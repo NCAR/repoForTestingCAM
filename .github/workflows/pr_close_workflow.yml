@@ -1,6 +1,4 @@
 name: closed PR workflow
-description: Workflow file for github actions performed after a pull request is closed.
-authors: Jesse Nusbaumer
 
 on:
   pull_request:
