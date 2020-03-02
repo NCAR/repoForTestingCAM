@@ -81,7 +81,7 @@ def parse_arguments():
 
     #Add input arguments to be parsed:
     parser.add_argument('--access_token', metavar='<GITHUB_TOKEN>', action='store', type=str,
-                        help="access token used to access GitHub API"))
+                        help="access token used to access GitHub API")
 
     parser.add_argument('--pull_num', metavar='<pull request number>', action='store', type=int,
                         help="Number of pull request that has been merged")
