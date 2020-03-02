@@ -126,7 +126,7 @@ def _main_prog():
     #cam_repo = ghub.get_repo("ESCOMP/CAM")
 
     #Test repo:
-    cam_repo = ghub.get_repo("cacraigucar/forJessetesting")
+    cam_repo = ghub.get_repo("NCAR/repoForTestingCAM")
 
     #++++++++++++++++++++++++++++++++++++++
     #Create integer list of all open issues:
