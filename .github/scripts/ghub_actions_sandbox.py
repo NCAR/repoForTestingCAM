@@ -22,8 +22,8 @@ import sys
 #+++++++++++++++++++++++++++++++
 
 parser = argparse.ArgumentParser()
-#parser.add_argument('--token', action='store')
 parser.add_argument('--test_env', action='store')
+parser.add_argument('--access_token', action='store')
 args = parser.parse_args()
 
 #+++++++++++++++++++++++++++
@@ -38,7 +38,9 @@ print(args.test_env)
 #Access github API
 #+++++++++++++++++
 
-#ghub = Github(token)
+token = args.access_token
+
+ghub = Github(token)
 
 #++++++++++++++++++++
 #Open ESCOMP/CAM repo
@@ -48,7 +50,24 @@ print(args.test_env)
 #cam_repo = ghub.get_repo("ESCOMP/CAM")
 
 #Test repo:
-#cam_repo = ghub.get_repo("cacraigucar/forJessetesting")
+cam_repo = ghub.get_repo("NCAR/repoForTestingCAM")
+
+#++++++++++++++++++++++++++++++++++++++
+#Gather info from most recent merged PR
+#++++++++++++++++++++++++++++++++++++++
+
+#Extract all "closed" pull requests, in order of most recently updated first:
+closed_pulls = cam_repo.get_pulls(state='closed', sort='updated', direction='desc')
+
+#Loop over closed pull requests:
+for pr in closed_pulls:
+   #Check that Pull Request was merged:
+   if(pr.merged):
+     #If so, then pull out PR number and exit loop:
+     pr_num = pr.number
+     break
+
+print(pr_num)
 
 #++++++++++
 #End script

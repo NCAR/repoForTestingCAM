@@ -1,11 +1,15 @@
-name: pull request close actions workflow
+name: closed PR workflow
+description: Workflow file for github actions performed after a pull request is closed.
+authors: Jesse Nusbaumer
 
 on:
   pull_request:
     types: [closed]
 
 jobs:
-  build:
+  #This job is designed to close any issues or pull requests specified
+  #in the body of a pull request merged into a non-default branch.
+  issue_closer:
     runs-on: ubuntu-latest
     steps:
     # acquire github action routines
@@ -20,9 +24,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip  # Install latest version of PIP
         pip install PyGithub                 # Install PyGithub pythong package
-    # run CAM pr-closing scripts
+    - name: Print environmental vars
+      run: |
+        echo ${{ github.event_name }}
+        echo ${{ github.event.pull_request.number }}
+    # run CAM issue-closing script
     - name: python action scripts
       env:
         TEST_VAR: 'Goodbye_World!'
-      run: python .github/scripts/ghub_actions_sandbox.py --test_env $TEST_VAR
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: python .github/scripts/ghub_actions_sandbox.py --test_env $TEST_VAR --access_token $GITHUB_TOKEN
 
