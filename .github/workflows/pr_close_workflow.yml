@@ -25,7 +25,7 @@ jobs:
     # run CAM issue-closing script
     - name: python action scripts
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
-      run: .github/scripts/branch_PR_issue_closer.py --access_token $GITHUB_TOKEN --pull_num $PR_NUMBER
+      run: .github/scripts/branch_PR_issue_closer.py --access_token $ACCESS_TOKEN --pull_num $PR_NUMBER
 
