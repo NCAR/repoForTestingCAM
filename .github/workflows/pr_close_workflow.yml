@@ -22,20 +22,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip  # Install latest version of PIP
         pip install PyGithub                 # Install PyGithub pythong package
-    # print environmental variables to screen:
-    - name: debugging environment
-      env:
-        HELLO_WORLD: 'HELLO WORLD'
-        ENV_NUM: 12345
-        TEST_SEC: ${{ secrets.TEST_VAR }}
-      run: |
-        echo $HELLO_WORLD
-        echo $ENV_NUM
-        echo $TEST_SEC
     # run CAM issue-closing script
     - name: python action scripts
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
-      run: .github/scripts/branch_PR_issue_closer.py --access_token $ACCESS_TOKEN --pull_num $PR_NUMBER
-
+        TEST_SEC: ${{ secrets.TEST_VAR }}
+      #run: .github/scripts/branch_PR_issue_closer.py --access_token $ACCESS_TOKEN --pull_num $PR_NUMBER
+      run: .github/scripts/branch_PR_issue_closer.py --access_token $TEST_SEC --pull_num $PR_NUMBER

@@ -112,6 +112,9 @@ def _main_prog():
     token  = args.access_token
     pr_num = args.pull_num
 
+    print(token)
+    sys.exit(0)
+
     #++++++++++++++++++++++++++++++++
     #Log-in to github API using token
     #++++++++++++++++++++++++++++++++
