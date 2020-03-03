@@ -109,8 +109,8 @@ def _main_prog():
     args = parse_arguments()
 
     #Add argument values to variables:
-    token  = args.access_token
-    pr_num = args.pull_num
+    token = args.access_token
+    #pr_num = args.pull_num
 
     #++++++++++++++++++++++++++++++++
     #Log-in to github API using token
