@@ -34,4 +34,5 @@ jobs:
     - name: python action scripts
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      run: .github/scripts/branch_PR_issue_closer.py --access_token $ACCESS_TOKEN
+        TRIGGER_SHA: ${{ github.sha }}
+      run: .github/scripts/branch_PR_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $TRIGGER_SHA

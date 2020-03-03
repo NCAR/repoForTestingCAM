@@ -83,8 +83,8 @@ def parse_arguments():
     parser.add_argument('--access_token', metavar='<GITHUB_TOKEN>', action='store', type=str,
                         help="access token used to access GitHub API")
 
-#    parser.add_argument('--pull_num', metavar='<pull request number>', action='store', type=int,
-#                        help="Number of pull request that has been merged")
+    parser.add_argument('--trigger_sha', metavar='<GITHUB SHA>', action='store', type=str,
+                        help="Commit SHA that triggered the workflow")
 
     #Parse Argument inputs
     args = parser.parse_args()
@@ -110,7 +110,7 @@ def _main_prog():
 
     #Add argument values to variables:
     token = args.access_token
-    #pr_num = args.pull_num
+    trigger_sha = args.trigger_sha
 
     #++++++++++++++++++++++++++++++++
     #Log-in to github API using token
@@ -127,6 +127,19 @@ def _main_prog():
 
     #Test repo:
     cam_repo = ghub.get_repo("NCAR/repoForTestingCAM")
+
+    #+++++++++++++++++++++++++++++
+    #Get triggering commit message
+    #+++++++++++++++++++++++++++++
+
+    github_commit = cam_repo.get_commit(trigger_sha)
+
+    commit_message = github_commit.commit.message
+
+    print(commit_message)
+
+    #End script here!
+    sys.exit(0)
 
     #++++++++++++++++++++++++++++++++++++++
     #Create integer list of all open issues:
