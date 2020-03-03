@@ -83,8 +83,8 @@ def parse_arguments():
     parser.add_argument('--access_token', metavar='<GITHUB_TOKEN>', action='store', type=str,
                         help="access token used to access GitHub API")
 
-    parser.add_argument('--pull_num', metavar='<pull request number>', action='store', type=int,
-                        help="Number of pull request that has been merged")
+#    parser.add_argument('--pull_num', metavar='<pull request number>', action='store', type=int,
+#                        help="Number of pull request that has been merged")
 
     #Parse Argument inputs
     args = parser.parse_args()
@@ -111,9 +111,6 @@ def _main_prog():
     #Add argument values to variables:
     token  = args.access_token
     pr_num = args.pull_num
-
-    print(token)
-    sys.exit(0)
 
     #++++++++++++++++++++++++++++++++
     #Log-in to github API using token
@@ -166,15 +163,33 @@ def _main_prog():
     #+++++++++++++++++++++++++++++++++++++
 
     #Extract pull request info:
-    merged_pull = cam_repo.get_pull(pr_num)
+    #merged_pull = cam_repo.get_pull(pr_num)
 
     #If pull request has not been merged, then exit script:
-    if not merged_pull.merged:
-        print("\n")
-        print("Pull request was not merged, so the script will not close anything.")
-        print("\n")
-        print("Issue closing check has completed successfully.")
-        sys.exit(0)
+    #if not merged_pull.merged:
+    #    print("\n")
+    #    print("Pull request was not merged, so the script will not close anything.")
+    #    print("\n")
+    #    print("Issue closing check has completed successfully.")
+    #    sys.exit(0)
+
+    #++++++++++++++++++++++++++++++++++++++
+    #Gather info from most recent merged PR
+    #++++++++++++++++++++++++++++++++++++++
+
+    #Extract all "closed" pull requests, in order of most recently updated first:
+    closed_pulls = cam_repo.get_pulls(state='closed', sort='updated', direction='desc')
+
+    #Loop over closed pull requests:
+    for pr in closed_pulls:
+        #Check that Pull Request was merged:
+        if(pr.merged):
+          #If so, then pull out PR number and exit loop:
+          pr_num = pr.number
+          break
+
+    #Extract most recent merged PR:
+    merged_pull = cam_repo.get_pull(pr_num)
 
     #++++++++++++++++++++++++++++++++++++++++
     #Check that PR was not for default branch

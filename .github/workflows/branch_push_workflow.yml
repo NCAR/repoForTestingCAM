@@ -1,8 +1,8 @@
 name: Pushed commit workflow
 
 on:
-  #For some reason, GitHub does not allow secrets
-  #when a PR from a fork is merged.  Thus instead
+  #For some reason GitHub does not allow secrets
+  #when a PR from a fork is closeed.  Thus instead
   #the workflow must activate whenever a commit
   #is pushed to the repo.  Theoretically this should
   #behave the same way as if triggered from a pull
@@ -11,8 +11,6 @@ on:
   push:
     branches:
       - fake_development
-#  pull_request:
-#    types: [closed]
 
 jobs:
   #This job is designed to close any issues or pull requests specified
@@ -36,7 +34,4 @@ jobs:
     - name: python action scripts
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        PR_NUMBER: ${{ github.event.pull_request.number }}
-        TEST_SEC: ${{ secrets.TEST_VAR }}
-      #run: .github/scripts/branch_PR_issue_closer.py --access_token $ACCESS_TOKEN
-      run: .github/scripts/branch_PR_issue_closer.py --access_token $TEST_SEC
+      run: .github/scripts/branch_PR_issue_closer.py --access_token $ACCESS_TOKEN
