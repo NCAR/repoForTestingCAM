@@ -1,8 +1,11 @@
 name: closed PR workflow
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+    branches:
+      - fake_development
+#  pull_request:
+#    types: [closed]
 
 jobs:
   #This job is designed to close any issues or pull requests specified
