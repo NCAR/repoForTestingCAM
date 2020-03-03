@@ -2,3 +2,5 @@ A text file used in this repo's "fake_development" branch.
 
 Added a line to "fix" test issue one.  Adding another sentence to this line to try and "fix" test issue one again.
 
+Added a second line, to try and activate the environment debug commands present in the PR-close workflow file.
+
