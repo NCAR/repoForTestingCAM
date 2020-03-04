@@ -8,6 +8,9 @@
 #       Also checks if the newly-merged PR is the final PR needed to fix the issue
 #       for all related branches.  If so, then the issue is formally closed.
 #
+#       Finally, this script also checks to see if the merged PR attempted
+#       to close other PRs, and does so if the merge was not to the repo's default branch.
+#
 #Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - October, 2019
 #
 #+++++++++++++++++++++
@@ -16,6 +19,7 @@
 
 from github import Github
 from github import Issue
+from github import PullRequest
 from datetime import datetime
 
 import re
@@ -200,6 +204,21 @@ def _main_prog():
         endmsg = "Pull request in commit message was not actually merged, so the script will not close anything."
         end_script(endmsg)
 
+    #++++++++++++++++++++++++++++++++++++++++
+    #Check that PR was not for default branch
+    #++++++++++++++++++++++++++++++++++++++++
+
+    #Determine default branch on repo:
+    default_branch = cam_repo.default_branch
+
+    #Extract merged branch from latest Pull request:
+    merged_branch = merged_pull.base.ref
+
+    #If PR was to default branch, then exit script (as github will handle it automatically):
+    if merged_branch == default_branch:
+        endmsg = "Pull request ws merged into default repo branch. Thus issue is closed automatically"
+        end_script(endmsg)
+
     #++++++++++++++++++++++++++++++++++++++
     #Create integer list of all open issues:
     #++++++++++++++++++++++++++++++++++++++
@@ -229,39 +248,6 @@ def _main_prog():
     for pr in open_repo_pulls:
         #Add pr number to "open_pulls" list:
         open_pulls.append(pr.number)
-
-    #++++++++++++++++++++++++++++++++++++++
-    #Gather info from most recent merged PR
-    #++++++++++++++++++++++++++++++++++++++
-
-    #Extract all "closed" pull requests, in order of most recently updated first:
-    #closed_pulls = cam_repo.get_pulls(state='closed', sort='updated', direction='desc')
-
-    #Loop over closed pull requests:
-    #for pr in closed_pulls:
-        #Check that Pull Request was merged:
-    #    if(pr.merged):
-          #If so, then pull out PR number and exit loop:
-    #      pr_num = pr.number
-    #      break
-
-    #Extract most recent merged PR:
-    #merged_pull = cam_repo.get_pull(pr_num)
-
-    #++++++++++++++++++++++++++++++++++++++++
-    #Check that PR was not for default branch
-    #++++++++++++++++++++++++++++++++++++++++
-
-    #Determine default branch on repo:
-    default_branch = cam_repo.default_branch
-
-    #Extract merged branch from latest Pull request:
-    merged_branch = merged_pull.base.ref
-
-    #If PR was to default branch, then exit script (as github will handle it automatically):
-    if merged_branch == default_branch:
-        endmsg = "Pull request ws merged into default repo branch. Thus issue is closed automatically"
-        end_script(endmsg)
 
     #+++++++++++++++++++++++++++++++++++++++++++++++++
     #Check if one of the keywords exists in PR message
@@ -361,13 +347,8 @@ def _main_prog():
     #First, Pull-out all projects from repo:
     projects = cam_repo.get_projects()
 
-    #Also determine relevant project and column name for card move:
-    if merged_branch  == "cam_development":
-        proj_mod_name = "CAM Development branch (cutting edge development)"
-        col_mod_name = "closed issues"
-    else:
-        proj_mod_name = "CAM Public Release for CESM2_1"
-        col_mod_name = "Completed issues"
+    #Initalize modified project name:
+    proj_mod_name = None
 
     #Loop over all repo projects:
     for project in projects:
@@ -384,6 +365,7 @@ def _main_prog():
 
                 #Loop over cards:
                 for card in cards:
+                    #Extract card content:
                     card_content = card.get_content()
 
                     #Check that card content is an "issue":
@@ -409,8 +391,32 @@ def _main_prog():
                           if project.name == proj_mod_name:
                               proj_issue_card_ids.update({card_content.number:card.id})
 
+            #If not, then check if column name is "Completed Tags"
+            elif column.name == "Completed tags":
+                #If so, then extract cards:
+                cards = column.get_cards()
+
+                #Loop over cards:
+                for card in cards:
+                    #Extract card content:
+                    card_content = card.get_content()
+
+                    #Check that card content is a "pull request":
+                    if isinstance(card_content, PullRequest.PullRequest):
+
+                        #Next, check if card number matches merged PR number:
+                        if card_content.number == pr_num:
+                            #If so, and if Project name is None, then set string:
+                            if proj_mod_name is None:
+                                proj_mod_name = project.name
+                            else:
+                                #If already set, then somehow merged PR is in two different projects,
+                                #which is not what this script is expecting, so just exit:
+                                endmsg = "Merged Pull Request found in two different projects, so script will do nothing."
+                                end_script(endmsg)
+
             #Otherwise, check if column name matches "modified/closed issues" column:
-            elif column.name == col_mod_name and project.name == proj_mod_name:
+            elif column.name == "closed issues" and project.name == proj_mod_name:
                 #If so, then save column id:
                 column_id = column.id
 
