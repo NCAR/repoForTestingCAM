@@ -90,6 +90,21 @@ def parse_arguments():
     args = parser.parse_args()
     return args
 
+#++++++++++++++++++++++++++++++++
+#Script message and exit function
+#++++++++++++++++++++++++++++++++
+
+def end_script(msg):
+
+    """
+    Prints message to screen, and then exits script.
+    """
+    print("\n")
+    print(msg)
+    print("\n")
+    print("Issue closing check has completed successfully.")
+    sys.exit(0)
+
 #############
 #MAIN PROGRAM
 #############
@@ -138,8 +153,52 @@ def _main_prog():
 
     print(commit_message)
 
-    #End script here!
-    sys.exit(0)
+    #+++++++++++++++++++++++++++++++
+    #Search for github PR merge text
+    #+++++++++++++++++++++++++++++++
+
+    #Compile Pull Request merge text expression:
+    pr_merge_pattern = re.compile(r'Merge pull request ')
+
+    #Search for merge text, starting at beginning of message:
+    commit_msg_match = pr_merge_pattern.match(commit_message)
+
+    #Check if match exists:
+    if commit_msg_match is not None:
+        #If it does then pull out text immediately after message:
+        post_msg_text = commit_message[commit_msg_match.end():]
+
+        #Split text into individual words:
+        post_msg_word_list = post_msg_text.split()
+
+        #Extract first word:
+        first_word = post_msg_word_list[0]
+
+        print(first_word)
+
+        try:
+            #Try assuming the word is just a number:
+            pr_num = int(first_word[1:]) #ignore "#" symbol
+        except ValueError:
+            #If the conversion fails, then this is likely not a real PR merge, so end the script:
+            endmsg = "No Pull Request number was found in the commit message, so there is nothing for the script to do."
+            end_script(endmsg)
+
+    else:
+        endmsg = "This push commit does not appear to be a merged pull request, so the script will do nothing."
+        end_script(endmsg)
+
+    #+++++++++++++++++++++++++++++++++++++
+    #Check that PR has in fact been merged
+    #+++++++++++++++++++++++++++++++++++++
+
+    #Extract pull request info:
+    merged_pull = cam_repo.get_pull(pr_num)
+
+    #If pull request has not been merged, then exit script:
+    if not merged_pull.merged:
+        endmsg = "Pull request in commit message was not actually merged, so the script will not close anything."
+        end_script(endmsg)
 
     #++++++++++++++++++++++++++++++++++++++
     #Create integer list of all open issues:
@@ -171,38 +230,23 @@ def _main_prog():
         #Add pr number to "open_pulls" list:
         open_pulls.append(pr.number)
 
-    #+++++++++++++++++++++++++++++++++++++
-    #Check that PR has in fact been merged
-    #+++++++++++++++++++++++++++++++++++++
-
-    #Extract pull request info:
-    #merged_pull = cam_repo.get_pull(pr_num)
-
-    #If pull request has not been merged, then exit script:
-    #if not merged_pull.merged:
-    #    print("\n")
-    #    print("Pull request was not merged, so the script will not close anything.")
-    #    print("\n")
-    #    print("Issue closing check has completed successfully.")
-    #    sys.exit(0)
-
     #++++++++++++++++++++++++++++++++++++++
     #Gather info from most recent merged PR
     #++++++++++++++++++++++++++++++++++++++
 
     #Extract all "closed" pull requests, in order of most recently updated first:
-    closed_pulls = cam_repo.get_pulls(state='closed', sort='updated', direction='desc')
+    #closed_pulls = cam_repo.get_pulls(state='closed', sort='updated', direction='desc')
 
     #Loop over closed pull requests:
-    for pr in closed_pulls:
+    #for pr in closed_pulls:
         #Check that Pull Request was merged:
-        if(pr.merged):
+    #    if(pr.merged):
           #If so, then pull out PR number and exit loop:
-          pr_num = pr.number
-          break
+    #      pr_num = pr.number
+    #      break
 
     #Extract most recent merged PR:
-    merged_pull = cam_repo.get_pull(pr_num)
+    #merged_pull = cam_repo.get_pull(pr_num)
 
     #++++++++++++++++++++++++++++++++++++++++
     #Check that PR was not for default branch
@@ -216,11 +260,8 @@ def _main_prog():
 
     #If PR was to default branch, then exit script (as github will handle it automatically):
     if merged_branch == default_branch:
-        print("\n")
-        print("Pull request ws merged into default repo branch. Thus issue is closed automatically")
-        print("\n")
-        print("Issue closing check has completed successfully.")
-        sys.exit(0)
+        endmsg = "Pull request ws merged into default repo branch. Thus issue is closed automatically"
+        end_script(endmsg)
 
     #+++++++++++++++++++++++++++++++++++++++++++++++++
     #Check if one of the keywords exists in PR message
@@ -245,12 +286,8 @@ def _main_prog():
         #If at least one keyword is found, then determine location of every keyword instance:
         word_matches = keyword_pattern.finditer(pr_msg_lower)
     else:
-        #If no keyword is found, then exit script (as there is nothing more to do):
-        print("\n")
-        print("Pull request was merged without using any of the keywords.  Thus there are no issues to close.")
-        print("\n")
-        print("Issue closing check has completed successfully.")
-        sys.exit(0)
+        endmsg = "Pull request was merged without using any of the keywords.  Thus there are no issues to close."
+        end_script(endmsg)
 
    #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    #Extract issue and PR numbers associated with found keywords in merged PR message
@@ -305,11 +342,8 @@ def _main_prog():
 
     #If no issue numbers are present after any of the keywords, then exit script:
     if not close_issues and not close_pulls:
-        print("\n")
-        print("No issue or PR numbers were found in the merged PR message.  Thus there is nothing to close.")
-        print("\n")
-        print("Issue closing check has completed successfully.")
-        sys.exit(0)
+        endmsg = "No issue or PR numbers were found in the merged PR message.  Thus there is nothing to close."
+        end_script(endmsg)
 
     #++++++++++++++++++++++++++++++++++++++++
     #Extract repo project "To do" card issues
@@ -382,10 +416,8 @@ def _main_prog():
 
     #If no project cards are found that match the issue, then exit script:
     if not proj_issues:
-        print("\n")
-        print("ERROR:  No project cards matched the issue being closed.")
-        print("Either the number in the PR message is wrong, or the project cards have been configured in-correctly.")
-        sys.exit(0)
+        endmsg = "No project cards match the issue being closed, so the script will do nothing."
+        end_script(endmsg)
 
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #Check if the number of "To-do" project cards matches the total number
