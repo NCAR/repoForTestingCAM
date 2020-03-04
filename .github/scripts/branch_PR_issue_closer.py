@@ -331,6 +331,50 @@ def _main_prog():
         endmsg = "No issue or PR numbers were found in the merged PR message.  Thus there is nothing to close."
         end_script(endmsg)
 
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    #Determine name of project associated with merged Pull Request
+    #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    #Pull-out all projects from repo:
+    projects = cam_repo.get_projects()
+
+    #Initalize modified project name:
+    proj_mod_name = None
+
+    #Loop over all repo projects:
+    for project in projects:
+        #Pull-out columns from each project:
+        proj_columns = project.get_columns()
+
+        #Loop over columns:
+        for column in proj_columns:
+
+            #check if column name is "Completed Tags"
+            if column.name == "Completed tags":
+                #If so, then extract cards:
+                cards = column.get_cards()
+
+                #Loop over cards:
+                for card in cards:
+                    #Extract card content:
+                    card_content = card.get_content()
+
+                    #Check that card content is a "pull request":
+                    if isinstance(card_content, PullRequest.PullRequest):
+
+                        #Next, check if card number matches merged PR number:
+                        if card_content.number == pr_num:
+                            #If so, and if Project name is None, then set string:
+                            if proj_mod_name is None:
+                                proj_mod_name = project.name
+                                #Break out of card loop:
+                                break
+                            else:
+                                #If already set, then somehow merged PR is in two different projects,
+                                #which is not what this script is expecting, so just exit:
+                                endmsg = "Merged Pull Request found in two different projects, so script will do nothing."
+                                end_script(endmsg)
+
     #++++++++++++++++++++++++++++++++++++++++
     #Extract repo project "To do" card issues
     #++++++++++++++++++++++++++++++++++++++++
@@ -343,12 +387,6 @@ def _main_prog():
 
     #Initalize issue id to project card id dictionary:
     proj_issue_card_ids = dict()
-
-    #First, Pull-out all projects from repo:
-    projects = cam_repo.get_projects()
-
-    #Initalize modified project name:
-    proj_mod_name = None
 
     #Loop over all repo projects:
     for project in projects:
@@ -391,31 +429,7 @@ def _main_prog():
                           if project.name == proj_mod_name:
                               proj_issue_card_ids.update({card_content.number:card.id})
 
-            #If not, then check if column name is "Completed Tags"
-            elif column.name == "Completed tags":
-                #If so, then extract cards:
-                cards = column.get_cards()
-
-                #Loop over cards:
-                for card in cards:
-                    #Extract card content:
-                    card_content = card.get_content()
-
-                    #Check that card content is a "pull request":
-                    if isinstance(card_content, PullRequest.PullRequest):
-
-                        #Next, check if card number matches merged PR number:
-                        if card_content.number == pr_num:
-                            #If so, and if Project name is None, then set string:
-                            if proj_mod_name is None:
-                                proj_mod_name = project.name
-                            else:
-                                #If already set, then somehow merged PR is in two different projects,
-                                #which is not what this script is expecting, so just exit:
-                                endmsg = "Merged Pull Request found in two different projects, so script will do nothing."
-                                end_script(endmsg)
-
-            #Otherwise, check if column name matches "modified/closed issues" column:
+            #Otherwise, check if column name matches "closed issues" column:
             elif column.name == "closed issues" and project.name == proj_mod_name:
                 #If so, then save column id:
                 column_id = column.id
