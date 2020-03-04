@@ -450,7 +450,7 @@ def _main_prog():
             card_id = proj_issue_card_ids[issue_num]
 
             #Then move the card on the relevant project page to the "Modified/Completed Issues" column:
-            project_card_move(access_token.strip(), column_id, card_id)
+            project_card_move(token.strip(), column_id, card_id)
 
     #++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #Finally, close all Pull Requests in "close_pulls" list:
