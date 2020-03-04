@@ -8,3 +8,5 @@ Added a third line, to "fix" test issue two. Adding new sentence, to try and "fi
 
 Added a fourth line, to try and close test issue two.
 
+Added a fifth line.  This line was added to test the response of the push event commit message to multiple commits.
+
