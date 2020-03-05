@@ -12,3 +12,5 @@ Added a fifth line.  This line was added to test the response of the push event 
 
 Added a sixth line, to try and "fix" test issue three.  Trying again, this time without the project ordering bug. Trying a third time, now without the un-necessary isinstance() call.
 
+Added a seventh line, to "fix" test issue three in the "release" branch project.
+
