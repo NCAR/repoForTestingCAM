@@ -359,21 +359,18 @@ def _main_prog():
                     #Extract card content:
                     card_content = card.get_content()
 
-                    #Check that card content is a "pull request":
-                    if isinstance(card_content, PullRequest.PullRequest):
-
-                        #Next, check if card number matches merged PR number:
-                        if card_content.number == pr_num:
-                            #If so, and if Project name is None, then set string:
-                            if proj_mod_name is None:
-                                proj_mod_name = project.name
-                                #Break out of card loop:
-                                break
-                            else:
-                                #If already set, then somehow merged PR is in two different projects,
-                                #which is not what this script is expecting, so just exit:
-                                endmsg = "Merged Pull Request found in two different projects, so script will do nothing."
-                                end_script(endmsg)
+                    #Next, check if card number matches merged PR number:
+                    if card_content.number == pr_num:
+                        #If so, and if Project name is None, then set string:
+                        if proj_mod_name is None:
+                            proj_mod_name = project.name
+                            #Break out of card loop:
+                            break
+                        else:
+                            #If already set, then somehow merged PR is in two different projects,
+                            #which is not what this script is expecting, so just exit:
+                            endmsg = "Merged Pull Request found in two different projects, so script will do nothing."
+                            end_script(endmsg)
 
     #++++++++++++++++++++++++++++++++++++++++
     #Extract repo project "To do" card issues
@@ -406,28 +403,25 @@ def _main_prog():
                     #Extract card content:
                     card_content = card.get_content()
 
-                    #Check that card content is an "issue":
-                    if isinstance(card_content, Issue.Issue):
+                    #Next, check if card issue number matches any of the "close" issue numbers from the PR:
+                    if card_content.number in close_issues:
 
-                        #Next, check if card issue number matches any of the "close" issue numbers from the PR:
-                        if card_content.number in close_issues:
+                        #If so, then check if issue number is already in proj_issues:
+                        if card_content.number in proj_issues:
+                            #If it is already present, then extract index of issue:
+                            iss_idx = proj_issues.index(card_content.number)
 
-                          #If so, then check if issue number is already in proj_issues:
-                          if card_content.number in proj_issues:
-                              #If it is already present, then extract index of issue:
-                              iss_idx = proj_issues.index(card_content.number)
+                            #Add one to project issue counter:
+                            proj_issue_count[iss_idx] += 1
 
-                              #Add one to project issue counter:
-                              proj_issue_count[iss_idx] += 1
+                        else:
+                            #If not, then append to project issues and counter list:
+                            proj_issues.append(card_content.number)
+                            proj_issue_count.append(1)
 
-                          else:
-                              #If not, then append to project issues and counter list:
-                              proj_issues.append(card_content.number)
-                              proj_issue_count.append(1)
-
-                          #Also add issue id and card id to id dictionary used for card move, if in relevant project:
-                          if project.name == proj_mod_name:
-                              proj_issue_card_ids.update({card_content.number:card.id})
+                            #Also add issue id and card id to id dictionary used for card move, if in relevant project:
+                            if project.name == proj_mod_name:
+                                proj_issue_card_ids.update({card_content.number:card.id})
 
             #Otherwise, check if column name matches "closed issues" column:
             elif column.name == "closed issues" and project.name == proj_mod_name:
