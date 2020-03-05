@@ -1,33 +1,31 @@
 #!/usr/bin/env python
-#
-#Script name:  branch_PR_issue_closer.py
-#
-#Goal:  To check if the newly-merged PR's commit message attempted to close an issue.
-#       If so, then move the associated project card to the "closed issues" column.
-#
-#       Also checks if the newly-merged PR is the final PR needed to fix the issue
-#       for all related branches.  If so, then the issue is formally closed.
-#
-#       Finally, this script also checks to see if the merged PR attempted
-#       to close other PRs, and does so if the merge was not to the repo's default branch.
-#
-#Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - October, 2019
-#
+
+"""
+Script name:  branch_PR_issue_closer.py
+
+Goal:  To check if the newly-merged PR's commit message attempted to close an issue.
+       If so, then move the associated project card to the "closed issues" column.
+
+       Also checks if the newly-merged PR is the final PR needed to fix the issue
+       for all related branches.  If so, then the issue is formally closed.
+
+       Finally, this script also checks to see if the merged PR attempted
+       to close other PRs, and does so if the merge was not to the repo's default branch.
+
+Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - October, 2019
+"""
+
 #+++++++++++++++++++++
 #Import needed modules
 #+++++++++++++++++++++
 
-from github import Github
-from github import Issue
-from github import PullRequest
-from datetime import datetime
-
 import re
 import sys
-import os
 import subprocess
 import shlex
 import argparse
+
+from github import Github
 
 #################
 #HELPER FUNCTIONS
@@ -37,7 +35,7 @@ import argparse
 #Curl command needed to move project cards
 #+++++++++++++++++++++++++++++++++++++++++
 
-def  project_card_move(OA_token, column_id, card_id):
+def  project_card_move(oa_token, column_id, card_id):
 
     """
     Currently pyGithub doesn't contain the methods required
@@ -55,19 +53,19 @@ def  project_card_move(OA_token, column_id, card_id):
     """
 
     #create required argument strings from inputs:
-    github_OA_header = ''' "Authorization: token {0}" '''.format(OA_token)
-    github_url_str   = '''https://api.github.com/projects/columns/cards/{0}/moves'''.format(card_id)
+    github_oa_header = ''' "Authorization: token {0}" '''.format(oa_token)
+    github_url_str = '''https://api.github.com/projects/columns/cards/{0}/moves'''.format(card_id)
     json_post_inputs = ''' '{"position":"top", "column_id":%i}' ''' %column_id  #format() can't be used due to curly brackets in string.
 
     #Create curl command line string:
-    curl_cmdline = '''curl -H '''+github_OA_header+''' -H "Accept: application/vnd.github.inertia-preview+json" -X POST -d '''+\
+    curl_cmdline = '''curl -H '''+github_oa_header+''' -H "Accept: application/vnd.github.inertia-preview+json" -X POST -d '''+\
                    json_post_inputs+''' '''+github_url_str
 
     #Split command line string into argument list:
     curl_arg_list = shlex.split(curl_cmdline)
 
     #Run command using subprocess:
-    subprocess.run(curl_arg_list)
+    subprocess.run(curl_arg_list, check=True)
 
 #++++++++++++++++++++++++++++++
 #Input Argument parser function
@@ -114,6 +112,10 @@ def end_script(msg):
 #############
 
 def _main_prog():
+
+    # pylint: disable=too-many-locals
+    # pylint: disable=too-many-branches
+    # pylint: disable=too-many-statements
 
     #++++++++++++
     #Begin script
@@ -245,9 +247,9 @@ def _main_prog():
     open_repo_pulls = cam_repo.get_pulls(state='open')
 
     #Loop over all open repo issues:
-    for pr in open_repo_pulls:
+    for pull in open_repo_pulls:
         #Add pr number to "open_pulls" list:
-        open_pulls.append(pr.number)
+        open_pulls.append(pull.number)
 
     #+++++++++++++++++++++++++++++++++++++++++++++++++
     #Check if one of the keywords exists in PR message
@@ -366,11 +368,11 @@ def _main_prog():
                             proj_mod_name = project.name
                             #Break out of card loop:
                             break
-                        else:
-                            #If already set, then somehow merged PR is in two different projects,
-                            #which is not what this script is expecting, so just exit:
-                            endmsg = "Merged Pull Request found in two different projects, so script will do nothing."
-                            end_script(endmsg)
+
+                        #If already set, then somehow merged PR is in two different projects,
+                        #which is not what this script is expecting, so just exit:
+                        endmsg = "Merged Pull Request found in two different projects, so script will do nothing."
+                        end_script(endmsg)
 
     #++++++++++++++++++++++++++++++++++++++++
     #Extract repo project "To do" card issues
@@ -454,16 +456,16 @@ def _main_prog():
 
         #if issue count is just one, then close issue:
         if issue_count == 1:
-          #Extract github issue object:
-          cam_issue = cam_repo.get_issue(number=issue_num)
-          #Close issue:
-          cam_issue.edit(state='closed')
-          print("Issue #{} has been closed.".format(issue_num))
+            #Extract github issue object:
+            cam_issue = cam_repo.get_issue(number=issue_num)
+            #Close issue:
+            cam_issue.edit(state='closed')
+            print("Issue #{} has been closed.".format(issue_num))
         else:
             #Extract card id from id dictionary:
             card_id = proj_issue_card_ids[issue_num]
 
-            #Then move the card on the relevant project page to the "Modified/Completed Issues" column:
+            #Then move the card on the relevant project page to the "closed issues" column:
             project_card_move(token.strip(), column_id, card_id)
 
     #++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -472,7 +474,7 @@ def _main_prog():
 
     for pull_num in close_pulls:
         #Extract Pull request object:
-        cam_pull = cam.repo.get_pull(number=pull_num)
+        cam_pull = cam_repo.get_pull(number=pull_num)
 
         #Close Pull Request:
         cam_pull.edit(state='closed')
@@ -489,4 +491,3 @@ def _main_prog():
 #Run the main script program:
 if __name__ == "__main__":
     _main_prog()
-
