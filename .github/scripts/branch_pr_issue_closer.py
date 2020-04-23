@@ -142,7 +142,7 @@ def _main_prog():
     #++++++++++++++++++++
 
     #Official CAM repo:
-    cam_repo = ghub.get_repo("ESCOMP/CAM")
+    cam_repo = ghub.get_repo("NCAR/repoForTestingCAM")
 
     #+++++++++++++++++++++++++++++
     #Get triggering commit message
