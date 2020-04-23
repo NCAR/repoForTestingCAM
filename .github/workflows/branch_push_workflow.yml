@@ -1,8 +1,16 @@
-name: closed PR workflow
+name: Pushed commit workflow
 
 on:
-  pull_request:
-    types: [closed]
+  #For some reason GitHub does not allow secrets
+  #when a PR from a fork is closeed.  Thus instead
+  #the workflow must activate whenever a commit
+  #is pushed to the repo.  Theoretically this should
+  #behave the same way as if triggered from a pull
+  #request, just as long as no user ever pushes
+  #directly to the repo.
+  push:
+    branches:
+      - fake_release
 
 jobs:
   #This job is designed to close any issues or pull requests specified
@@ -25,7 +33,6 @@ jobs:
     # run CAM issue-closing script
     - name: python action scripts
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PR_NUMBER: ${{ github.event.pull_request.number }}
-      run: .github/scripts/branch_PR_issue_closer.py --access_token $GITHUB_TOKEN --pull_num $PR_NUMBER
-
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        TRIGGER_SHA: ${{ github.sha }}
+      run: .github/scripts/branch_pr_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $TRIGGER_SHA
