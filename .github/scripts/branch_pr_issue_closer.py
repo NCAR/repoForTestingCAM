@@ -315,11 +315,13 @@ def _main_prog():
 
     #Print list of referenced issues to screen:
     if close_issues:
-        print("Issues referenced by the merged PR: "+", ".join(close_issues))
+        print("Issues referenced by the merged PR: "+", ".join(\
+              str(issue) for issue in close_issues))
 
     #Print list of referenced PRs to screen:
     if close_pulls:
-        print("PRs referenced by the merged PR: "+", ".join(close_pulls))
+        print("PRs referenced by the merged PR: "+", ".join(\
+              str(pull) for pull in close_pulls))
 
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #Determine name of project associated with merged Pull Request
