@@ -403,16 +403,16 @@ def _main_prog():
                             #Add one to project issue counter:
                             proj_issues_count[card_content.number] += 1
 
+                            #Also add issue id and card id to id dictionary used for card move, if in relevant project:
+                            if project.name == proj_mod_name:
+                                proj_issue_card_ids[card_content.number] = card.id
+
                         else:
-                            #If not, then append to project issues and counter list:
+                            #If not, then append to project issues count dictionary:
                             proj_issues_count[card_content.number] = 1
 
                             #Also add issue id and card id to id dictionary used for card move, if in relevant project:
                             if project.name == proj_mod_name:
-                                #proj_issue_card_ids.update({card_content.number:card.id})
-                                print("Make it here?  What are the values then?")
-                                print(card_content.number)
-                                print(card.id)
                                 proj_issue_card_ids[card_content.number] = card.id
 
             #Otherwise, check if column name matches "closed issues" column:
@@ -438,8 +438,6 @@ def _main_prog():
 
     #Loop over project issues and counts that have been "closed" by merged PR:
     for issue_num, issue_count in proj_issues_count.items():
-
-        print("looping how often?")
 
         #If issue count is just one, then close issue:
         if issue_count == 1:
