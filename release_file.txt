@@ -2,6 +2,6 @@ A text file used in this repo's "fake_release" branch.
 
 A second line to fix issue #24.
 
-Add a third line to fix issue #23.  Add a second sentenc to try fixing #23 again.
-Add a fourth line to hopefully fix issue #23.
+Add a third line to fix issue #23.  Add a second sentence to try fixing #23 again.
+Add a fourth line to hopefully fix issue #23. Add a second sentence to finally, hopefully, fix #23.
 
