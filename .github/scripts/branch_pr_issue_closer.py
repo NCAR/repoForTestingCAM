@@ -152,8 +152,6 @@ def _main_prog():
 
     commit_message = github_commit.commit.message
 
-    print(commit_message)
-
     #+++++++++++++++++++++++++++++++
     #Search for github PR merge text
     #+++++++++++++++++++++++++++++++
@@ -175,7 +173,8 @@ def _main_prog():
         #Extract first word:
         first_word = post_msg_word_list[0]
 
-        print(first_word)
+        #Print merged pr number to screen:
+        print("Merged PR: {}".format(first_word))
 
         try:
             #Try assuming the word is just a number:
@@ -314,6 +313,16 @@ def _main_prog():
         endmsg = "No issue or PR numbers were found in the merged PR message.  Thus there is nothing to close."
         end_script(endmsg)
 
+    #Print list of referenced issues to screen:
+    if close_issues:
+        print("Issues referenced by the merged PR: "+", ".join(\
+              str(issue) for issue in close_issues))
+
+    #Print list of referenced PRs to screen:
+    if close_pulls:
+        print("PRs referenced by the merged PR: "+", ".join(\
+              str(pull) for pull in close_pulls))
+
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     #Determine name of project associated with merged Pull Request
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -355,6 +364,9 @@ def _main_prog():
                         endmsg = "Merged Pull Request found in two different projects, so script will do nothing."
                         end_script(endmsg)
 
+    #Print project name associated with merged PR:
+    print("merged PR project name: {}".format(proj_mod_name))
+
     #++++++++++++++++++++++++++++++++++++++++
     #Extract repo project "To do" card issues
     #++++++++++++++++++++++++++++++++++++++++
@@ -391,13 +403,16 @@ def _main_prog():
                             #Add one to project issue counter:
                             proj_issues_count[card_content.number] += 1
 
+                            #Also add issue id and card id to id dictionary used for card move, if in relevant project:
+                            if project.name == proj_mod_name:
+                                proj_issue_card_ids[card_content.number] = card.id
+
                         else:
-                            #If not, then append to project issues and counter list:
+                            #If not, then append to project issues count dictionary:
                             proj_issues_count[card_content.number] = 1
 
                             #Also add issue id and card id to id dictionary used for card move, if in relevant project:
                             if project.name == proj_mod_name:
-                                #proj_issue_card_ids.update({card_content.number:card.id})
                                 proj_issue_card_ids[card_content.number] = card.id
 
             #Otherwise, check if column name matches "closed issues" column:
@@ -421,11 +436,8 @@ def _main_prog():
     #"closed issues" column.
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    #Loop over project issues that have been "closed" by merged PR:
-    for issue_num in proj_issues_count:
-
-        #Determine project issue count:
-        issue_count = proj_issues_count[issue_num]
+    #Loop over project issues and counts that have been "closed" by merged PR:
+    for issue_num, issue_count in proj_issues_count.items():
 
         #If issue count is just one, then close issue:
         if issue_count == 1:
