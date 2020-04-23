@@ -431,7 +431,7 @@ def _main_prog():
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     #Loop over project issues and counts that have been "closed" by merged PR:
-    for issue_num, issue_count in proj_issues_count.item:
+    for issue_num, issue_count in proj_issues_count.items():
 
         #If issue count is just one, then close issue:
         if issue_count == 1:
