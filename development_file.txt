@@ -16,3 +16,4 @@ Added a seventh line, to "fix" test issue three in the "release" branch project.
 
 Added an 8th line, to "fix" test issue four.
 
+Added a 9th line, to "fix" test issue #24.
