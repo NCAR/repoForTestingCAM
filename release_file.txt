@@ -1,2 +1,3 @@
 A text file used in this repo's "fake_release" branch.
 
+A second line to fix issue #24.
