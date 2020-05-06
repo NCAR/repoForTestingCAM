@@ -33,9 +33,7 @@ jobs:
 #        git clone ${{ github.head_ref }} test_repo
     # Run "checkout_externals":
     - name: Checkout externals
-      run: |
-#        cd test_repo
-        ./manage_externals/checkout_externals
+      run: ./manage_externals/checkout_externals
     # Run python unit and doctests:
     - name: python unit tests
       run: |
