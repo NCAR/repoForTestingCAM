@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         #All of these python versions will be used to run tests:
-        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+        python-version: [2.7, 3.5, 3.6, 3.7]
     steps:
     # Acquire github action routines:
     - uses: actions/checkout@v2
