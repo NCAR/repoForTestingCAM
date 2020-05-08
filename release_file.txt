@@ -11,3 +11,5 @@ Adding a sixth line, to, once and for all, fix  #23.
 
 Adding a seventh line, to make sure issue-closing script still works.
 
+Adding an eight line, to make sure issue-closing script fails.
+
