@@ -352,7 +352,7 @@ def _main_prog():
                     card_content = card.get_content()
 
                     #Next, check if card number matches merged PR number:
-                    if card_content.number == pr_num:
+                    if card_content is not None and card_content.number == pr_num:
                         #If so, and if Project name is None, then set string:
                         if proj_mod_name is None:
                             proj_mod_name = project.name
@@ -396,7 +396,7 @@ def _main_prog():
                     card_content = card.get_content()
 
                     #Next, check if card issue number matches any of the "close" issue numbers from the PR:
-                    if card_content.number in close_issues:
+                    if card_content is not None and card_content.number in close_issues:
 
                         #If so, then check if issue number is already in proj_issues_count:
                         if card_content.number in proj_issues_count:
