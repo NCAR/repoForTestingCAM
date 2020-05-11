@@ -21,3 +21,5 @@ Added a 9th line, to "fix" test issue #24.  Adding another sentence to try "fixi
 Added a 10th line, to "fix" test issue #24.
 
 Added an 11th line, to "resolve" test issue #23.
+
+Added a 12th line, to see if "sync" means checks run after every pushed commit to a PR.
