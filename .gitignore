@@ -1,0 +1,27 @@
+# Ignore externals
+ccpp_framework
+chem_proc
+cime
+components
+manage_externals.log
+src/physics/carma/base
+src/physics/clubb
+src/physics/cosp2/src
+src/physics/ncar_ccpp
+src/physics/silhs
+
+
+# Ignore compiled python
+buildnmlc
+*.pyc
+
+# Ignore test output
+test/unit/tmp
+test/include/*.mod
+test/include/*.o
+
+# Ignore editor temporaries and backups
+*~
+.#*
+\#*#
+*.swp
