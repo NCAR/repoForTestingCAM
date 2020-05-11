@@ -27,26 +27,18 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install libxml2-utils
-    # Clone branch involved in PR:
-    - name: Clone PR branch
-      env:
-        PR_BRANCH_URL: https://github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}.git
-      run:  |
-        echo $GITHUB_ACTOR
-        echo $GITHUB_REPOSITORY
-        echo $PR_BRANCH_URL
-        git clone -b ${{ github.head_ref }} $PR_BRANCH_URL test_repo
     # Run "checkout_externals":
     - name: Checkout externals
-      run: test_repo/manage_externals/checkout_externals
+      run: manage_externals/checkout_externals
     # Run python unit and doctests:
     - name: python unit tests
       run: |
+        echo "Is this working?"
         # CAM config doctests:
-        python test_repo/cime_config/cam_config.py
+        python cime_config/cam_config.py
         # CAM config unit tests:
-        python test_repo/test/unit/cam_config_unit_tests.py
+        python test/unit/cam_config_unit_tests.py
         # Registry generator doctests:
-        python -m doctest test_repo/src/data/generate_registry_data.py
+        python -m doctest src/data/generate_registry_data.py
         # Registry generator unit tests:
-        python test_repo/test/unit/test_registry.py
+        python test/unit/test_registry.py
