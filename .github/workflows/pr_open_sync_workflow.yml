@@ -30,12 +30,10 @@ jobs:
     # Clone branch involved in PR:
     - name: Clone PR branch
       env:
-        PR_USER: ${{ GITHUB_ACTOR }}
-        PR_REPO: ${{ GITHUB_REPOSITORY }}
-        PR_BRANCH_URL: https://github.com/${PR_USER}/${PR_REPO}.git
+        PR_BRANCH_URL: https://github.com/${GITHUB_ACTOR}/${GITHUB_REPOSITORY}.git
       run:  |
-        echo $PR_USER
-        echo $PR_REPO
+        echo $GITHUB_ACTOR
+        echo $GITHUB_REPOSITORY
         echo $PR_BRANCH_URL
         git clone -b ${{ github.head_ref }} $PR_BRANCH_URL test_repo
     # Run "checkout_externals":
