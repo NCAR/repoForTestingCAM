@@ -29,9 +29,15 @@ jobs:
         sudo apt-get install libxml2-utils
     # Clone branch involved in PR:
     - name: Clone PR branch
+      env:
+        PR_USER: ${{ GITHUB_ACTOR }}
+        PR_REPO: ${{ GITHUB_REPOSITORY }}
+        PR_BRANCH_URL: https://github.com/${PR_USER}/${PR_REPO}.git
       run:  |
-        echo ${{ github.head_ref }}
-        git clone ${{ github.head_ref }} test_repo
+        echo $PR_USER
+        echo $PR_REPO
+        echo $PR_BRANCH_URL
+        git clone -b ${{ github.head_ref }} $PR_BRANCH_URL test_repo
     # Run "checkout_externals":
     - name: Checkout externals
       run: test_repo/manage_externals/checkout_externals
