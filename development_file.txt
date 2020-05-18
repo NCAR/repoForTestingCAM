@@ -23,3 +23,7 @@ Added a 10th line, to "fix" test issue #24.
 Added an 11th line, to "resolve" test issue #23.
 
 Added a 12th line, to see if "sync" means checks run after every pushed commit to a PR.
+
+Added a 13th line, to see if issue closer triggers on accident.
+
+
