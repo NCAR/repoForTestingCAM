@@ -29,11 +29,10 @@ jobs:
         sudo apt-get install libxml2-utils
     # Run "checkout_externals":
     - name: Checkout externals
-      run: manage_externals/checkout_externals
+      run: manage_externals/checkout_externals --externals Externals_CAM.cfg ccpp-framework
     # Run python unit and doctests:
     - name: python unit tests
       run: |
-        echo "Is this working?"
         # CAM config doctests:
         python cime_config/cam_config.py
         # CAM config unit tests:
@@ -42,3 +41,5 @@ jobs:
         python -m doctest src/data/generate_registry_data.py
         # Registry generator unit tests:
         python test/unit/test_registry.py
+        # Physics variable init (phys_init) generator unit tests:
+        python test/unit/write_init_unit_tests.py
