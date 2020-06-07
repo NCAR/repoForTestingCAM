@@ -354,6 +354,10 @@ class WriteInitTest(unittest.TestCase):
         contain Array variables and a DDT.
         """
 
+        #Force test to fail when using python 3.7:
+        if sys.version_info[0] == 3 and sys.version_info[1] == 7:
+            raise SyntaxError("Python 3.7?  I'd rather not.")
+
         # Setup registry inputs:
         filename = os.path.join(_REG_SAMPLES_DIR, "reg_good_ddt_array.xml")
         out_source_name = "physics_types_ddt_array"
