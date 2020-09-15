@@ -1,4 +1,4 @@
-module physics_inputs_simple
+module physics_inputs_param
 
    implicit none
    private
@@ -15,10 +15,10 @@ CONTAINS
       use physics_data,         only: read_field, find_input_name_idx
       use physics_data,         only: no_exist_idx, init_mark_idx, prot_no_init_idx
       use cam_ccpp_cap,         only: ccpp_physics_suite_variables
-      use phys_vars_init_check_simple, only: phys_var_stdnames, input_var_names
-      use phys_vars_init_check_simple, only: std_name_len
-      use physics_types_simple,        only: theta
-      use physics_types_simple,        only: slp
+      use phys_vars_init_check_param, only: phys_var_stdnames, input_var_names
+      use phys_vars_init_check_param, only: std_name_len
+      use physics_types_param,        only: theta
+      use physics_types_param,        only: slp
 
       ! Dummy arguments
       type(file_desc_t), intent(inout) :: file
@@ -150,4 +150,4 @@ CONTAINS
 
    end subroutine physics_read_data
 
-end module physics_inputs_simple
+end module physics_inputs_param

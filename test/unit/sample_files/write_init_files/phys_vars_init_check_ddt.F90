@@ -1,4 +1,4 @@
-module phys_vars_init_check_simple
+module phys_vars_init_check_ddt
 
    implicit none
    private
@@ -14,14 +14,14 @@ module phys_vars_init_check_simple
 
    !Array storing all physics-related variable standard names:
    character(len=21), public, protected :: phys_var_stdnames(phys_var_num) = (/ &
-      'potential_temperature', &
       'sea_level_pressure   ', &
+      'potential_temperature', &
       'eddy_length_scale    ' /)
 
    !Array storing all registered IC file input names for each variable:
    character(len=12), public, protected :: input_var_names(2, phys_var_num) = reshape((/ &
-      'theta       ', 'pot_temp    ', &
       'slp         ', 'sea_lev_pres', &
+      'theta       ', 'pot_temp    ', &
       'eddy_len    ', '            ' /), (/2, phys_var_num/))
 
    !Logical array to indicate whether or not variable is protected:
@@ -120,4 +120,4 @@ CONTAINS
 
    end function is_initialized
 
-end module phys_vars_init_check_simple
+end module phys_vars_init_check_ddt

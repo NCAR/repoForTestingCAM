@@ -1,4 +1,4 @@
-module phys_vars_init_check_simple
+module phys_vars_init_check_protect
 
    implicit none
    private
@@ -21,12 +21,12 @@ module phys_vars_init_check_simple
    !Array storing all registered IC file input names for each variable:
    character(len=12), public, protected :: input_var_names(2, phys_var_num) = reshape((/ &
       'theta       ', 'pot_temp    ', &
-      'slp         ', 'sea_lev_pres', &
+      'psl         ', 'sea_lev_pres', &
       'eddy_len    ', '            ' /), (/2, phys_var_num/))
 
    !Logical array to indicate whether or not variable is protected:
    logical, public, protected :: protected_vars(phys_var_num) = (/ &
-      .false., &
+      .true., &
       .false., &
       .false. /)
 
@@ -120,4 +120,4 @@ CONTAINS
 
    end function is_initialized
 
-end module phys_vars_init_check_simple
+end module phys_vars_init_check_protect
