@@ -69,6 +69,7 @@ jobs:
     # run CAM source code testing master script:
     - name: source-code testing python script
       env:
+        PR_NUMBER: ${{ github.event.number }}
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: .github/scripts/pr_mod_file_list.py --access_token $ACCESS_TOKEN --base_ref $GITHUB_BASE_REF --head_ref $GITHUB_HEAD_REF 
-   
+      run: .github/scripts/pr_mod_file_list.py --access_token $ACCESS_TOKEN --pr_num $PR_NUMBER
+

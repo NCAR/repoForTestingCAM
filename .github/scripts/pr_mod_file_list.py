@@ -42,11 +42,8 @@ def parse_arguments():
     parser.add_argument('--access_token', metavar='<GITHUB_TOKEN>', action='store', type=str,
                         help="access token used to access GitHub API")
 
-    parser.add_argument('--base_ref', metavar='<GITHUB_BASE_REF>', action='store', type=str,
-                        help="pull request target branch")
-    
-    parser.add_argument('--head_ref', metavar='<GITHUB_HEAD_REF>', action='store', type=str,
-                        help="Pull request source branch")
+    parser.add_argument('--pr_num', metavar='<PR_NUMBER>', action='store', type=int,
+                        help="pull request number")
 
     #Parse Argument inputs
     args = parser.parse_args()
@@ -76,11 +73,9 @@ def _main_prog():
 
     #Add argument values to variables:
     token = args.access_token
-    base_ref = args.base_ref
-    head_ref = args.head_ref
+    pr_num = args.pr_num
 
-    print(base_ref)
-    print(head_ref)
+    print(pr_num)
 
     #++++++++++++++++++++++++++++++++
     #Log-in to github API using token
@@ -95,7 +90,7 @@ def _main_prog():
     #Official CAM repo:
     cam_repo = ghub.get_repo("NCAR/repoForTestingCAM")
 
-    print(list(cam_repo.get_branches()))
+    print(list(cam_repo.get_pulls()))
 
 #############################################
 
