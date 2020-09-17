@@ -3,7 +3,7 @@
 """
 Script name:  pr_mod_file_list.py
 
-Goal:  To generate a list of files modified in the associated 
+Goal:  To generate a list of files modified in the associated
        Github Pull Request (PR), using the PyGithub interface.
 
 Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - September, 2020
@@ -45,9 +45,6 @@ def parse_arguments():
     parser.add_argument('--pr_num', metavar='<PR_NUMBER>', action='store', type=int,
                         help="pull request number")
 
-    parser.add_argument('--pr_files', metavar='<PR_FILES>', action='store', type=str,
-                        help="files modified in pull request")
-
     #Parse Argument inputs
     args = parser.parse_args()
     return args
@@ -77,7 +74,6 @@ def _main_prog():
     #Add argument values to variables:
     token = args.access_token
     pr_num = args.pr_num
-    pr_files = args.pr_files
 
     #++++++++++++++++++++++++++++++++
     #Log-in to github API using token
@@ -107,9 +103,6 @@ def _main_prog():
     for file_obj in file_obj_list:
 
         print(file_obj.filename)
-
-    print("From GITHUB API:")
-    print(pr_files)
 
 #############################################
 
