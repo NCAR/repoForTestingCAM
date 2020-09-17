@@ -45,8 +45,8 @@ def parse_arguments():
     parser.add_argument('--pr_num', metavar='<PR_NUMBER>', action='store', type=int,
                         help="pull request number")
 
-    parser.add_argument('--trigger_sha', metavar='<GITHUB SHA>', action='store', type=str,
-                        help="Commit SHA that triggered the workflow")
+    parser.add_argument('--pr_files', metavar='<PR_FILES>', action='store', type=str,
+                        help="files modified in pull request")
 
     #Parse Argument inputs
     args = parser.parse_args()
@@ -66,7 +66,7 @@ def _main_prog():
     #Begin script
     #++++++++++++
 
-    print("Checking if issue needs to be closed...")
+    print("Generating list of modified files...")
 
     #+++++++++++++++++++++++
     #Read in input arguments
@@ -77,7 +77,7 @@ def _main_prog():
     #Add argument values to variables:
     token = args.access_token
     pr_num = args.pr_num
-    trigger_sha = args.trigger_sha
+    pr_files = args.pr_files
 
     #++++++++++++++++++++++++++++++++
     #Log-in to github API using token
@@ -98,31 +98,18 @@ def _main_prog():
 
     pull_req = cam_repo.get_pull(pr_num)
 
-    #++++++++++++++++++++++++
-    #Extract merge commit SHA
-    #++++++++++++++++++++++++
+    #++++++++++++++++++++++++++++++
+    #Extract list of modified files
+    #++++++++++++++++++++++++++++++
 
-    merge_commit = pull_req.merge_commit_sha
+    file_obj_list = pull_req.get_files()
 
-    print(merge_commit)
-    print(trigger_sha)
+    for file_obj in file_obj_list:
 
-    #+++++++++++++++++++++++++++
-    #Gather output from git diff
-    #+++++++++++++++++++++++++++
+        print(file_obj.filename)
 
-    #Create Git Diff command string:
-    git_diff_cmd = "git diff-tree --no-commit-id --name-only -r {}".format(merge_commit)
-
-    #Split command line string into argument list:
-    diff_arg_list = shlex.split(git_diff_cmd)
-
-    #Run command using subprocess:
-    file_diff_str = subprocess.check_output(diff_arg_list)
-
-    print(file_diff_str)
-
-    print(file_diff_str.split())
+    print("From GITHUB API:")
+    print(pr_files)
 
 #############################################
 
