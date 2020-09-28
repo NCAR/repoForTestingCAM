@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 """
-Script name:  pr_mod_file_list.py
+Script name:  pr_mod_file_tests.py
 
 Goal:  To generate a list of files modified in the associated
-       Github Pull Request (PR), using the PyGithub interface.
+       Github Pull Request (PR), using the PyGithub interface,
+       and then to run tests on those files when appropriate.
 
 Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - September, 2020
 """

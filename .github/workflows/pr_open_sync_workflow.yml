@@ -71,5 +71,5 @@ jobs:
       env:
         PR_NUMBER: ${{ github.event.number }}
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: .github/scripts/pr_mod_file_list.py --access_token $ACCESS_TOKEN --pr_num $PR_NUMBER
+      run: .github/scripts/pr_mod_file_tests.py --access_token $ACCESS_TOKEN --pr_num $PR_NUMBER
 
