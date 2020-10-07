@@ -32,3 +32,5 @@ Added a 15th line, in order to create a new PR needed for testing PyGithub.
 
 Added a 16th line, in order to test error-handling in issue-closing script.
 
+Added a 17th line, in order to test error-handling in issue-closing script again.
+
