@@ -26,4 +26,13 @@ Added a 12th line, to see if "sync" means checks run after every pushed commit t
 
 Added a 13th line, to see if issue closer triggers on accident.
 
+Added a 14th line, so that example PR goes through successfully.
+
+Added a 15th line, in order to create a new PR needed for testing PyGithub.
+
+Added a 16th line, in order to test error-handling in issue-closing script.
+
+Added a 17th line, in order to test error-handling in issue-closing script again.
+
+Added an 18th line, in order to test the "closed issues" project column check in the issue-closing script.
 
