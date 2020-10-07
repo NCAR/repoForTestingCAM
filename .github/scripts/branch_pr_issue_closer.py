@@ -470,7 +470,7 @@ def _main_prog():
             print("Issue #{} has been closed.".format(issue_num))
         else:
             #Extract card id from id dictionary:
-            if issue_num in proj_issue_card_ids[issue_num]:
+            if issue_num in proj_issue_card_ids:
                 card_id = proj_issue_card_ids[issue_num]
             else:
                 #If issue isn't in dictionary, then it means the issue
