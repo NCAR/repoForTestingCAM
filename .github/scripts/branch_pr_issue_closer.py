@@ -292,7 +292,6 @@ def _main_prog():
             except ValueError:
                 #If not, then ignore last letter:
                 try:
-                    #issue_num = int(first_word[1:len(first_word)-1])
                     issue_num = int(first_word[1:-1])
                 except ValueError:
                     #If ignoring the first and last letter doesn't work,
@@ -310,7 +309,7 @@ def _main_prog():
 
     #If no issue numbers are present after any of the keywords, then exit script:
     if not close_issues and not close_pulls:
-        endmsg = "No issue or PR numbers were found in the merged PR message.  Thus there is nothing to close."
+        endmsg = "No open issue or PR numbers were found in the merged PR message.  Thus there is nothing to close."
         end_script(endmsg)
 
     #Print list of referenced issues to screen:
@@ -351,8 +350,8 @@ def _main_prog():
                     #Extract card content:
                     card_content = card.get_content()
 
-                    #Next, check if card number matches merged PR number:
-                    if card_content.number == pr_num:
+                    #Next, check if card number exists and matches merged PR number:
+                    if card_content is not None and card_content.number == pr_num:
                         #If so, and if Project name is None, then set string:
                         if proj_mod_name is None:
                             proj_mod_name = project.name
@@ -396,7 +395,7 @@ def _main_prog():
                     card_content = card.get_content()
 
                     #Next, check if card issue number matches any of the "close" issue numbers from the PR:
-                    if card_content.number in close_issues:
+                    if card_content is not None and card_content.number in close_issues:
 
                         #If so, then check if issue number is already in proj_issues_count:
                         if card_content.number in proj_issues_count:
