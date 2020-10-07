@@ -34,3 +34,5 @@ Added a 16th line, in order to test error-handling in issue-closing script.
 
 Added a 17th line, in order to test error-handling in issue-closing script again.
 
+Added an 18th line, in order to test the "closed issues" project column check in the issue-closing script.
+
