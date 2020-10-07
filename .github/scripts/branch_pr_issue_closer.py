@@ -448,7 +448,20 @@ def _main_prog():
             print("Issue #{} has been closed.".format(issue_num))
         else:
             #Extract card id from id dictionary:
-            card_id = proj_issue_card_ids[issue_num]
+            try:
+                card_id = proj_issue_card_ids[issue_num]
+            except KeyError:
+                #If there is a key error, then it means the issue
+                #number was never found in the "To do" column, which
+                #likely means the user either referenced the wrong
+                #issue number, or the issue was never assigned to the
+                #project.  Warn user and then exit with a non-zero
+                #error so that the Action fails:
+                endmsg = 'Issue #{} was not found in the "To Do" Column of the {} project.\n' \
+                         'Either the wrong issue number was referenced, or the issue was never ' \
+                         'attached to the project.'.format(issue_num, proj_mod_name)
+                print(endmsg)
+                sys.exit(1)
 
             #Then move the card on the relevant project page to the "closed issues" column:
             project_card_move(token.strip(), column_target_id, card_id)
