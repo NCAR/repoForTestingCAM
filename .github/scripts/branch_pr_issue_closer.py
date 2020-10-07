@@ -376,6 +376,9 @@ def _main_prog():
     #Initalize issue id to project card id dictionary:
     proj_issue_card_ids = dict()
 
+    #Initialize list for issues that have already been closed:
+    already_closed_issues = list()
+
     #Loop over all repo projects:
     for project in projects:
 
@@ -432,8 +435,13 @@ def _main_prog():
                         #If issue number matches, then it likely means the same
                         #commit message or issue number reference was used in multiple
                         #pushes to the same repo (e.g., for a PR and then a tag). Thus
-                        #the issue should be removed from the "proj_issues_count" dict:
-                        proj_issues_count.pop(closed_card_content.number)
+                        #the issue should be marked as "already closed":
+                        already_closed_issues.append(closed_card_content.number)
+
+    #Remove all issues from issue dictionary that are "already closed":
+    for already_closed_issue_num in already_closed_issues:
+        if already_closed_issue_num in proj_issues_count:
+            proj_issues_count.pop(already_closed_issue_num)
 
     #If no project cards are found that match the issue, then exit script:
     if not proj_issues_count:
