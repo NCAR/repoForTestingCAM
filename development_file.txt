@@ -30,3 +30,5 @@ Added a 14th line, so that example PR goes through successfully.
 
 Added a 15th line, in order to create a new PR needed for testing PyGithub.
 
+Added a 16th line, in order to test error-handling in issue-closing script.
+
