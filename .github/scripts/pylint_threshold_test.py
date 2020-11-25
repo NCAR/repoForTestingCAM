@@ -39,7 +39,8 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='Generate list of all files modified by pull request.')
 
     #Add input arguments to be parsed:
-    parser.add_argument('--python_files', metavar='<comma-separated list>', action='store', type=str,
+    parser.add_argument('--python_files', metavar='<comma-separated list>',
+                        nargs='+', action='store', type=str,
                         help="list of python files to test")
 
     parser.add_argument('--rcfile', metavar='<pylintrc file path>', action='store', type=str,
@@ -64,22 +65,26 @@ def pylint_check(pyfile_list, rcfile, threshold=10.0):
     threshold.
     """
 
-    #Check if pfylie_list is empty.  If so then exipt
+    #Check if pfylie_list is empty.  If so then exit
     #script, as their are no python files to test:
     if not pyfile_list:
         return
 
-    #create rcfile option string:
+    #Creat empty lists to store pylint output:
+    lint_scores = list()
+    lint_msgs = list()
+
+    #Create rcfile option string:
     rcstr = '--rcfile={}'.format(rcfile)
-
-    #Create IO object to receive pylint messages:
-    pylint_output = io.StringIO()
-
-    #Create pylint reporter object using new IO object:
-    pylint_report = TextReporter(pylint_output)
 
     #If files exist, then loop through the list:
     for pyfile in pyfile_list:
+
+        #Create IO object to receive pylint messages:
+        pylint_output = io.StringIO()
+
+        #Create pylint reporter object using new IO object:
+        pylint_report = TextReporter(pylint_output)
 
         #Run linter:
         lint_results = lint.Run([rcstr, '--exit-zero', pyfile],
@@ -94,21 +99,20 @@ def pylint_check(pyfile_list, rcfile, threshold=10.0):
         #Close IO object:
         pylint_output.close()
 
-        print("This is the pylint score:")
-        print(lint_score)
-        print("This is the pylint message:")
-        print(lint_msg)
+        #Add file score and message to list if
+        #below pylint threshold:
+        if lint_score < threshold:
+            lint_scores.append(lint_score)
+            lint_msgs.append(lint_msg)
 
-        #CONTINUE HERE!!!!  SPECIFICALLY, CREATE
-        #NEW LISTS THAT CONTAIN THE RESULTS
-        #FOR MULTIPLE FILES.  IF THAT WORKS,
-        #THEN MODIFY THE GITHUB ACTION MASTER
-        #SCRIPT TO PASS IN ONLY PYTHON FILES,
-        #AND TO RECEIVE THESE GENERATED PYLINT
-        #LISTS.  IF THE LISTS ARE NON-EMPTY,
-        #THEN PRINT THE RESULT AND RAISE AN
-        #EXCEPTION SO THAT THE ACTION "FAILS".
-        #GOOD LUCK!!!!!!!!!!!!
+    for idx, score in enumerate(lint_scores):
+        print("File #{}".format(idx))
+        print("Pylint score = {}".format(score))
+        print("Pylint message:")
+        print(lint_msgs[idx])
+
+    #Return plyint lists:
+    return lint_score, lint_msgs
 
 ####################
 #Command-line script
@@ -125,18 +129,16 @@ def _pylint_check_commandline():
     args = parse_arguments()
 
     #Add argument values to variables:
-    python_file_str = args.python_files
+    python_files = args.python_files
     pylintrc = args.rcfile
     pylint_level = args.pylint_level
 
-    #Convert string into list of python files:
-    python_files = python_file_str.split()
-
     #run pylint threshold check:
     if pylint_level:
-        pylint_check(python_files, pylintrc, threshold=pylint_level)
+        scores, msgs = pylint_check(python_files, pylintrc,
+                                    threshold=pylint_level)
     else:
-        pylint_check(python_files, pylintrc)
+        scores, msgs = pylint_check(python_files, pylintrc)
 
 #############################################
 
