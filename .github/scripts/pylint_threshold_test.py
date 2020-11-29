@@ -65,14 +65,13 @@ def pylint_check(pyfile_list, rcfile, threshold=10.0):
     threshold.
     """
 
-    #Check if pfylie_list is empty.  If so then exit
+    #Creat empty list to store pylint output:
+    lint_msgs = list()
+
+    #Check if pyfile_list is empty.  If so then exit
     #script, as their are no python files to test:
     if not pyfile_list:
-        return
-
-    #Creat empty lists to store pylint output:
-    lint_scores = list()
-    lint_msgs = list()
+        return lint_msgs
 
     #Create rcfile option string:
     rcstr = '--rcfile={}'.format(rcfile)
@@ -102,17 +101,10 @@ def pylint_check(pyfile_list, rcfile, threshold=10.0):
         #Add file score and message to list if
         #below pylint threshold:
         if lint_score < threshold:
-            lint_scores.append(lint_score)
             lint_msgs.append(lint_msg)
 
-    for idx, score in enumerate(lint_scores):
-        print("File #{}".format(idx))
-        print("Pylint score = {}".format(score))
-        print("Pylint message:")
-        print(lint_msgs[idx])
-
     #Return plyint lists:
-    return lint_score, lint_msgs
+    return lint_msgs
 
 ####################
 #Command-line script
@@ -122,7 +114,9 @@ def _pylint_check_commandline():
 
     """
     Runs the "pylint_check" test using
-    command line inputs.
+    command line inputs. This will
+    print the test results to stdout
+    (usually the screen).
     """
 
     #Read in command-line arguments:
@@ -135,10 +129,18 @@ def _pylint_check_commandline():
 
     #run pylint threshold check:
     if pylint_level:
-        scores, msgs = pylint_check(python_files, pylintrc,
-                                    threshold=pylint_level)
+         msgs = pylint_check(python_files, pylintrc,
+                             threshold=pylint_level)
     else:
-        scores, msgs = pylint_check(python_files, pylintrc)
+         msgs = pylint_check(python_files, pylintrc)
+
+    #print pylint info to screen:
+    if msgs:
+        #If test(s) failed, then print pylint message(s):
+        for msg in msgs:
+           print(msg)
+    else:
+        print("All files scored above pylint threshold")
 
 #############################################
 

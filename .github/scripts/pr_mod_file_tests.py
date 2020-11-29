@@ -23,6 +23,15 @@ import argparse
 from stat import S_ISREG
 from github import Github
 
+#Local scripts:
+from pylint_threshold_test import pylint_check
+
+#################
+
+class PrModTestFail(ValueError):
+    """Class used to handle file test failures
+    (e.g., log user failures without backtrace)"""
+
 #################
 #HELPER FUNCTIONS
 #################
@@ -92,6 +101,9 @@ def parse_arguments():
     parser.add_argument('--pr_num', metavar='<PR_NUMBER>', action='store', type=int,
                         help="pull request number")
 
+    parser.add_argument('--pylint_level', metavar='<number>', action='store', type=float,
+                        required=False, help="pylint score that file(s) must exceed")
+
     #Parse Argument inputs
     args = parser.parse_args()
     return args
@@ -121,6 +133,7 @@ def _main_prog():
     #Add argument values to variables:
     token = args.access_token
     pr_num = args.pr_num
+    pylev = args.pylint_level
 
     #++++++++++++++++++++++++++++++++
     #Log-in to github API using token
@@ -153,20 +166,57 @@ def _main_prog():
 
     for file_obj in file_obj_list:
 
-        print(file_obj.filename)
         #Check if it is a python file:
         if _file_is_python(file_obj.filename):
             #If so, then add to python list:
             pyfiles.append(file_obj.filename)
 
-        #CONTINUE HERE!!!  NEED TO TEST
-        #"_file_is_python" function!  IF it
-        #works then bring in "pylint" script.
-        #IF that works, THEN use pylint lists
-        #to either generate failue or a successful
-        #system exit!
-        #GOOD LUCK!!!!!!!!!!!!!!
+    #++++++++++++++++++++++++++++++++++++++++++++
+    #Check if any python files are being modified:
+    #++++++++++++++++++++++++++++++++++++++++++++
+    if pyfiles:
 
+        #Notify users of python files that will
+        #be tested:
+        print("The following modified python files will be tested:")
+        for pyfile in pyfiles:
+            print(pyfile)
+
+        #+++++++++++++++++++++++++
+        #Run pylint threshold test
+        #+++++++++++++++++++++++++
+
+        lint_msgs = pylint_check(pyfiles,
+                                 threshold=pylev)
+
+        #++++++++++++++++++
+        #Check test results
+        #++++++++++++++++++
+
+        #If pylint check lists are non-empty, then
+        #a test has failed, and an exception should
+        #be raised with the relevant pytlint info:
+        if lint_msgs:
+            #Print pylint results for failed tests to screen:
+            print("+++++++++++PYLINT FAILURE MESSAGES+++++++++++++")
+            for lmsg in lint_msgs:
+                print(lmsg)
+            print("+++++++++++++++++++++++++++++++++++++++++++++++")
+
+            #Raise test failure exception:
+            fail_msg = "One or more files are below allowed pylint " \
+                       "score of {}.\nPlease see pylint message(s) " \
+                       "above for possible fixes."
+            raise PrModTestFail(fail_msg)
+        else:
+            #All tests have passed, so exit normally:
+            print("All pylint tests passed!")
+            sys.exit(0)
+
+    #If no python files exist in PR, then exit script:
+    else:
+        print("No python files present in PR, so there is nothing to test.")
+        sys.exit(0)
 
 #############################################
 
