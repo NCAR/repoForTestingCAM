@@ -230,12 +230,12 @@ class WriteInitTest(unittest.TestCase):
         self.assertTrue(os.path.exists(phys_input_out), msg=amsg)
 
         # For each output file, make sure it matches input file
-        #amsg = "{} does not match {}".format(check_init_in, check_init_out)
-        #self.assertTrue(filecmp.cmp(check_init_in, check_init_out, shallow=False), \
-        #                msg=amsg)
-        #amsg = "{} does not match {}".format(phys_input_in, phys_input_out)
-        #self.assertTrue(filecmp.cmp(phys_input_in, phys_input_out, shallow=False), \
-        #                msg=amsg)
+        amsg = "{} does not match {}".format(check_init_in, check_init_out)
+        self.assertTrue(filecmp.cmp(check_init_in, check_init_out, shallow=False), \
+                        msg=amsg)
+        amsg = "{} does not match {}".format(phys_input_in, phys_input_out)
+        self.assertTrue(filecmp.cmp(phys_input_in, phys_input_out, shallow=False), \
+                        msg=amsg)
 
     def test_protected_reg_write_init(self):
         """
@@ -329,8 +329,6 @@ class WriteInitTest(unittest.TestCase):
         host_files = [model_host, out_meta]
 
         # Setup write_init_files inputs:
-        check_init_in = os.path.join(_INIT_SAMPLES_DIR, "phys_vars_init_check_simple.F90")
-        phys_input_in = os.path.join(_INIT_SAMPLES_DIR, "physics_inputs_simple.F90")
         check_init_out = os.path.join(_TMP_DIR, "phys_vars_init_check_simple.F90")
         phys_input_out = os.path.join(_TMP_DIR, "physics_inputs_simple.F90")
 
@@ -413,8 +411,6 @@ class WriteInitTest(unittest.TestCase):
         host_files = [model_host, out_meta]
 
         # Setup write_init_files inputs:
-        check_init_in = os.path.join(_INIT_SAMPLES_DIR, "phys_vars_init_check_mf.F90")
-        phys_input_in = os.path.join(_INIT_SAMPLES_DIR, "physics_inputs_mf.F90")
         check_init_out = os.path.join(_TMP_DIR, "phys_vars_init_check_two.F90")
         phys_input_out = os.path.join(_TMP_DIR, "physics_inputs_two.F90")
 
@@ -436,10 +432,10 @@ class WriteInitTest(unittest.TestCase):
 
         # Run test
         with self.assertRaises(ValueError) as verr:
-            retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
-                                                     cap_datafile, logger,
-                                                     phys_check_filename="phys_vars_init_check_two.F90",
-                                                     phys_input_filename="physics_inputs_two.F90")
+            _ = write_init.write_init_files(files, _TMP_DIR, 3,
+                                            cap_datafile, logger,
+                                            phys_check_filename="phys_vars_init_check_two.F90",
+                                            phys_input_filename="physics_inputs_two.F90")
 
         # Check exception message
         emsg = "Multiple registered variables have the" \
@@ -447,6 +443,7 @@ class WriteInitTest(unittest.TestCase):
                "There can only be one registered variable per" \
                " standard name.\nThe meta files containing the" \
                " conflicting variables are:\nref_two\nphysics_types_mf"
+        self.assertEqual(emsg, str(verr.exception))
 
         # Make sure no output file was created:
         amsg = "{} should not exist".format(check_init_out)
@@ -544,8 +541,6 @@ class WriteInitTest(unittest.TestCase):
         host_files = [model_host, out_meta]
 
         # Setup write_init_files inputs:
-        check_init_in = os.path.join(_INIT_SAMPLES_DIR, "phys_vars_init_check_simple.F90")
-        phys_input_in = os.path.join(_INIT_SAMPLES_DIR, "physics_inputs_simple.F90")
         check_init_out = os.path.join(_TMP_DIR, "phys_vars_init_check_scalar.F90")
         phys_input_out = os.path.join(_TMP_DIR, "physics_inputs_scalar.F90")
 
@@ -567,10 +562,10 @@ class WriteInitTest(unittest.TestCase):
 
         # Run test
         with self.assertRaises(ValueError) as verr:
-            retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
-                                                     cap_datafile, logger,
-                                                     phys_check_filename="phys_vars_init_check_scalar.F90",
-                                                     phys_input_filename="physics_inputs_scalar.F90")
+            _ = write_init.write_init_files(files, _TMP_DIR, 3,
+                                            cap_datafile, logger,
+                                            phys_check_filename="phys_vars_init_check_scalar.F90",
+                                            phys_input_filename="physics_inputs_scalar.F90")
 
         # Check exception message
         emsg = "Variable 'sea_level_pressure' needs at least one dimension in order" \
@@ -583,7 +578,7 @@ class WriteInitTest(unittest.TestCase):
         amsg = "{} should not exist".format(phys_input_out)
         self.assertFalse(os.path.exists(phys_input_out), msg=amsg)
 
-    def test_4D_var_write_init(self):
+    def test_4d_var_write_init(self):
         """
         Test that the 'write_init_files' function
         correctly determines that a variable that
@@ -608,8 +603,6 @@ class WriteInitTest(unittest.TestCase):
         host_files = [model_host, out_meta]
 
         # Setup write_init_files inputs:
-        check_init_in = os.path.join(_INIT_SAMPLES_DIR, "phys_vars_init_check_simple.F90")
-        phys_input_in = os.path.join(_INIT_SAMPLES_DIR, "physics_inputs_simple.F90")
         check_init_out = os.path.join(_TMP_DIR, "phys_vars_init_check_4D.F90")
         phys_input_out = os.path.join(_TMP_DIR, "physics_inputs_4D.F90")
 
@@ -631,10 +624,10 @@ class WriteInitTest(unittest.TestCase):
 
         # Run test
         with self.assertRaises(ValueError) as verr:
-            retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
-                                                     cap_datafile, logger,
-                                                     phys_check_filename="phys_vars_init_check_4D.F90",
-                                                     phys_input_filename="physics_inputs_4D.F90")
+            _ = write_init.write_init_files(files, _TMP_DIR, 3,
+                                            cap_datafile, logger,
+                                            phys_check_filename="phys_vars_init_check_4D.F90",
+                                            phys_input_filename="physics_inputs_4D.F90")
 
         # Check exception message
         emsg = "variable 'sea_level_pressure' has more than two dimensions, but" \
@@ -673,8 +666,6 @@ class WriteInitTest(unittest.TestCase):
         host_files = [model_host, out_meta]
 
         # Setup write_init_files inputs:
-        check_init_in = os.path.join(_INIT_SAMPLES_DIR, "phys_vars_init_check_simple.F90")
-        phys_input_in = os.path.join(_INIT_SAMPLES_DIR, "physics_inputs_simple.F90")
         check_init_out = os.path.join(_TMP_DIR, "phys_vars_init_check_simple.F90")
         phys_input_out = os.path.join(_TMP_DIR, "physics_inputs_simple.F90")
 
