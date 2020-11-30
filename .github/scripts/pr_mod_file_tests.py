@@ -64,18 +64,25 @@ def _file_is_python(filename):
             #open the file and look for a shabang
             #that contains the word "python".
             with open(filename, "r") as mod_file:
-                #Read first line of file:
-                first_line = mod_file.readline()
+                #Loop over lines in file:
+                for line in mod_file:
 
-                #Check that first line is a shabang:
-                if first_line[0:1] == '#!':
-                    #If so, then check that the word
-                    #"python" is also present:
-                    if first_line.find("python") != -1:
-                        #If the word exists, then assume
-                        #it is a python file:
-                        is_python = True
+                    #Ignore blank lines:
+                    if line.strip():
 
+                        #Check that first non-blank
+                        #line is a shabang:
+                        if line[0:1] == '#!':
+                            #If so, then check that the word
+                            #"python" is also present:
+                            if line.find("python") != -1:
+                                #If the word exists, then assume
+                                #it is a python file:
+                                is_python = True
+
+                        #Exit loop, as only the first non-blank
+                        #line should be examined:
+                        break
 
     #Return file type result:
     return is_python
