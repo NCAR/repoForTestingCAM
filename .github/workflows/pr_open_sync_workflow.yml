@@ -65,11 +65,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip  # Install latest version of PIP
-        pip install PyGithub                 # Install PyGithub pythong package
+        pip install PyGithub                 # Install PyGithub python package
+        pip install pylint                   # Insteall Pylint python package
     # run CAM source code testing master script:
     - name: source-code testing python script
       env:
         PR_NUMBER: ${{ github.event.number }}
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: .github/scripts/pr_mod_file_list.py --access_token $ACCESS_TOKEN --pr_num $PR_NUMBER
+      run: .github/scripts/pr_mod_file_tests.py --access_token $ACCESS_TOKEN --pr_num $PR_NUMBER --rcfile test/.pylintrc --pylint_level 9.5
 
