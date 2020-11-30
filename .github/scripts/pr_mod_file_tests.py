@@ -101,6 +101,9 @@ def parse_arguments():
     parser.add_argument('--pr_num', metavar='<PR_NUMBER>', action='store', type=int,
                         help="pull request number")
 
+    parser.add_argument('--rcfile', metavar='<pylintrc file path>', action='store', type=str,
+                       help="location of pylintrc file (full path)")
+
     parser.add_argument('--pylint_level', metavar='<number>', action='store', type=float,
                         required=False, help="pylint score that file(s) must exceed")
 
@@ -133,6 +136,7 @@ def _main_prog():
     #Add argument values to variables:
     token = args.access_token
     pr_num = args.pr_num
+    rcfile = args.rcfile
     pylev = args.pylint_level
 
     #++++++++++++++++++++++++++++++++
@@ -191,7 +195,7 @@ def _main_prog():
         #Run pylint threshold test
         #+++++++++++++++++++++++++
 
-        lint_msgs = pylint_check(pyfiles,
+        lint_msgs = pylint_check(pyfiles, rcfile,
                                  threshold=pylev)
 
         #++++++++++++++++++
