@@ -129,16 +129,16 @@ def _pylint_check_commandline():
 
     #run pylint threshold check:
     if pylint_level:
-         msgs = pylint_check(python_files, pylintrc,
-                             threshold=pylint_level)
+        msgs = pylint_check(python_files, pylintrc,
+                            threshold=pylint_level)
     else:
-         msgs = pylint_check(python_files, pylintrc)
+        msgs = pylint_check(python_files, pylintrc)
 
     #print pylint info to screen:
     if msgs:
         #If test(s) failed, then print pylint message(s):
         for msg in msgs:
-           print(msg)
+            print(msg)
     else:
         print("All files scored above pylint threshold")
 
@@ -147,4 +147,3 @@ def _pylint_check_commandline():
 #Run main script using provided command line arguments:
 if __name__ == "__main__":
     _pylint_check_commandline()
-

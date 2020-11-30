@@ -39,12 +39,12 @@ else:
 
 #Check for all necessary directories:
 if not os.path.exists(__CCPP_DIR):
-    emsg = "Cannot find CCPP framework directory where 'ccpp_capgen.py' should be located."
-    raise ImportError(emsg)
+    EMSG = "Cannot find CCPP framework directory where 'ccpp_capgen.py' should be located."
+    raise ImportError(EMSG)
 
 if not os.path.exists(__REGISTRY_DIR):
-    emsg = "Cannot find registry directory where 'write_init_files.py' should be located."
-    raise ImportError(emsg)
+    EMSG = "Cannot find registry directory where 'write_init_files.py' should be located."
+    raise ImportError(EMSG)
 
 if not os.path.exists(_REG_SAMPLES_DIR):
     raise ImportError("Cannot find sample files directory")
@@ -136,7 +136,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _ , files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -204,7 +204,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -272,7 +272,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -341,7 +341,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -425,7 +425,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -491,7 +491,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -556,7 +556,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -620,7 +620,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -685,7 +685,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -765,7 +765,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -833,7 +833,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -901,7 +901,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -969,7 +969,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
@@ -1037,7 +1037,7 @@ class WriteInitTest(unittest.TestCase):
         remove_files([out_source, out_meta, cap_datafile, check_init_out, phys_input_out])
 
         # Generate registry files:
-        retcode, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
                                       _SRC_MOD_DIR, _CAM_ROOT,
                                       loglevel=logging.ERROR,
                                       error_on_no_validate=True)
