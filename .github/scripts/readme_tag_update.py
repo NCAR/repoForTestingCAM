@@ -124,7 +124,7 @@ def _main_prog():
     #If no tag matches, then exit script
     #+++++++++++++++++++++++++++++++++++
 
-    if tag_name:
+    if not tag_name:
         endmsg = "No tag was created by this push, so there is nothing to do."
         end_script(endmsg)
 
@@ -132,6 +132,7 @@ def _main_prog():
     #Upate README file on master branch
     #++++++++++++++++++++++++++++++++++
 
+    print("Script found tag name of '{}'".format(tag_name))
     #CONTINUE HERE!!!!!!!!!!!!!!
 
     #++++++++++
