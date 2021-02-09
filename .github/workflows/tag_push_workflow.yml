@@ -1,21 +1,15 @@
-name: Pushed branch commit workflow
+name: Pushed tag workflow
 
 on:
-  #For some reason GitHub does not allow secrets
-  #when a PR from a fork is closeed.  Thus instead
-  #the workflow must activate whenever a commit
-  #is pushed to the repo.  Theoretically this should
-  #behave the same way as if triggered from a pull
-  #request, just as long as no user ever pushes
-  #directly to the repo.
   push:
-    branches:
-      - '**'  #Trigger workflow on push to any branch or branch heirarchy.
+    tags:
+      - '**'  #Trigger workflow on push of any tag or tag heirarchy.
+
 
 jobs:
-  #This job is designed to close any issues or pull requests specified
-  #in the body of a pull request merged into a non-default branch.
-  issue_closer:
+  #This job will update the README file on the default branch
+  #if the push created a new development branch tag.
+  update_readme_dev_tag:
     runs-on: ubuntu-latest
     steps:
     # acquire github action routines
@@ -38,6 +32,8 @@ jobs:
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       run: |
-        #Issue-closing script:
-        .github/scripts/branch_pr_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
+        #README tag-updating script:
+        .github/scripts/readme_tag_update.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
+        #Debugging output:
+        echo $GITHUB_REF
 
