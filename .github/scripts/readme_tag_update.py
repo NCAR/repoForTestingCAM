@@ -15,10 +15,10 @@ Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - February, 2020
 #Import needed modules
 #+++++++++++++++++++++
 
-import re
+#import re
 import sys
-import subprocess
-import shlex
+#import subprocess
+#import shlex
 import argparse
 
 from github import Github
@@ -118,7 +118,13 @@ def _main_prog():
 
     for cam_tag in cam_tags:
         if cam_tag.commit.sha == trigger_sha:
+            #If matching tag is found, then extract
+            #tag name and tag commit message:
             tag_name = cam_tag.name
+            tag_commit = cam_repo.get_commit(trigger_sha)
+
+            #End tag loop:
+            break 
 
     #+++++++++++++++++++++++++++++++++++
     #If no tag matches, then exit script
@@ -127,13 +133,23 @@ def _main_prog():
     if not tag_name:
         endmsg = "No tag was created by this push, so there is nothing to do."
         end_script(endmsg)
+    else:
+        print("Script found tag name of '{}'".format(tag_name))
+
+    #+++++++++++++++++++++++++++++++++++++++++++++++++
+    #Determine which branch contains the tagged commit
+    #+++++++++++++++++++++++++++++++++++++++++++++++++
+
+    #Extract tag commit message:
+    commit_msg = tag_commit.commit.message
+
+    #CONTINUE HERE!!!!!!!!!!!!!!!
 
     #++++++++++++++++++++++++++++++++++
     #Upate README file on master branch
     #++++++++++++++++++++++++++++++++++
 
     print("Script found tag name of '{}'".format(tag_name))
-    #CONTINUE HERE!!!!!!!!!!!!!!
 
     #++++++++++
     #End script
