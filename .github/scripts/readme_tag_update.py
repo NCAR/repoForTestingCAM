@@ -124,7 +124,7 @@ def _main_prog():
             tag_commit = cam_repo.get_commit(trigger_sha)
 
             #End tag loop:
-            break 
+            break
 
     #+++++++++++++++++++++++++++++++++++
     #If no tag matches, then exit script
@@ -144,6 +144,11 @@ def _main_prog():
     commit_msg = tag_commit.commit.message
 
     #CONTINUE HERE!!!!!!!!!!!!!!!
+
+    #IMPLEMENT THE SAME PR NUMBER EXTRACTION AS IS DONE IN THE ISSUE-CLOSING SCRIPT.
+    #THEN USE THAT PR TO CHECK IF THE RECEIVING BRANCH WAS THE DEVELOPMENT BRANCH.
+    #IF SO THEN BEGIN README MODIFICATIONS.  OTHERWISE EXIT SCRIPT!
+    #GOOD LUCK!!!!
 
     #++++++++++++++++++++++++++++++++++
     #Upate README file on master branch
