@@ -32,10 +32,19 @@ jobs:
       run: |
         python -m pip install --upgrade pip  # Install latest version of PIP
         pip install PyGithub                 # Install PyGithub pythong package
-    # run CAM issue-closing script
-    - name: python action scripts
+    # run CAM issue-closing and README tag update scripts
+    - name: python issue and README tag scripts
       if: github.repository == 'NCAR/repoForTestingCAM' #Only run on main repo
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         TRIGGER_SHA: ${{ github.sha }}
-      run: .github/scripts/branch_pr_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $TRIGGER_SHA
+      run: |
+        #Issue-closing script:
+        .github/scripts/branch_pr_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $TRIGGER_SHA
+        #README tag-updating script:
+        .github/scripts/readme_tag_update.py --access_token $ACCESS_TOKEN --trigger_sha $TRIGGER_SHA
+        #Debugging output:
+        echo $TRIGGER_SHA
+        echo $GITHUB_SHA
+        echo $GITHUB_REF
+
