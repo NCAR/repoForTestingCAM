@@ -5,7 +5,7 @@ Script name:  readme_tag_update.py
 
 Goal:  To determine if a recent push to the "development" branch
        was for a tag, and if so, to update the README.md file on
-       the master branch to display the new development tag.
+       the default branch to display the new development tag.
 
 
 Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - February, 2020
@@ -203,20 +203,11 @@ def _main_prog():
         endmsg = "Tagged PR merged into non-development branch. No further action will thus be taken."
         end_script(endmsg)
 
-    #+++++++++++++++++++++++++++++++++++++++++++++++++
-    #Determine which branch contains the tagged commit
-    #+++++++++++++++++++++++++++++++++++++++++++++++++
+    #+++++++++++++++++++++++++++++++++++
+    #Upate README file on default branch
+    #+++++++++++++++++++++++++++++++++++
 
-    #CONTINUE HERE!!!!!!!!!!!!!!!
-
-    #IMPLEMENT THE SAME PR NUMBER EXTRACTION AS IS DONE IN THE ISSUE-CLOSING SCRIPT.
-    #THEN USE THAT PR TO CHECK IF THE RECEIVING BRANCH WAS THE DEVELOPMENT BRANCH.
-    #IF SO THEN BEGIN README MODIFICATIONS.  OTHERWISE EXIT SCRIPT!
-    #GOOD LUCK!!!!
-
-    #++++++++++++++++++++++++++++++++++
-    #Upate README file on master branch
-    #++++++++++++++++++++++++++++++++++
+    #CONTINUE HERE!!!!!!
 
     #++++++++++
     #End script
