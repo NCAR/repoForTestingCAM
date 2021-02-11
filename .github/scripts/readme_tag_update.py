@@ -168,12 +168,12 @@ def _main_prog():
             pr_num = int(first_word[1:]) #ignore "#" symbol
         except ValueError:
             #If the conversion fails, then this is likely not a real PR merge, so end the script:
-            endmsg = "No Pull Request number was found in the tagged commit message. ".
+            endmsg = "No Pull Request number was found in the tagged commit message. "
             endmsg += "This is likely a special commit, so the script will not modify README."
             end_script(endmsg)
 
     else:
-        endmsg = "No Pull Request merges were found in the tagged commit message. ".
+        endmsg = "No Pull Request merges were found in the tagged commit message. "
         endmsg += "This is likely a special commit, so the script will not modify README."
         end_script(endmsg)
 
