@@ -199,7 +199,7 @@ def _main_prog():
     print("Script found branch name of '{}'".format(merged_branch))
 
     #If PR is not to the development branch, then exit script:
-    if merged_branch == "fake_development":
+    if merged_branch != "fake_development":
         endmsg = "Tagged PR merged into non-development branch. No further action will thus be taken."
         end_script(endmsg)
 
