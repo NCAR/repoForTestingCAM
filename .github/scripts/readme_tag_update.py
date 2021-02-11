@@ -15,7 +15,7 @@ Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - February, 2020
 #Import needed modules
 #+++++++++++++++++++++
 
-#import re
+import re
 import sys
 #import subprocess
 #import shlex
@@ -136,12 +136,76 @@ def _main_prog():
     else:
         print("Script found tag name of '{}'".format(tag_name))
 
+    #+++++++++++++++++++++++++++++++
+    #Search for associated PR number
+    #+++++++++++++++++++++++++++++++
+
+    #Extract tag commit message:
+    commit_message = tag_commit.commit.message
+
+    #Compile Pull Request merge text expression:
+    pr_merge_pattern = re.compile(r'Merge pull request ')
+
+    #Search for merge text, starting at beginning of message:
+    commit_msg_match = pr_merge_pattern.match(commit_message)
+
+    #Check if match exists:
+    if commit_msg_match is not None:
+        #If it does then pull out text immediately after message:
+        post_msg_text = commit_message[commit_msg_match.end():]
+
+        #Split text into individual words:
+        post_msg_word_list = post_msg_text.split()
+
+        #Extract first word:
+        first_word = post_msg_word_list[0]
+
+        #Print merged pr number to screen:
+        print("Merged PR associated with tag: {}".format(first_word))
+
+        try:
+            #Try assuming the word is just a number:
+            pr_num = int(first_word[1:]) #ignore "#" symbol
+        except ValueError:
+            #If the conversion fails, then this is likely not a real PR merge, so end the script:
+            endmsg = "No Pull Request number was found in the tagged commit message. ".
+            endmsg += "This is likely a special commit, so the script will not modify README."
+            end_script(endmsg)
+
+    else:
+        endmsg = "No Pull Request merges were found in the tagged commit message. ".
+        endmsg += "This is likely a special commit, so the script will not modify README."
+        end_script(endmsg)
+
+    #+++++++++++++++++++++++++++++++++++++
+    #Check if tagged PR was in fact merged
+    #+++++++++++++++++++++++++++++++++++++
+
+    #Extract pull request info:
+    merged_pull = cam_repo.get_pull(pr_num)
+
+    #If pull request has not been merged, then exit script:
+    if not merged_pull.merged:
+        endmsg = "Pull request in commit message was not actually merged, so the script will not close anything."
+        end_script(endmsg)
+
+    #++++++++++++++++++++++++++++++++++++++++++
+    #Check if PR was for the development branch
+    #++++++++++++++++++++++++++++++++++++++++++
+
+    #Extract merged branch from latest Pull request:
+    merged_branch = merged_pull.base.ref
+
+    print("Script found branch name of '{}'".format(merged_branch))
+
+    #If PR is not to the development branch, then exit script:
+    if merged_branch == "fake_development":
+        endmsg = "Tagged PR merged into non-development branch. No further action will thus be taken."
+        end_script(endmsg)
+
     #+++++++++++++++++++++++++++++++++++++++++++++++++
     #Determine which branch contains the tagged commit
     #+++++++++++++++++++++++++++++++++++++++++++++++++
-
-    #Extract tag commit message:
-    commit_msg = tag_commit.commit.message
 
     #CONTINUE HERE!!!!!!!!!!!!!!!
 
@@ -153,8 +217,6 @@ def _main_prog():
     #++++++++++++++++++++++++++++++++++
     #Upate README file on master branch
     #++++++++++++++++++++++++++++++++++
-
-    print("Script found tag name of '{}'".format(tag_name))
 
     #++++++++++
     #End script
