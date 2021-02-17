@@ -17,8 +17,6 @@ Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - February, 2020
 
 import re
 import sys
-#import subprocess
-#import shlex
 import argparse
 
 from github import Github
@@ -203,11 +201,48 @@ def _main_prog():
         endmsg = "Tagged PR merged into non-development branch. No further action will thus be taken."
         end_script(endmsg)
 
-    #+++++++++++++++++++++++++++++++++++
-    #Upate README file on default branch
-    #+++++++++++++++++++++++++++++++++++
+    #++++++++++++++++++++++++++++++++
+    #Extrac README file contents/text
+    #++++++++++++++++++++++++++++++++
 
-    #CONTINUE HERE!!!!!!
+    #Grab README file object:
+    #Note: This command always uses the default branch unless
+    #      specifically told to do otherwise.
+    readme_obj = cam_repo.get_contents("README.md")
+
+    #Extract README content (as a bytestring):
+    readme_content = readme_obj.decoded_content
+
+    #Convert bytestring to unicode (regular) string:
+    readme_text = readme_content.decode('UTF-8')
+
+    #+++++++++++++++++++++++++++++++++
+    #Upate README file development tag
+    #+++++++++++++++++++++++++++++++++
+
+    #Compile development tag text expression:
+    dev_tag_pattern = re.compile(r'cam\d+_\d+_\d+')
+
+    #Search for tag text in README file:
+    dev_tag_match = dev_tag_pattern.search(readme_text)
+
+    #End script if nothing is found:
+    if not dev_tag_match:
+        endmsg = "No text matches expected development tag pattern in README.md file, "
+        endmsg += "so no further action will be taken."
+        end_script(endmsg)
+
+    #Extract start and end indices of matched tag text:
+    dev_tag_idx = dev_tag_match.span()
+
+    #Add new tag to README text:
+    new_content = readme_text[:dev_tag_idx[0]] + tag_name + readme_text[dev_tag_idx[1]:]
+
+    #+++++++++++++++++++++++++++++++++++++++++++++++
+    #Push updated README file back to default branch
+    #+++++++++++++++++++++++++++++++++++++++++++++++
+
+    cam_repo.update_file("README.md","Auto-update development tag.", new_content, readme_obj.sha)
 
     #++++++++++
     #End script
