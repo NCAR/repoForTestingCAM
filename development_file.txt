@@ -39,3 +39,5 @@ Added an 18th line, in order to test the "closed issues" project column check in
 Added a 19th line, in order to test the new if-statement check in the issue-closing script.
 
 Added a 20th line, in order to make sure the pylint Github Action correctly does nothing if no python files are modified.
+
+Added a 21st line, in order to make sure tag-updating script works as expected.
