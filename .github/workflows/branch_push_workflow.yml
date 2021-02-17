@@ -1,4 +1,4 @@
-name: Pushed commit workflow
+name: Pushed branch commit workflow
 
 on:
   #For some reason GitHub does not allow secrets
@@ -10,7 +10,7 @@ on:
   #directly to the repo.
   push:
     branches:
-      - fake_release
+      - '**'  #Trigger workflow on push to any branch or branch heirarchy.
 
 jobs:
   #This job is designed to close any issues or pull requests specified
@@ -22,17 +22,22 @@ jobs:
     - uses: actions/checkout@v2
     # acquire specific version of python
     - name: Set up Python 3.6
+      if: github.repository == 'NCAR/repoForTestingCAM' #Only run on main repo
       uses: actions/setup-python@v1
       with:
         python-version: '3.6' # Semantic version range syntax or exact version of a Python version
     # install required python packages
     - name: Install dependencies
+      if: github.repository == 'NCAR/repoForTestingCAM' #Only run on main repo
       run: |
         python -m pip install --upgrade pip  # Install latest version of PIP
         pip install PyGithub                 # Install PyGithub pythong package
     # run CAM issue-closing script
-    - name: python action scripts
+    - name: python issue and README tag scripts
+      if: github.repository == 'NCAR/repoForTestingCAM' #Only run on main repo
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        TRIGGER_SHA: ${{ github.sha }}
-      run: .github/scripts/branch_pr_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $TRIGGER_SHA
+      run: |
+        #Issue-closing script:
+        .github/scripts/branch_pr_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
+
