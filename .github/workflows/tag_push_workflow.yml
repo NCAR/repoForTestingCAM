@@ -27,11 +27,9 @@ jobs:
         python -m pip install --upgrade pip  # Install latest version of PIP
         pip install PyGithub                 # Install PyGithub pythong package
     # run CAM README tag update script
-    - name: python issue and README tag scripts
+    - name: Run python README tag-updating script
       if: github.repository == 'NCAR/repoForTestingCAM' #Only run on main repo
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      run: |
-        #README tag-updating script:
-        .github/scripts/readme_tag_update.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
+      run: .github/scripts/readme_tag_update.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
 
