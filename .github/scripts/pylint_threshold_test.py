@@ -89,10 +89,6 @@ def pylint_check(pyfile_list, rcfile, threshold=10.0):
         lint_results = lint.Run([rcstr, '--exit-zero', pyfile],
                                 reporter=pylint_report, do_exit=False)
 
-        #Debugging -JN:
-        for stat_key in lint_results.linter.stats.keys():
-           print(stat_key)
-
         #Extract linter score:
         lint_score = lint_results.linter.stats['global_note']
 

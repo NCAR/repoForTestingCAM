@@ -34,6 +34,4 @@ jobs:
       run: |
         #README tag-updating script:
         .github/scripts/readme_tag_update.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
-        #Debugging output:
-        echo $GITHUB_REF
 

@@ -5,7 +5,7 @@ Script name:  readme_tag_update.py
 
 Goal:  To determine if a recent push to the "development" branch
        was for a tag, and if so, to update the README.md file on
-       the master branch to display the new development tag.
+       the default branch to display the new development tag.
 
 
 Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - February, 2020
@@ -17,8 +17,6 @@ Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - February, 2020
 
 import re
 import sys
-#import subprocess
-#import shlex
 import argparse
 
 from github import Github
@@ -199,24 +197,52 @@ def _main_prog():
     print("Script found branch name of '{}'".format(merged_branch))
 
     #If PR is not to the development branch, then exit script:
-    if merged_branch == "fake_development":
+    if merged_branch != "fake_development":
         endmsg = "Tagged PR merged into non-development branch. No further action will thus be taken."
         end_script(endmsg)
 
-    #+++++++++++++++++++++++++++++++++++++++++++++++++
-    #Determine which branch contains the tagged commit
-    #+++++++++++++++++++++++++++++++++++++++++++++++++
+    #++++++++++++++++++++++++++++++++
+    #Extrac README file contents/text
+    #++++++++++++++++++++++++++++++++
 
-    #CONTINUE HERE!!!!!!!!!!!!!!!
+    #Grab README file object:
+    #Note: This command always uses the default branch unless
+    #      specifically told to do otherwise.
+    readme_obj = cam_repo.get_contents("README.md")
 
-    #IMPLEMENT THE SAME PR NUMBER EXTRACTION AS IS DONE IN THE ISSUE-CLOSING SCRIPT.
-    #THEN USE THAT PR TO CHECK IF THE RECEIVING BRANCH WAS THE DEVELOPMENT BRANCH.
-    #IF SO THEN BEGIN README MODIFICATIONS.  OTHERWISE EXIT SCRIPT!
-    #GOOD LUCK!!!!
+    #Extract README content (as a bytestring):
+    readme_content = readme_obj.decoded_content
 
-    #++++++++++++++++++++++++++++++++++
-    #Upate README file on master branch
-    #++++++++++++++++++++++++++++++++++
+    #Convert bytestring to unicode (regular) string:
+    readme_text = readme_content.decode('UTF-8')
+
+    #+++++++++++++++++++++++++++++++++
+    #Upate README file development tag
+    #+++++++++++++++++++++++++++++++++
+
+    #Compile development tag text expression:
+    dev_tag_pattern = re.compile(r'cam\d+_\d+_\d+')
+
+    #Search for tag text in README file:
+    dev_tag_match = dev_tag_pattern.search(readme_text)
+
+    #End script if nothing is found:
+    if not dev_tag_match:
+        endmsg = "No text matches expected development tag pattern in README.md file, "
+        endmsg += "so no further action will be taken."
+        end_script(endmsg)
+
+    #Extract start and end indices of matched tag text:
+    dev_tag_idx = dev_tag_match.span()
+
+    #Add new tag to README text:
+    new_content = readme_text[:dev_tag_idx[0]] + tag_name + readme_text[dev_tag_idx[1]:]
+
+    #+++++++++++++++++++++++++++++++++++++++++++++++
+    #Push updated README file back to default branch
+    #+++++++++++++++++++++++++++++++++++++++++++++++
+
+    cam_repo.update_file("README.md","Auto-update development tag.", new_content, readme_obj.sha)
 
     #++++++++++
     #End script
