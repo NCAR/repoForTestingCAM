@@ -74,7 +74,7 @@ def end_script_fail(msg):
     """
     print("\n{}\n".format(msg))
     print("README tag update script was un-successful.")
-    raise SystemError
+    sys.exit(1)
 
 #############
 #MAIN PROGRAM
