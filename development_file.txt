@@ -43,3 +43,6 @@ Added a 20th line, in order to make sure the pylint Github Action correctly does
 Added a 21st line, in order to make sure tag-updating script works as expected.
 
 Added a 22nd line, in order to test the tag-updating script again.
+
+Added a 23rd line, in order to test the "new" tag-updating script.
+
