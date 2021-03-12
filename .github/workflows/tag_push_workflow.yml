@@ -33,5 +33,5 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       run: |
         echo $GITHUB_REF
-        .github/scripts/readme_tag_update.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
+        .github/scripts/tag_check_readme_update.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
 
