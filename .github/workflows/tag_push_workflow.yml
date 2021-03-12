@@ -31,5 +31,7 @@ jobs:
       if: github.repository == 'NCAR/repoForTestingCAM' #Only run on main repo
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-      run: .github/scripts/readme_tag_update.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
+      run: |
+        echo $GITHUB_REF
+        .github/scripts/readme_tag_update.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
 

@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
 """
-Script name:  readme_tag_update.py
+Script name:  tag_check_readme_update.py
 
-Goal:  To determine if a recent push to the "development" branch
-       was for a tag, and if so, to update the README.md file on
-       the default branch to display the new development tag.
+Goal:  To determine if the pushed tag was configured properly.
+       If not then the action will "fail", notifying the admins.
 
+       Also, if the pushed tag was configured correctly and was
+       for the "development" branch, then this script will update
+       the README.md file on the default branch to display the new
+       development tag.
 
 Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - February, 2020
 """
@@ -37,7 +40,7 @@ def parse_arguments():
     """
 
     #Create parser object:
-    parser = argparse.ArgumentParser(description='Close issues and pull requests specified in merged pull request.')
+    parser = argparse.ArgumentParser(description='Check that tag was properly created, and update README if development tag.')
 
     #Add input arguments to be parsed:
     parser.add_argument('--access_token', metavar='<GITHUB_TOKEN>', action='store', type=str,
@@ -62,6 +65,16 @@ def end_script(msg):
     print("\n{}\n".format(msg))
     print("README tag update script has completed successfully.")
     sys.exit(0)
+
+def end_script_fail(msg):
+
+    """
+    Prints message to screen, and then raises an exception
+    in order to generate a failure notification in Github.
+    """
+    print("\n{}\n".format(msg))
+    print("README tag update script was un-successful.")
+    raise SystemError
 
 #############
 #MAIN PROGRAM
@@ -166,14 +179,14 @@ def _main_prog():
             pr_num = int(first_word[1:]) #ignore "#" symbol
         except ValueError:
             #If the conversion fails, then this is likely not a real PR merge, so end the script:
-            endmsg = "No Pull Request number was found in the tagged commit message. "
-            endmsg += "This is likely a special commit, so the script will not modify README."
-            end_script(endmsg)
+            endmsg = "No Pull Request number was found in the tagged commit message.\n"
+            endmsg += "This is a non-normal tag commit, and so would be worth double-checking."
+            end_script_fail(endmsg)
 
     else:
-        endmsg = "No Pull Request merges were found in the tagged commit message. "
-        endmsg += "This is likely a special commit, so the script will not modify README."
-        end_script(endmsg)
+        endmsg = "No Pull Request merges were found in the tagged commit message.\n"
+        endmsg += "This is likely a non-normal tag commit, and so would be worth double-checking."
+        end_script_fail(endmsg)
 
     #+++++++++++++++++++++++++++++++++++++
     #Check if tagged PR was in fact merged
@@ -184,8 +197,9 @@ def _main_prog():
 
     #If pull request has not been merged, then exit script:
     if not merged_pull.merged:
-        endmsg = "Pull request in commit message was not actually merged, so the script will not close anything."
-        end_script(endmsg)
+        endmsg = "Pull request in tagged commit message was not actually merged.\n"
+        endmsg += "This is likely a non-normal tag commit, and so would be worth double-checking."
+        end_script_fail(endmsg)
 
     #++++++++++++++++++++++++++++++++++++++++++
     #Check if PR was for the development branch
