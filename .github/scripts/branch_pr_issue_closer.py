@@ -299,7 +299,7 @@ def _main_prog():
                     #so set the issue number to one that will never be found:
                     issue_num = -9999
 
-            #Check that number is actually for a PR (as opposed to an issue):
+            #Check if number is actually for a PR (as opposed to an issue):
             if issue_num in open_pulls:
                 #Add PR number to "close pulls" list:
                 close_pulls.append(issue_num)
