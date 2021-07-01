@@ -11,12 +11,13 @@ on:
   push:
     branches:
       #Trigger workflow on push to any branch or branch heirarchy under NCAR/repoForTestingCAM:
-      - 'NCAR/repoForTestingCAM/**'
+      - '**'
 
 jobs:
   #This job is designed to close any issues or pull requests specified
   #in the body of a pull request merged into a non-default branch.
   issue_closer:
+    if: github.repository == 'NCAR/repoForTestingCAM/'
     runs-on: ubuntu-latest
     steps:
     # acquire github action routines
