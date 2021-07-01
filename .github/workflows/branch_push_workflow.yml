@@ -14,27 +14,27 @@ on:
       - '**'
 
 jobs:
-  if: github.repository == 'NCAR/repoForTestingCAM/'
-    #This job is designed to close any issues or pull requests specified
-    #in the body of a pull request merged into a non-default branch.
-    issue_closer:
-      runs-on: ubuntu-latest
-      steps:
-      # acquire github action routines
-      - uses: actions/checkout@v2
-      # acquire specific version of python
-      - name: Set up Python 3.6
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.6' # Semantic version range syntax or exact version of a Python version
-      # install required python packages
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip  # Install latest version of PIP
-          pip install PyGithub                 # Install PyGithub pythong package
-      # run CAM issue-closing script
-      - name: Run python Github issue-closing script
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: .github/scripts/branch_pr_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
+  #This job is designed to close any issues or pull requests specified
+  #in the body of a pull request merged into a non-default branch.
+  issue_closer:
+    if: github.repository == 'NCAR/repoForTestingCAM/'
+    runs-on: ubuntu-latest
+    steps:
+    # acquire github action routines
+    - uses: actions/checkout@v2
+    # acquire specific version of python
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.6' # Semantic version range syntax or exact version of a Python version
+    # install required python packages
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip  # Install latest version of PIP
+        pip install PyGithub                 # Install PyGithub pythong package
+    # run CAM issue-closing script
+    - name: Run python Github issue-closing script
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      run: .github/scripts/branch_pr_issue_closer.py --access_token $ACCESS_TOKEN --trigger_sha $GITHUB_SHA
 
