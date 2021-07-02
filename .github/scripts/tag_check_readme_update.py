@@ -272,8 +272,7 @@ def _main_prog():
     if tag_found == -1:
         endmsg = "Newly-created tag '{}' not the first tag listed at top of ChangeLog!\n"
         endmsg += "Please update the ChangeLog so that the newest tag is listed first."
-        endmsg.format(tag_name)
-        end_script_fail(endmsg)
+        end_script_fail(endmsg.format(tag_name))
 
     #+++++++++++++++++++++++++++++++++
     #Extract README file contents/text
