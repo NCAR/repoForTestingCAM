@@ -260,7 +260,7 @@ def _main_prog():
         end_script_fail(endmsg)
     else:
         #Find first occurence of "Originator", to set tag search end:
-        orig_log_idx = changelog.find("Originator")
+        orig_log_idx = changelog.find("originator")
         if orig_log_idx == -1:
             endmsg = "No 'Originator' entry found in the ChangeLog!\n"
             endmsg += "The ChangeLog file has likely been corrupted."
