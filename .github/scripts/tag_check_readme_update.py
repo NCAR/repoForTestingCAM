@@ -249,7 +249,7 @@ def _main_prog():
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     #Make ChangeLog all lowercase, so that searching is case independent:
-    changelog = changelog.loweR()
+    changelog = changelog.lower()
 
     #Find first occurence of "Tag name" string:
     tag_log_idx = changelog.find("tag name")
