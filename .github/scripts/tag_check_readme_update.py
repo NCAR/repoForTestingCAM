@@ -21,6 +21,7 @@ Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - February, 2020
 import re
 import sys
 import argparse
+import base64
 
 from github import Github
 
@@ -232,13 +233,13 @@ def _main_prog():
     #If sha can't be found, then it means the ChangeLog is missing,
     #so throw an error:
     if not changelog_sha:
-       endmsg = "ChangeLog SHA can't be found, which means no doc/ChangeLog file exists.\n"
-       endmsg += "Please create a new PR ASAP that adds the ChangeLog back to the development branch."
-       end_script_fail(endmsg)
+        endmsg = "ChangeLog SHA can't be found, which means no doc/ChangeLog file exists.\n"
+        endmsg += "Please create a new PR ASAP that adds the ChangeLog back to the development branch."
+        end_script_fail(endmsg)
 
     #The ChangeLog is too large to download using the standard API,
     #so we need to use the Github data API:
-    changelog_git_blob = camrepo.get_git_blob(changelog_sha)
+    changelog_git_blob = cam_repo.get_git_blob(changelog_sha)
 
     #Convert changelog blob to unicode string:
     changelog = base64.b64decode(changelog_git_blob.content).decode("UTF-8")
@@ -254,16 +255,16 @@ def _main_prog():
     tag_log_idx = changelog.find("tag name")
 
     if tag_log_idx == -1:
-       endmsg = "No 'tag name' entry found in the ChangeLog!\n"
-       endmsg += "The ChangeLog file has likely been corrupted."
-       end_script_fail(endmsg)
+        endmsg = "No 'tag name' entry found in the ChangeLog!\n"
+        endmsg += "The ChangeLog file has likely been corrupted."
+        end_script_fail(endmsg)
     else:
-      #Find first occurence of "Originator", to set tag search end:
-      orig_log_idx = changelog.find("Originator")
-      if orig_log_idx == -1:
-          endmsg = "No 'Originator' entry found in the ChangeLog!\n"
-          endmsg += "The ChangeLog file has likely been corrupted."
-          end_script_fail(endmsg)
+        #Find first occurence of "Originator", to set tag search end:
+        orig_log_idx = changelog.find("Originator")
+        if orig_log_idx == -1:
+            endmsg = "No 'Originator' entry found in the ChangeLog!\n"
+            endmsg += "The ChangeLog file has likely been corrupted."
+            end_script_fail(endmsg)
 
     #Search for tag string inbetween "tag name" and "originator":
     tag_found = changelog[tag_log_idx:orig_log_idx].find(tag_name)
