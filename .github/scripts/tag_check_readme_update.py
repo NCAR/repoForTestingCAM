@@ -65,28 +65,28 @@ def parse_arguments():
 
 def email_msg(receiver_list, pword, title, msg):
 
-   """
-   Send email message to receiver list via
-   the "cam.engineering.works@gmail.com" email.
-   """
+    """
+    Send email message to receiver list via
+    the "cam.engineering.works@gmail.com" email.
+    """
 
-   #Combine email title and message,
-   #so that email is properly formatted:
-   email_msg = "Subject: "+title+"\n\n"+msg
+    #Combine email title and message,
+    #so that email is properly formatted:
+    msg_email = "Subject: "+title+"\n\n"+msg
 
-   #create email encryption:
-   #Note that gmail automatically converts SSL to TLS
-   context = ssl.create_default_context()
+    #create email encryption:
+    #Note that gmail automatically converts SSL to TLS
+    context = ssl.create_default_context()
 
-   #Open email server (gmail always uses port 465):
-   with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-       #Login to cam.engineering.works:
-       server.login("cam.engineering.works@gmail.com", pword)
-       #Loop over receiver emails:
-       for receiver in receiver_list:
-           #Send email
-           server.sendmail("cam.engineering.works@gmail.com", receiver,
-                           email_msg)
+    #Open email server (gmail always uses port 465):
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+        #Login to cam.engineering.works:
+        server.login("cam.engineering.works@gmail.com", pword)
+        #Loop over receiver emails:
+        for receiver in receiver_list:
+            #Send email
+            server.sendmail("cam.engineering.works@gmail.com", receiver,
+                            msg_email)
 
 #++++++++++++++++++++++++++++++++
 #Script message and exit function
@@ -112,7 +112,7 @@ def end_script_fail(cam_pword, msg):
     """
 
     receiver_list = ["nusbaume@ucar.edu"]
-    email_msg(receiver_list, cam_pword, "Tag README update failure!", endmsg)
+    email_msg(receiver_list, cam_pword, "Tag README update failure!", msg)
 
     print("\n{}\n".format(msg))
     print("README tag update script was un-successful.")
