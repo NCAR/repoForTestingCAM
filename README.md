@@ -10,7 +10,7 @@ The information below is solely for testing CI/CD scripts, and has nothing to do
 ## NOTE: This is **unsupported** development code and is subject to the [CESM developer's agreement](http://www.cgd.ucar.edu/cseg/development-code.html).
 <!-- First line of CAM-dev tag code -->
 ```
-git checkout cam6_3_004
+git checkout cam6_3_013
 ./manage_externals/checkout_externals
 ```
 <!-- Last line of CAM-dev tag code -->
