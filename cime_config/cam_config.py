@@ -10,6 +10,7 @@ CIME case.
 # Import generic python libraries/modules
 #----------------------------------------
 import re
+import sys
 import argparse
 
 # Determine regular rexpression type  (for later usage in Config_string)
@@ -783,8 +784,26 @@ class ConfigCAM:
     #++++++++++++++++++++++
 
     @classmethod
-    def parse_config_opts(cls, config_opts):
-        """Parse <config_opts> and return the results"""
+    def parse_config_opts(cls, config_opts, test_mode=False):
+        """Parse <config_opts> and return the results
+        >>> ConfigCAM.parse_config_opts("", test_mode=True) #doctest: +IGNORE_EXCEPTION_DETAIL
+        Traceback (most recent call last):
+        SystemExit: 2
+        >>> ConfigCAM.parse_config_opts("--dyn se", test_mode=True) #doctest: +IGNORE_EXCEPTION_DETAIL
+        Traceback (most recent call last):
+        SystemExit: 2
+        >>> ConfigCAM.parse_config_opts("--physics-suites kessler")
+        Namespace(dyn='', physics_suites='kessler')
+        >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
+        Namespace(dyn='se', physics_suites='kessler')
+        >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
+        Namespace(dyn='se', physics_suites='kessler')
+        >>> ConfigCAM.parse_config_opts("--physics-suites kessler;musica")
+        Namespace(dyn='', physics_suites='kessler;musica')
+        >>> ConfigCAM.parse_config_opts("--physics-suites kessler musica", test_mode=True) #doctest: +IGNORE_EXCEPTION_DETAIL
+        Traceback (most recent call last):
+        SystemExit: 2
+        """
         cco_str = "CAM_CONFIG_OPTS"
         parser = argparse.ArgumentParser(description=cco_str,
                                          prog="ConfigCAM",
@@ -797,7 +816,14 @@ class ConfigCAM:
                             type=str, required=False, default="",
                             help="Name of dycore")
         popts = [opt for opt in config_opts.split(" ") if opt]
+        if test_mode:
+           stderr_save = sys.stderr
+           sys.stderr = sys.stdout
+        # end if
         pargs = parser.parse_args(popts)
+        if test_mode:
+            sys.stderr = stderr_save
+        # end if
         return pargs
 
     def create_config(self, name, desc, val,
