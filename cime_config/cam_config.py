@@ -793,7 +793,7 @@ class ConfigCAM:
         Traceback (most recent call last):
         SystemExit: 2
         >>> ConfigCAM.parse_config_opts("--physics-suites kessler")
-        Namespace(physics_suites='kessler', dyn='')
+        Namespace(dyn='', physics_suites='kessler')
         >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
         Namespace(dyn='se', physics_suites='kessler')
         >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
@@ -809,12 +809,12 @@ class ConfigCAM:
                                          prog="ConfigCAM",
                                          epilog="Allowed values of "+cco_str)
 
-        parser.add_argument("--physics-suites", type=str, required=True,
-                            help="""Comma-separated list of Physics Suite
-                            Definition Files (SDFs)""")
         parser.add_argument("--dyn", "-dyn", metavar='<dycore>',
                             type=str, required=False, default="",
                             help="Name of dycore")
+        parser.add_argument("--physics-suites", type=str, required=True,
+                            help="""Comma-separated list of Physics Suite
+                            Definition Files (SDFs)""")
         popts = [opt for opt in config_opts.split(" ") if opt]
         if test_mode:
            stderr_save = sys.stderr
@@ -997,7 +997,10 @@ if __name__ == "__main__":
     FCONFIG = ConfigCAM(FCASE, LOGGER)
 
     # Run doctests on this file's python objects
-    doctest.testmod()
+    test_success = doctest.testmod()[0]
+
+    # Exit script with error code matching number of failed tests:
+    sys.exit(test_success)
 
 ##############
 # End of file##
