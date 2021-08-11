@@ -809,12 +809,12 @@ class ConfigCAM:
                                          prog="ConfigCAM",
                                          epilog="Allowed values of "+cco_str)
 
-        parser.add_argument("--physics-suites", type=str, required=True,
-                            help="""Comma-separated list of Physics Suite
-                            Definition Files (SDFs)""")
         parser.add_argument("--dyn", "-dyn", metavar='<dycore>',
                             type=str, required=False, default="",
                             help="Name of dycore")
+        parser.add_argument("--physics-suites", type=str, required=True,
+                            help="""Comma-separated list of Physics Suite
+                            Definition Files (SDFs)""")
         popts = [opt for opt in config_opts.split(" ") if opt]
         if test_mode:
            stderr_save = sys.stderr
