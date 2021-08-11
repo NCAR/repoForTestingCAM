@@ -997,7 +997,7 @@ if __name__ == "__main__":
     FCONFIG = ConfigCAM(FCASE, LOGGER)
 
     # Run doctests on this file's python objects
-    doctest.testmod()
+    doctest.testmod(verbose=True)
 
 ##############
 # End of file##
