@@ -793,7 +793,7 @@ class ConfigCAM:
         Traceback (most recent call last):
         SystemExit: 2
         >>> ConfigCAM.parse_config_opts("--physics-suites kessler")
-        What is going on here????!?!?!??!?!
+        Namespace(dyn='', physics_suites='kessler')
         >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
         Namespace(dyn='se', physics_suites='kessler')
         >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
