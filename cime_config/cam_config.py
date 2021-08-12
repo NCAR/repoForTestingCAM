@@ -792,13 +792,13 @@ class ConfigCAM:
         >>> ConfigCAM.parse_config_opts("--dyn se", test_mode=True) #doctest: +IGNORE_EXCEPTION_DETAIL
         Traceback (most recent call last):
         SystemExit: 2
-        >>> ConfigCAM.parse_config_opts("--physics-suites kessler")
+        >>> vars(ConfigCAM.parse_config_opts("--physics-suites kessler"))
         Namespace(dyn='', physics_suites='kessler')
-        >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
+        >>> vars(ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se"))
         Namespace(dyn='se', physics_suites='kessler')
-        >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
+        >>> vars(ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se"))
         Namespace(dyn='se', physics_suites='kessler')
-        >>> ConfigCAM.parse_config_opts("--physics-suites kessler;musica")
+        >>> vars(ConfigCAM.parse_config_opts("--physics-suites kessler;musica"))
         Namespace(dyn='', physics_suites='kessler;musica')
         >>> ConfigCAM.parse_config_opts("--physics-suites kessler musica", test_mode=True) #doctest: +IGNORE_EXCEPTION_DETAIL
         Traceback (most recent call last):
