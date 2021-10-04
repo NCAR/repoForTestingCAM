@@ -792,14 +792,12 @@ class ConfigCAM:
         >>> ConfigCAM.parse_config_opts("--dyn se", test_mode=True) #doctest: +IGNORE_EXCEPTION_DETAIL
         Traceback (most recent call last):
         SystemExit: 2
-        >>> ConfigCAM.parse_config_opts("--physics-suites kessler")
-        Namespace(dyn='', physics_suites='kessler')
-        >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
-        Namespace(dyn='se', physics_suites='kessler')
-        >>> ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se")
-        Namespace(dyn='se', physics_suites='kessler')
-        >>> ConfigCAM.parse_config_opts("--physics-suites kessler;musica")
-        Namespace(dyn='', physics_suites='kessler;musica')
+        >>> vars(ConfigCAM.parse_config_opts("--physics-suites kessler"))
+        {'physics_suites': 'kessler', 'dyn': ''}
+        >>> vars(ConfigCAM.parse_config_opts("--physics-suites kessler --dyn se"))
+        {'physics_suites': 'kessler', 'dyn': 'se'}
+        >>> vars(ConfigCAM.parse_config_opts("--physics-suites kessler;musica"))
+        {'physics_suites': 'kessler;musica', 'dyn': ''}
         >>> ConfigCAM.parse_config_opts("--physics-suites kessler musica", test_mode=True) #doctest: +IGNORE_EXCEPTION_DETAIL
         Traceback (most recent call last):
         SystemExit: 2
@@ -809,12 +807,13 @@ class ConfigCAM:
                                          prog="ConfigCAM",
                                          epilog="Allowed values of "+cco_str)
 
+        parser.add_argument("--physics-suites", type=str, required=True,
+                            help="""Semicolon-separated list of Physics Suite
+                            Definition Files (SDFs)""")
         parser.add_argument("--dyn", "-dyn", metavar='<dycore>',
                             type=str, required=False, default="",
                             help="Name of dycore")
-        parser.add_argument("--physics-suites", type=str, required=True,
-                            help="""Comma-separated list of Physics Suite
-                            Definition Files (SDFs)""")
+
         popts = [opt for opt in config_opts.split(" ") if opt]
         if test_mode:
            stderr_save = sys.stderr
