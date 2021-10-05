@@ -1,4 +1,7 @@
 # repoForTestingCAM
+
+![Python Unit Tests](https://github.com/NCAR/repoForTestingCAM/actions/workflows/pr_open_sync_workflow.yml/badge.svg)
+
 This repo is solely for testing purposes
 
 The information below is solely for testing CI/CD scripts, and has nothing to do with the actual code in this repo.
