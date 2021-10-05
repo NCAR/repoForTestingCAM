@@ -1,6 +1,8 @@
 # repoForTestingCAM
 This repo is solely for testing purposes
 
+![Unit Tests](https://github.com/NCAR/repoForTestingCAM/actions/workflows/unit_tests.yaml/badge.svg)
+
 The information below is solely for testing CI/CD scripts, and has nothing to do with the actual code in this repo.
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
