@@ -1,3 +1,6 @@
+[ccpp-table-properties]
+  name = physics_base
+  type = ddt
 [ccpp-arg-table]
   name = physics_base
   type = ddt
@@ -15,21 +18,27 @@
   type = integer
   dimensions = ()
   protected = True
+[ccpp-table-properties]
+  name = model_wind
+  type = ddt
 [ccpp-arg-table]
   name = model_wind
   type = ddt
 [ u ]
-  standard_name = eastward_wind
+  standard_name = x_wind
   units = m s-1
   type = real | kind = kind_phys
   dimensions = (horizontal_dimension, vertical_layer_dimension)
   protected = True
 [ v ]
-  standard_name = northward_wind
+  standard_name = y_wind
   units = m s-1
   type = real | kind = kind_phys
   dimensions = (horizontal_dimension, vertical_layer_dimension)
   protected = True
+[ccpp-table-properties]
+  name = physics_state
+  type = ddt
 [ccpp-arg-table]
   name = physics_state
   type = ddt
@@ -48,7 +57,7 @@
 [ wind ]
   standard_name = model_wind
   units = None
-  ddt_type = model_wind
+  type = model_wind
   dimensions = ()
 [ q ]
   standard_name = constituent_mixing_ratio
@@ -60,11 +69,14 @@
   units = kg kg-1
   type = real | kind = kind_phys
   dimensions = (horizontal_dimension, vertical_layer_dimension)
-[ q(:,:,index_of_cloud_liquid_water_mixing_ratio) ]
-  standard_name = cloud_liquid_water_mixing_ratio
+[ q(:,:,index_of_cloud_liquid_water_mixing_ratio_of_moist_air) ]
+  standard_name = cloud_liquid_water_mixing_ratio_of_moist_air
   units = kg kg-1
   type = real | kind = kind_phys
   dimensions = (horizontal_dimension, vertical_layer_dimension)
+[ccpp-table-properties]
+  name = physics_types_complete
+  type = module
 [ccpp-arg-table]
   name = physics_types_complete
   type = module
@@ -74,7 +86,7 @@
   type = integer
   dimensions = ()
 [ ix_cld_liq ]
-  standard_name = index_of_cloud_liquid_water_mixing_ratio
+  standard_name = index_of_cloud_liquid_water_mixing_ratio_of_moist_air
   units = count
   type = integer
   dimensions = ()
@@ -90,8 +102,8 @@
   type = real
   dimensions = ()
 [ phys_state ]
-  standard_name = physics_state_from_dynamics
+  standard_name = physics_state_due_to_dynamics
   long_name = Physics state variables updated by dynamical core
   units = None
-  ddt_type = physics_state
+  type = physics_state
   dimensions = ()

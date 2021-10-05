@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 #-----------------------------------------------------------------------
 # Description:  Contains unit tests for testing CAM "phys_init" code
 #               generation using the registry and CCPP physics suites.
@@ -34,7 +34,7 @@ PY3 = sys.version_info[0] > 2
 if PY3:
     __FILE_OPEN = (lambda x: open(x, 'r', encoding='utf-8'))
 else:
-    __FILE_OPEN = (lambda x: open(x, 'r'))
+    __FILE_OPEN = (lambda x: open(x, 'r', encoding='utf-8'))
 # End if
 
 #Check for all necessary directories:
@@ -143,7 +143,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
@@ -211,7 +211,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
@@ -279,7 +279,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
@@ -346,7 +346,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         # Note: "assertLogs" method doesn't exist in python 2:
@@ -378,7 +378,7 @@ class WriteInitTest(unittest.TestCase):
         # Check return message:
         amsg = "Test failure: retmsg={}".format(retmsg)
         self.assertEqual(retmsg,
-                         "Required CCPPP physics variables missing from host model.",
+                         "Required CCPP physics variables missing from host model.",
                          msg=amsg)
 
         # Make sure no output file was created:
@@ -428,7 +428,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Run test
         with self.assertRaises(ValueError) as verr:
@@ -476,8 +476,6 @@ class WriteInitTest(unittest.TestCase):
         host_files = [model_host, out_meta]
 
         # Setup write_init_files inputs:
-        check_init_in = os.path.join(_INIT_SAMPLES_DIR, "phys_vars_init_check_simple.F90")
-        phys_input_in = os.path.join(_INIT_SAMPLES_DIR, "physics_inputs_simple.F90")
         check_init_out = os.path.join(_TMP_DIR, "phys_vars_init_check_no_horiz.F90")
         phys_input_out = os.path.join(_TMP_DIR, "physics_inputs_no_horiz.F90")
 
@@ -495,17 +493,17 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Run test
         with self.assertRaises(ValueError) as verr:
-            retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
-                                                     cap_datafile, logger,
-                                                     phys_check_filename="phys_vars_init_check_no_horiz.F90",
-                                                     phys_input_filename="physics_inputs_no_horiz.F90")
+            _ = write_init.write_init_files(files, _TMP_DIR, 3,
+                                            cap_datafile, logger,
+                                            phys_check_filename="phys_vars_init_check_no_horiz.F90",
+                                            phys_input_filename="physics_inputs_no_horiz.F90")
 
         # Check exception message
-        emsg = "Variable 'sea_level_pressure' needs at least one registered dimension" \
+        emsg = "Variable 'air_pressure_at_sea_level' needs at least one registered dimension" \
                " to be 'horizontal_dimension' in order to be read from a file using 'read_fied'.\n" \
                "Instead variable has dimensions of: ['vertical_layer_dimension']"
         self.assertEqual(emsg, str(verr.exception))
@@ -558,7 +556,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Run test
         with self.assertRaises(ValueError) as verr:
@@ -568,7 +566,7 @@ class WriteInitTest(unittest.TestCase):
                                             phys_input_filename="physics_inputs_scalar.F90")
 
         # Check exception message
-        emsg = "Variable 'sea_level_pressure' needs at least one dimension in order" \
+        emsg = "Variable 'air_pressure_at_sea_level' needs at least one dimension in order" \
                " to be read from a file using 'read_field'."
         self.assertEqual(emsg, str(verr.exception))
 
@@ -620,7 +618,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Run test
         with self.assertRaises(ValueError) as verr:
@@ -630,7 +628,7 @@ class WriteInitTest(unittest.TestCase):
                                             phys_input_filename="physics_inputs_4D.F90")
 
         # Check exception message
-        emsg = "variable 'sea_level_pressure' has more than two dimensions, but" \
+        emsg = "variable 'air_pressure_at_sea_level' has more than two dimensions, but" \
                "'read_field' can only manage up to two dimensions" \
                "when reading a variable from a file."
         self.assertEqual(emsg, str(verr.exception))
@@ -683,7 +681,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         # Note: "assertLogs" method doesn't exist in python 2:
@@ -763,7 +761,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
@@ -831,7 +829,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
@@ -899,7 +897,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
@@ -967,7 +965,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
@@ -1035,7 +1033,7 @@ class WriteInitTest(unittest.TestCase):
 
         # Generate CCPP capgen files:
         capgen(host_files, scheme_files, sdf, cap_datafile,'',
-               False, False, _TMP_DIR, 'cam', 'REAL64', logger)
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
 
         # Generate physics initialization files:
         retmsg = write_init.write_init_files(files, _TMP_DIR, 3,
@@ -1060,6 +1058,70 @@ class WriteInitTest(unittest.TestCase):
         amsg = "{} does not match {}".format(phys_input_in, phys_input_out)
         self.assertTrue(filecmp.cmp(phys_input_in, phys_input_out, shallow=False), \
                         msg=amsg)
+
+    def test_bad_vertical_dimension(self):
+        """
+        Test that the 'write_init_files' function
+        correctly determines that a variable that
+        could be called from "read_field" has two dimensions
+        but the second is not a vertical dimension (which read_field can't
+        handle) and exits with both the correct return
+        message, and with no fortran files generated.
+        """
+
+        # Setup registry inputs:
+        filename = os.path.join(_INIT_SAMPLES_DIR, "var_bad_vertdim.xml")
+        out_source_name = "physics_types_simple"
+        out_source = os.path.join(_TMP_DIR, out_source_name + '.F90')
+        out_meta = os.path.join(_TMP_DIR, out_source_name + '.meta')
+
+        # Setup capgen inputs:
+        model_host = os.path.join(_INIT_SAMPLES_DIR,"simple_host.meta")
+        sdf = os.path.join(_INIT_SAMPLES_DIR,"simple_suite.xml")
+        scheme_files = os.path.join(_INIT_SAMPLES_DIR, "temp_adjust_bvd.meta")
+        cap_datafile = os.path.join(_TMP_DIR, "datatable_simple.xml")
+
+        host_files = [model_host, out_meta]
+
+        # Setup write_init_files inputs:
+        vic_name = "phys_vars_init_check_bvd.F90"
+        pi_name = "physics_inputs_bvd.F90"
+        check_init_out = os.path.join(_TMP_DIR, vic_name)
+        phys_input_out = os.path.join(_TMP_DIR, pi_name)
+
+        #Create local logger:
+        logger = logging.getLogger("write_init_files_bvd")
+
+        # Clear all temporary output files:
+        remove_files([out_source, out_meta, cap_datafile,
+                      check_init_out, phys_input_out])
+
+        # Generate registry files:
+        _, files = gen_registry(filename, 'se', {}, _TMP_DIR, 3,
+                                      _SRC_MOD_DIR, _CAM_ROOT,
+                                      loglevel=logging.ERROR,
+                                      error_on_no_validate=True)
+
+        # Generate CCPP capgen files:
+        capgen(host_files, scheme_files, sdf, cap_datafile,'',
+               False, False, _TMP_DIR, 'cam', 'REAL64', True, logger)
+
+        # Run test
+        with self.assertRaises(ValueError) as verr:
+            _ = write_init.write_init_files(files, _TMP_DIR, 3,
+                                            cap_datafile, logger,
+                                            phys_check_filename=vic_name,
+                                            phys_input_filename=pi_name)
+
+        # Check exception message
+        emsg = "Unsupported vertical dimension, 'band_number', in air_pressure_at_sea_level"
+        self.assertEqual(emsg, str(verr.exception))
+
+        # Make sure no output file was created:
+        amsg = "{} should not exist".format(check_init_out)
+        self.assertFalse(os.path.exists(check_init_out), msg=amsg)
+        amsg = "{} should not exist".format(phys_input_out)
+        self.assertFalse(os.path.exists(phys_input_out), msg=amsg)
 
 ##########
 

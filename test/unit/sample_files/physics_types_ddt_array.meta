@@ -1,3 +1,6 @@
+[ccpp-table-properties]
+  name = physics_state
+  type = ddt
 [ccpp-arg-table]
   name = physics_state
   type = ddt
@@ -30,11 +33,14 @@
   units = kg kg-1
   type = real | kind = kind_phys
   dimensions = (horizontal_dimension, vertical_layer_dimension)
-[ q(:,:,index_of_cloud_liquid_water_mixing_ratio) ]
-  standard_name = cloud_liquid_water_mixing_ratio
+[ q(:,:,index_of_cloud_liquid_water_mixing_ratio_of_moist_air) ]
+  standard_name = cloud_liquid_water_mixing_ratio_of_moist_air
   units = kg kg-1
   type = real | kind = kind_phys
   dimensions = (horizontal_dimension, vertical_layer_dimension)
+[ccpp-table-properties]
+  name = physics_types_ddt_array
+  type = module
 [ccpp-arg-table]
   name = physics_types_ddt_array
   type = module
@@ -44,13 +50,13 @@
   type = integer
   dimensions = ()
 [ ix_cld_liq ]
-  standard_name = index_of_cloud_liquid_water_mixing_ratio
+  standard_name = index_of_cloud_liquid_water_mixing_ratio_of_moist_air
   units = count
   type = integer
   dimensions = ()
 [ phys_state ]
-  standard_name = physics_state_from_dynamics
+  standard_name = physics_state_due_to_dynamics
   long_name = Physics state variables updated by dynamical core
   units = None
-  ddt_type = physics_state
+  type = physics_state
   dimensions = ()
