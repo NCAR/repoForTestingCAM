@@ -109,7 +109,7 @@ class FileStatus:
         file_hash = hashlib.sha1()
         barray = bytearray(128*1024)
         mem_view = memoryview(barray)
-        with open(filename, 'rb', buffering=0) as infile:
+        with open(filename, 'rb', buffering=0, encoding='utf-8') as infile:
             for num_read in iter(lambda: infile.readinto(mem_view), 0):
                 file_hash.update(mem_view[:num_read])
             # end for
@@ -517,35 +517,35 @@ if __name__ == "__main__":
     TEST_SCHEME = os.path.join(TEST_SOURCE_MODS_DIR, "temp_adjust_scalar.meta")
 
     # Generate test build caches from template:
-    f1 = open(BUILD_CACHE, 'rt')
+    f1 = open(BUILD_CACHE, 'rt', encoding='utf-8')
     data = f1.read()
     data = data.replace("TAG1", "").replace("TAG2", "").replace("TAG3", "")
     f1.close()
-    f1 = open(BUILD_CACHE, 'w')
+    f1 = open(BUILD_CACHE, 'w', encoding='utf-8')
     f1.write(data)
     f1.close()
 
-    f1 = open(BAD_BUILD_CACHE, 'rt')
+    f1 = open(BAD_BUILD_CACHE, 'rt', encoding='utf-8')
     data = f1.read()
     data = data.replace("TAG1", "<test />").replace("TAG2", "").replace("TAG3", "")
     f1.close()
-    f1 = open(BAD_BUILD_CACHE, 'w')
+    f1 = open(BAD_BUILD_CACHE, 'w', encoding='utf-8')
     f1.write(data)
     f1.close()
 
-    f1 = open(BAD_BUILD_CACHE_REG, 'rt')
+    f1 = open(BAD_BUILD_CACHE_REG, 'rt', encoding='utf-8')
     data = f1.read()
     data = data.replace("TAG1", "").replace("TAG2", "<test />").replace("TAG3", "")
     f1.close()
-    f1 = open(BAD_BUILD_CACHE_REG, 'w')
+    f1 = open(BAD_BUILD_CACHE_REG, 'w', encoding='utf-8')
     f1.write(data)
     f1.close()
 
-    f1 = open(BAD_BUILD_CACHE_CCPP, 'rt')
+    f1 = open(BAD_BUILD_CACHE_CCPP, 'rt', encoding='utf-8')
     data = f1.read()
     data = data.replace("TAG1", "").replace("TAG2", "").replace("TAG3", "<test />")
     f1.close()
-    f1 = open(BAD_BUILD_CACHE_CCPP, 'w')
+    f1 = open(BAD_BUILD_CACHE_CCPP, 'w', encoding='utf-8')
     f1.write(data)
     f1.close()
 
