@@ -1,4 +1,4 @@
-name: Pull Request (PR) open and sync workflow
+name: Python unit tests
 
 on:
   pull_request:

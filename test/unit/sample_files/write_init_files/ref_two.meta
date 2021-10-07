@@ -1,3 +1,6 @@
+[ccpp-table-properties]
+  name = ref_two
+  type = module
 [ccpp-arg-table]
   name = ref_two
   type = module
@@ -5,4 +8,4 @@
   standard_name = host_thermo_vars_obj
   units = None
   dimensions = (horizontal_dimension, vertical_layer_dimension)
-  ddt_type = theta_ddt_type
+  type = theta_ddt_type
