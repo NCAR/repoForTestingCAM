@@ -47,3 +47,5 @@ Added a 22nd line, in order to test the tag-updating script again.
 Added a 23rd line, in order to test the "new" tag-updating script.
 
 Added a 24th line, in order to test the pr-closing bug fix.
+
+Added a 25th line, in order to test the workflow badge functionality.
