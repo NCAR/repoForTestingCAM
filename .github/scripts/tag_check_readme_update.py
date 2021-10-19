@@ -113,7 +113,7 @@ def end_script_fail(cam_pword, msg):
     """
 
     receiver_list = ["nusbaume@ucar.edu"]
-    email_msg(receiver_list, cam_pword, "Tag README update failure!", msg)
+    #email_msg(receiver_list, cam_pword, "Tag README update failure!", msg)
 
     print("\n{}\n".format(msg))
     print("README tag update script was un-successful.")
@@ -354,10 +354,10 @@ def _main_prog():
     #Google will turn off "non-approved" SMTP access for a gmail account
     #if not used regularly.  So send an email every time this action is
     #triggered and updates the README file to ensure that google keeps the access open:
-    email_msg(["nusbaume@ucar.edu"], cam_pword, "Tag README update success!", endmsg)
+    #email_msg(["nusbaume@ucar.edu"], cam_pword, "Tag README update success!", endmsg)
 
     #Print end message to Github Action stdout:
-    print(endmsg)
+    end_script_pass(endmsg)
 
 #############################################
 

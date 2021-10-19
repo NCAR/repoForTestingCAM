@@ -2,7 +2,9 @@ name: Python unit tests
 
 on:
   pull_request:
-   types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]
+    branches:
+      - '**'
 
 jobs:
   #This job is designed to run all python unit and doctests whenever
