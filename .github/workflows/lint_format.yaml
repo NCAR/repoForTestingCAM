@@ -3,11 +3,6 @@ name: Python linting and formatting
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    # Run the tests one more time, after the PR changes
-    # have been pushed.
-    branches:
-      - 'fake_development'
 
 jobs:
   #This job is designed to run tests on all source-code files
