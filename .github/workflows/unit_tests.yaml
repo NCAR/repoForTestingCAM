@@ -5,15 +5,19 @@ on:
     types: [opened, synchronize, reopened]
   push:
     # Run the tests one more time, after the PR changes
-    # have been pushed.
+    # have been pushed.  The if-statement below prevents
+    # the push from running on other repos.
     branches:
-      - 'NCAR/fake_development'
+      #Trigger workflow on push to any branch or branch heirarchy under NCAR/repoForTestingCAM:
+      - '**'
 
 jobs:
   #This job is designed to run all python unit and doctests whenever
   #a PR is either opened or synced (i.e. additional commits are pushed
-  #to branch involved in PR).
+  #to branch involved in PR), or once a PR has been merged (pushed) to
+  #a branch on the main repo.
   python_unit_tests:
+    if: github.event_name == 'pull_request' || github.repository == 'NCAR/repoForTestingCAM'
     runs-on: ubuntu-latest
     strategy:
       matrix:
