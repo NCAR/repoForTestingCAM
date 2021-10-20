@@ -1,5 +1,7 @@
 # repoForTestingCAM
 
+[![Python unit tests](https://github.com/NCAR/repoForTestingCAM/actions/workflows/unit_tests.yaml/badge.svg)](https://github.com/NCAR/repoForTestingCAM/actions/workflows/unit_tests.yaml)
+
 This repo is solely for testing purposes
 
 The information below is solely for testing CI/CD scripts, and has nothing to do with the actual code in this repo.
