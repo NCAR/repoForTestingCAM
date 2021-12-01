@@ -27,7 +27,7 @@ body:
       value: "A bug happened!"
     validations:
       required: true
- - type: input
+  - type: input
     id: ADF Hash
     attributes:
       label: ADF Hash you are using
