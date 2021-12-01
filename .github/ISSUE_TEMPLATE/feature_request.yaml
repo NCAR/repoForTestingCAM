@@ -29,7 +29,7 @@ body:
       placeholder: ex. We can solve everything by ...
     validations:
       required: true
- - type: dropdown
+  - type: dropdown
     id: assistance
     attributes:
       label: Assistance required?
