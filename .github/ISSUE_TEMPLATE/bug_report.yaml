@@ -8,7 +8,7 @@ body:
       value: |
         Thanks for taking the time to fill out this bug report!
   - type: dropdown
-    id: ADF run-type
+    id: adf-run-type
     attributes:
       label:  ADF run type
       description: Model vs. Model or Model vs Obs?
@@ -28,7 +28,7 @@ body:
     validations:
       required: true
   - type: input
-    id: ADF Hash
+    id: adf-hash
     attributes:
       label: ADF Hash you are using
       #description: Type "git log --oneline -1" and copy the first set of letters/numbers here
