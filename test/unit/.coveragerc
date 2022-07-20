@@ -1,9 +1,0 @@
-[run]
-branch = True
-omit = test_unit_*.py
-       test_sys_*.py
-       test_registry*.py
-       /usr/*
-       /opt/*
-       .local/*
-       */site-packages/*
