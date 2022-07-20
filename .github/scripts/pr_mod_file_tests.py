@@ -7,7 +7,10 @@ Goal:  To generate a list of files modified in the associated
        Github Pull Request (PR), using the PyGithub interface,
        and then to run tests on those files when appropriate.
 
-Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - September, 2020
+Note:  This version currently limit the tests to a subset of files,
+       in order to avoid running pylint on non-core python source files.
+
+Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - November, 2020
 """
 
 #+++++++++++++++++++++
@@ -30,7 +33,7 @@ from pylint_threshold_test import pylint_check
 
 class PrModTestFail(ValueError):
     """Class used to handle file test failures
-    (e.g., log user failures without backtrace)"""
+    (i.e., raise test failures without backtrace)"""
 
 #################
 #HELPER FUNCTIONS
@@ -134,6 +137,15 @@ def _main_prog():
 
     print("Generating list of modified files...")
 
+    #This should eventually be passed in via a command-line
+    #argument, and include everything inside the "lib" directory -JN:
+    testable_files = {"lib/adf_base.py",
+                      "lib/adf_config.py",
+                      "lib/adf_info.py",
+                      "lib/adf_obs.py",
+                      "lib/adf_web.py",
+                      "lib/adf_diag.py"}
+
     #+++++++++++++++++++++++
     #Read in input arguments
     #+++++++++++++++++++++++
@@ -157,7 +169,7 @@ def _main_prog():
     #++++++++++++++++++++
 
     #Official CAM repo:
-    cam_repo = ghub.get_repo("NCAR/repoForTestingCAM")
+    cam_repo = ghub.get_repo("NCAR/ADF")
 
     #++++++++++++++++++++++++++++++++++++++++++
     #Open Pull Request which triggered workflow
@@ -192,47 +204,69 @@ def _main_prog():
     #++++++++++++++++++++++++++++++++++++++++++++
     if pyfiles:
 
-        #Notify users of python files that will
-        #be tested:
-        print("The following modified python files will be tested:")
+        #Create list of files to be linted, and notify
+        # users of python files that will be tested:
+        lint_files = []
         for pyfile in pyfiles:
-            print(pyfile)
+            if pyfile in testable_files:
+                lint_files.append(pyfile)
+            else:
+                continue
 
-        #+++++++++++++++++++++++++
-        #Run pylint threshold test
-        #+++++++++++++++++++++++++
+        #++++++++++++++++++++++++++++++++++++++++++++++
+        #Check if any python files are in testable list
+        #++++++++++++++++++++++++++++++++++++++++++++++
+        if lint_files:
 
-        lint_msgs = pylint_check(pyfiles, rcfile,
-                                 threshold=pylev)
+            #Notify users of python files that will be tested:
+            print("The following modified python files will be tested:")
+            for lint_file in lint_files:
+                print(lint_file)
 
-        #++++++++++++++++++
-        #Check test results
-        #++++++++++++++++++
+            #+++++++++++++++++++++++++
+            #Run pylint threshold test
+            #+++++++++++++++++++++++++
 
-        #If pylint check lists are non-empty, then
-        #a test has failed, and an exception should
-        #be raised with the relevant pytlint info:
-        if lint_msgs:
-            #Print pylint results for failed tests to screen:
-            print("+++++++++++PYLINT FAILURE MESSAGES+++++++++++++")
-            for lmsg in lint_msgs:
-                print(lmsg)
-            print("+++++++++++++++++++++++++++++++++++++++++++++++")
+            lint_msgs = pylint_check(lint_files, rcfile,
+                                     threshold=pylev)
 
-            #Raise test failure exception:
-            fail_msg = "One or more files are below allowed pylint " \
-                       "score of {}.\nPlease see pylint message(s) " \
-                       "above for possible fixes."
-            raise PrModTestFail(fail_msg)
+            #++++++++++++++++++
+            #Check test results
+            #++++++++++++++++++
+
+            #If pylint check lists are non-empty, then
+            #a test has failed, and an exception should
+            #be raised with the relevant pytlint info:
+            if lint_msgs:
+                #Print pylint results for failed tests to screen:
+                print("+++++++++++PYLINT FAILURE MESSAGES+++++++++++++")
+                for lmsg in lint_msgs:
+                    print(lmsg)
+                print("+++++++++++++++++++++++++++++++++++++++++++++++")
+
+                #Raise test failure exception:
+                fail_msg = "One or more files are below allowed pylint " \
+                           "score of {}.\nPlease see pylint message(s) " \
+                           "above for possible fixes.".format(pylev)
+                raise PrModTestFail(fail_msg)
+            else:
+                #All tests have passed, so exit normally:
+                print("All pylint tests passed!")
+                sys.exit(0)
+
+        #If no python files in set of testable_files, then exit script:
         else:
-            #All tests have passed, so exit normally:
-            print("All pylint tests passed!")
+            print("No ADF classes were modified in PR, so there is nothing to test.")
             sys.exit(0)
+
+         #End if (lint_files)
 
     #If no python files exist in PR, then exit script:
     else:
         print("No python files present in PR, so there is nothing to test.")
         sys.exit(0)
+
+    #End if (pyfiles)
 
 #############################################
 

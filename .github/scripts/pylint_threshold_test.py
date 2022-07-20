@@ -7,7 +7,7 @@ Purpose:  To test whether the provided list of python
           files pass a pylint check at the specified
           score threshold.
 
-Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - October, 2020
+Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - November, 2020
 """
 
 #+++++++++++++++++++++

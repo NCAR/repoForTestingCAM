@@ -1,6 +1,6 @@
 name: Feature Request
 description: File a request for a new feature
-title: ""
+title: "Put feature request title here!"
 labels: ["enhancement"]
 body:
   - type: markdown
@@ -19,6 +19,7 @@ body:
         - New regridding method or regridding enhancement
         - New climatology method or climatology enhancement
         - New infrastructure or infrastructure enhancement
+        - Other (please explain below)
     validations:
       required: true
   - type: textarea
@@ -29,7 +30,7 @@ body:
       placeholder: ex. We can solve everything by ...
     validations:
       required: true
- - type: dropdown
+  - type: dropdown
     id: assistance
     attributes:
       label: Assistance required?
