@@ -7,7 +7,7 @@ Goal:  To generate a list of files modified in the associated
        Github Pull Request (PR), using the PyGithub interface,
        and then to run tests on those files when appropriate.
 
-Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - September, 2020
+Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - November, 2020
 """
 
 #+++++++++++++++++++++
@@ -16,8 +16,6 @@ Written by:  Jesse Nusbaumer <nusbaume@ucar.edu> - September, 2020
 
 import sys
 import os
-import subprocess
-import shlex
 import argparse
 
 from stat import S_ISREG
@@ -30,7 +28,7 @@ from pylint_threshold_test import pylint_check
 
 class PrModTestFail(ValueError):
     """Class used to handle file test failures
-    (e.g., log user failures without backtrace)"""
+    (i.e., raise test failures without backtrace)"""
 
 #################
 #HELPER FUNCTIONS
@@ -63,7 +61,7 @@ def _file_is_python(filename):
             #If no ".py" extension exists, then
             #open the file and look for a shabang
             #that contains the word "python".
-            with open(filename, "r") as mod_file:
+            with open(filename, "r", encoding='utf-8') as mod_file:
                 #Loop over lines in file:
                 for line in mod_file:
 
@@ -170,7 +168,7 @@ def _main_prog():
     #++++++++++++++++++++++++++++++
 
     #Create empty list to store python files:
-    pyfiles = list()
+    pyfiles = []
 
     #Extract Github file objects:
     file_obj_list = pull_req.get_files()
@@ -220,14 +218,14 @@ def _main_prog():
             print("+++++++++++++++++++++++++++++++++++++++++++++++")
 
             #Raise test failure exception:
-            fail_msg = "One or more files are below allowed pylint " \
-                       "score of {}.\nPlease see pylint message(s) " \
-                       "above for possible fixes."
+            fail_msg = "One or more files are below allowed pylint "
+            fail_msg += f"score of {pylev}.\nPlease see pylint message(s) "
+            fail_msg += "above for possible fixes."
             raise PrModTestFail(fail_msg)
-        else:
-            #All tests have passed, so exit normally:
-            print("All pylint tests passed!")
-            sys.exit(0)
+
+        #All tests have passed, so exit normally:
+        print("All pylint tests passed!")
+        sys.exit(0)
 
     #If no python files exist in PR, then exit script:
     else:

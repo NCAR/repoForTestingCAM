@@ -1,0 +1,426 @@
+<?xml version="1.0"?>
+
+<entry_id_pg version="0.1">
+
+<!-- Initial Conditions -->
+
+  <entry id="ncdata">
+    <type>char*256</type>
+    <category>initial_conditions</category>
+    <group>cam_initfiles_nl</group>
+    <desc>
+      Full pathname of initial atmospheric state dataset (NetCDF format).
+      Default: UNSET_PATH
+    </desc>
+    <values>
+      <value>UNSET_PATH</value>
+      <value analytic_ic="1" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/cam_vcoords_L26_c180105.nc</value>
+      <value analytic_ic="1" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/cam_vcoords_L30_c180105.nc</value>
+      <value analytic_ic="1" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/cam_vcoords_L32_c180105.nc</value>
+      <value dyn="fv" hgrid="0.23x0.31" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-01-01_0.23x0.31_L26_c100513.nc</value>
+      <value dyn="fv" hgrid="0.23x0.31" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-09-01_0.23x0.31_L26_c061106.nc</value>
+      <value dyn="fv" hgrid="0.47x0.63" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_1980-01-01_0.47x0.63_L26_c071226.nc</value>
+      <value dyn="fv" hgrid="0.47x0.63" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-09-01_0.47x0.63_L26_c061106.nc</value>
+      <value dyn="fv" hgrid="0.5x0.625" ic_ymd="1001" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-10-01_0.5x0.625_L26_c031204.nc</value>
+      <value dyn="fv" hgrid="0.9x1.25" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_1987-01-01_0.9x1.25_L26_c060703.nc</value>
+      <value dyn="fv" hgrid="0.9x1.25" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-09-01_0.9x1.25_L26_c051205.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-01-01_1.9x2.5_L26_c070408.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-09-01_1.9x2.5_L26_c040809.nc</value>
+      <value dyn="fv" hgrid="2.5x3.33" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-01-01_2.5x3.33_L26_c110309.nc</value>
+      <value dyn="fv" hgrid="2.5x3.33" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-09-01_2.5x3.33_L26_c091007.nc</value>
+      <value dyn="fv" hgrid="4x5" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0001-01-01_4x5_L26_c060608.nc</value>
+      <value dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-01-01_10x15_L26_c030918.nc</value>
+      <value dyn="fv" hgrid="0.23x0.31" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-mam3_0000-01-01_0.23x0.31_L30_c110527.nc</value>
+      <value dyn="fv" hgrid="0.47x0.63" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-mam3_0000-01-01_0.47x0.63_L30_c100929.nc</value>
+      <value dyn="fv" hgrid="0.9x1.25" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-mam3_0000-01-01_0.9x1.25_L30_c100618.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-mam3_0000-01-01_1.9x2.5_L30_c090306.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="901" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-09-01_1.9x2.5_L30_c070109.nc</value>
+      <value dyn="fv" hgrid="2.5x3.33" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-01-01_2.5x3.33_L30_c110309.nc</value>
+      <value dyn="fv" hgrid="2.5x3.33" ic_ymd="901" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-09-01_2.5x3.33_L30_c100831.nc</value>
+      <value dyn="fv" hgrid="4x5" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-01-01_4x5_L30_c090108.nc</value>
+      <value dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-01-01_10x15_L30_c081013.nc</value>
+      <value dyn="fv" hgrid="0.9x1.25" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-mam3_0000-01-01_0.9x1.25_L32_c141031.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-mam3_0000-01-01_1.9x2.5_L32_c150407.nc</value>
+      <value dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-mam4_0000-01-01_10x15_L32_c170914.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="0.47x0.63" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami_0000-01-01_0.47x0.63_L26_APE_c080227.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="0.9x1.25" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0006-01-01_0.9x1.25_L26_c161020.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0006-01-01_1.9x2.5_L26_c161020.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0000-01-01_10x15_L26_c161230.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="0.9x1.25" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0006-01-01_0.9x1.25_L30_c161020.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0006-01-01_1.9x2.5_L30_c161020.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0000-01-01_10x15_L30_c170103.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="0.9x1.25" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0006-01-01_0.9x1.25_L32_c161020.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0006-01-01_1.9x2.5_L32_c161020.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/fv/aqua_0000-01-01_10x15_L32_c170103.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="0.9x1.25" ic_ymd="19900101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-chem_1990-01-01_0.9x1.25_L30_c080724.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="1.9x2.5" ic_ymd="19900101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-chem_1990-01-01_1.9x2.5_L26_c080114.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="1.9x2.5" ic_ymd="19900101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/cami-chem_1990-01-01_1.9x2.5_L30_c080215.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/camchemi_0012-01-01_10x15_L26_c081104.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/camchemi_0012-01-01_10x15_L30_c081104.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="4x5" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/camchemi_0012-01-01_4x5_L26_c081104.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="4x5" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/camchemi_0012-01-01_4x5_L30_c081104.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/fv/camchemi_0012-01-01_1.9x2.5_L26_c081104.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/camchemi_0012-01-01_1.9x2.5_L30_c081104.nc</value>
+      <value chem="trop_strat_mam4_vbs" dyn="fv" hgrid="10x15" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/trop_strat_mam3_chem_2000-01-01_10x15_L30_c121015.nc</value>
+      <value chem="trop_strat_mam4_vbs" dyn="fv" hgrid="4x5" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/trop_strat_mam3_chem_2000-01-01_4x5_L30_c121015.nc</value>
+      <value chem="trop_strat_mam4_vbs" dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/fv/trop_strat_mam3_chem_2000-01-01_1.9x2.5_L30_c121015.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="4x5" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/chem/trop_mozart/ic/cami_0000-09-01_4x5_L26_c060217.nc</value>
+      <value chem="trop_mozart" dyn="fv" hgrid="10x15" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/chem/trop_mozart/ic/cami_0000-09-01_10x15_L26_c060216.nc</value>
+      <value dyn="fv" hgrid="0.9x1.25" ic_ymd="20000201" nlev="66">${DIN_LOC_ROOT}/atm/waccm/ic/cami_2000-02-01_0.9x1.25_L66_c040928.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="20000701" nlev="66">${DIN_LOC_ROOT}/atm/waccm/ic/cami_2000-07-01_1.9x2.5_L66_c040928.nc</value>
+      <value dyn="fv" hgrid="0.9x1.25" nlev="70">${DIN_LOC_ROOT}/atm/waccm/ic/FWT2000_f09_spinup01.cam.i.0001-01-02-00000_c160315.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="20000101" nlev="70">${DIN_LOC_ROOT}/atm/waccm/ic/f2000.waccm-mam3_1.9x2.5_L70.cam2.i.0017-01-01.c120410.nc</value>
+      <value dyn="fv" hgrid="10x15" ic_ymd="20000101" nlev="70">${DIN_LOC_ROOT}/atm/waccm/ic/f2000.waccm-mam3_10x15_L70.cam2.i.0017-01-01.c141016.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="18500101" nlev="70">${DIN_LOC_ROOT}/atm/waccm/ic/b1850.waccm-mam3_1.9x2.5_L70.cam2.i.0156-01-01.c120523.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="20000501" nlev="103">${DIN_LOC_ROOT}/atm/waccm/ic/cami_2000-05-01_1.9x2.5_L103_c040928.nc</value>
+      <value dyn="fv" hgrid="4x5" ic_ymd="19600101" nlev="66">${DIN_LOC_ROOT}/atm/waccm/ic/wa3_4x5_1950_spinup.cam2.i.1960-01-01-00000.nc</value>
+      <value dyn="fv" hgrid="10x15" ic_ymd="20000101" nlev="66">${DIN_LOC_ROOT}/atm/waccm/ic/cami_2000-01-01_10x15_L66_c041121.nc</value>
+      <value chem="waccm_ma_sulfur" dyn="fv" hgrid="4x5" ic_ymd="20000101" nlev="66">${DIN_LOC_ROOT}/atm/waccm/ic/f40.2000.4deg.wcm.carma.sulf.004.cam2.i.0008-01-01-00000.nc</value>
+      <value chem="waccm_ma_sulfur" dyn="fv" hgrid="1.9x2.5" ic_ymd="20100101" nlev="66">${DIN_LOC_ROOT}/atm/waccm/ic/f40.2deg.wcm.carma.sulf.L66.cam2.i.2010-01-01.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" ic_ymd="20000101" nlev="81" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/WAX3548T08CO_2003top_f2000.waccm_0017bottom_L81_c110906.nc</value>
+      <value dyn="fv" hgrid="4x5" ic_ymd="20000101" nlev="81" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/WAX3548T08CO_2003top_f2000.waccm_0017bottom_4x5_L81_c160630.nc</value>
+      <value dyn="fv" hgrid="10x15" ic_ymd="20000101" nlev="81" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/WAX3548T08CO_2003top_f2000.waccm_0017bottom_10x15_L81_c141027.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="4x5" ic_ymd="10101" nlev="126" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/waccmx_aqua_4x5_L126_c170705.nc</value>
+      <value dyn="fv" hgrid="0.9x1.25" nlev="126" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/fx2000_0.9x1.25_126lev_0002-01-01-00000_c181221.nc</value>
+      <value dyn="fv" hgrid="1.9x2.5" nlev="130" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/wcmx-cam6-phys_1.9x2.5_130lev_2000_c181115.nc</value>
+      <value dyn="fv" hgrid="0.9x1.25" nlev="130" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/wcmx-cam6-phys_0.9x1.25_130lev_2000_c190122.nc</value>
+      <value dyn="fv" hgrid="0.47x0.63" nlev="130" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/FC6X2000_f05_spinup01.cam.i.0002-01-01-00000_c190711.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="4x5" ic_ymd="10101" nlev="130" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/waccmx_mam4_aqua_4x5_L130_c180803.nc</value>
+      <value aquaplanet="1" dyn="fv" hgrid="1.9x2.5" ic_ymd="10101" nlev="130" waccmx="1">${DIN_LOC_ROOT}/atm/waccm/ic/waccmx_mam4_aqua_1.9x2.5_L130_c180803.nc</value>
+      <value dyn="eul" hgrid="512x1024" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/T341clim01.cam2.i.0024-01-01-00000.nc</value>
+      <value dyn="eul" hgrid="256x512" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_256x512_L26_c030918.nc</value>
+      <value dyn="eul" hgrid="128x256" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_128x256_L26_c030918.nc</value>
+      <value dyn="eul" hgrid="128x256" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-09-01_128x256_L26_c040422.nc</value>
+      <value hgrid="64x128" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_64x128_T42_L26_c031110.nc</value>
+      <value hgrid="64x128" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-09-01_64x128_L26_c030918.nc</value>
+      <value hgrid="64x128" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_64x128_L30_c090102.nc</value>
+      <value hgrid="64x128" ic_ymd="901" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-09-01_64x128_L30_c031210.nc</value>
+      <value hgrid="64x128" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_64x128_L32_c170510.nc</value>
+      <value hgrid="48x96" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_48x96_L26_c091218.nc</value>
+      <value dyn="eul" hgrid="48x96" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-09-01_48x96_L26_c040420.nc</value>
+      <value hgrid="48x96" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_48x96_L30_c100426.nc</value>
+      <value hgrid="32x64" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-09-01_32x64_L26_c030918.nc</value>
+      <value hgrid="32x64" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_32x64_L30_c090107.nc</value>
+      <value hgrid="8x16" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_8x16_L26_c030228.nc</value>
+      <value hgrid="8x16" ic_ymd="901" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-09-01_8x16_L26_c030918.nc</value>
+      <value hgrid="8x16" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-01-01_8x16_L30_c090102.nc</value>
+      <value dyn="se" hgrid="ne5np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/homme/cami-mam3_0000-01_ne5np4_L30.140707.nc</value>
+      <value dyn="se" hgrid="ne16np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne16np4_L26_c171020.nc</value>
+      <value dyn="se" hgrid="ne16np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne16np4_L30_c171020.nc</value>
+      <value dyn="se" hgrid="ne16np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne16np4_L32_c171020.nc</value>
+      <value dyn="se" hgrid="ne30np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne30np4_L26_c171020.nc</value>
+      <value dyn="se" hgrid="ne30np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne30np4_L30_c171020.nc</value>
+      <value dyn="se" hgrid="ne30np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam6_ne30np4_L32_c171023.nc</value>
+      <value dyn="se" hgrid="ne60np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne60np4_L26_c171018.nc</value>
+      <value dyn="se" hgrid="ne60np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne60np4_L30_c171020.nc</value>
+      <value dyn="se" hgrid="ne60np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne60np4_L32_c171020.nc</value>
+      <value dyn="se" hgrid="ne120np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne120np4_L26_c171018.nc</value>
+      <value dyn="se" hgrid="ne120np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne120np4_L30_c171024.nc</value>
+      <value dyn="se" hgrid="ne120np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_topo_cam4_ne120np4_L32_c171023.nc</value>
+      <value dyn="se" hgrid="ne240np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/homme/cami_1850-01-01_ne240np4_L26_c110314.nc</value>
+      <value dyn="se" hgrid="ne240np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/homme/cami_0000-09-01_ne240np4_L26_c061106.nc</value>
+      <value dyn="se" hgrid="ne240np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/homme/cami-mam3_0000-01-ne240np4_L30_c111004.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne5np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam4_ne5np4_L26_c170517.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne16np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam4_ne16np4_L26_c170417.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne30np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam4_ne30np4_L26_c170417.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne60np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam4_ne60np4_L26_c171023.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne120np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam4_ne120np4_L26_c170419.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne240np4" ic_ymd="10101" nlev="26">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam4_ne240np4_L26_c170613.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne5np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam5_ne5np4_L30_c170517.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne16np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam5_ne16np4_L30_c170417.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne30np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam5_ne30np4_L30_c170417.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne120np4" ic_ymd="10101" nlev="30">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam5_ne120np4_L30_c170419.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne5np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam6_ne5np4_L32_c170517.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne16np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam6_ne16np4_L32_c170509.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne30np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam6_ne30np4_L32_c170509.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne120np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam6_ne120np4_L32_c170908.nc</value>
+      <value aquaplanet="1" dyn="se" hgrid="ne240np4" ic_ymd="10101" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/ape_cam6_ne240np4_L32_c170908.nc</value>
+      <value dyn="se" hgrid="ne0np4CONUS.ne30x8" nlev="32">${DIN_LOC_ROOT}/atm/cam/inic/se/f2000_conus_ne30x8_L32_c190712.nc</value>
+      <value dyn="se" hgrid="ne5np4" nlev="66">${DIN_LOC_ROOT}/atm/waccm/ic/wa3_ne5np4_1950_spinup.cam2.i.1960-01-01-00000_c150810.nc</value>
+      <value dyn="se" hgrid="ne30np4" nlev="70" sim_year="1850">${DIN_LOC_ROOT}/atm/waccm/ic/waccm5_1850_ne30np4_L70_0001-01-11-00000_c151217.nc</value>
+      <value dyn="se" hgrid="ne30np4" nlev="70">${DIN_LOC_ROOT}/atm/waccm/ic/fw2000_ne30np4_L70_c181221.nc</value>
+      <value hgrid="64x128" nlev="30" scam="1">${DIN_LOC_ROOT}/atm/cam/inic/gaus/cami_0000-09-01_64x128_L30_c031210.nc</value>
+    </values>
+  </entry>
+  <entry id="pertlim">
+    <type>real</type>
+    <category>initial_conditions</category>
+    <group>cam_initfiles_nl</group>
+    <desc>
+      Perturb the initial conditions for temperature randomly by up to the given
+      amount. Only applied for initial simulations.
+      Default: 0.0
+    </desc>
+    <values>
+      <value>0.0</value>
+    </values>
+  </entry>
+  <entry id="cam_branch_file">
+    <type>char*256</type>
+    <category>initial_conditions</category>
+    <group>cam_initfiles_nl</group>
+    <desc>
+      Full pathname of master restart file from which to branch. Setting is
+      Required for branch run.
+      Default: none
+    </desc>
+    <values>
+      <value>UNSET_PATH</value>
+    </values>
+  </entry>
+  <entry id="unset_path_str">
+    <type>char*80</type>
+    <category>initial_conditions</category>
+    <group>cam_initfiles_nl</group>
+    <desc>
+    </desc>
+    <values>
+      <value>UNSET_PATH</value>
+    </values>
+  </entry>
+
+<!-- Topography -->
+
+  <entry id="bnd_topo">
+    <type>char*256</type>
+    <category>topo</category>
+    <group>cam_initfiles_nl</group>
+    <desc>
+      Full pathname of time-invariant boundary dataset for topography fields.
+      Default: UNSET_PATH
+    </desc>
+    <values>
+      <value>UNSET_PATH</value>
+      <value hgrid="256x512">${DIN_LOC_ROOT}/atm/cam/topo/topo-from-cami_0000-01-01_256x512_L26_c030918.nc</value>
+      <value hgrid="128x256">${DIN_LOC_ROOT}/atm/cam/topo/USGS-gtopo30_128x256_c050520.nc</value>
+      <value hgrid="64x128">${DIN_LOC_ROOT}/atm/cam/topo/T42_nc3000_Co060_Fi001_PF_nullRR_Nsw042_20180111.nc</value>
+      <value hgrid="48x96">${DIN_LOC_ROOT}/atm/cam/topo/USGS-gtopo30_48x96_c050520.nc</value>
+      <value hgrid="32x64">${DIN_LOC_ROOT}/atm/cam/topo/USGS-gtopo30_32x64_c050520.nc</value>
+      <value hgrid="8x16">${DIN_LOC_ROOT}/atm/cam/topo/USGS-gtopo30_8x16_c050520.nc</value>
+      <value hgrid="0.23x0.31">${DIN_LOC_ROOT}/atm/cam/topo/USGS_gtopo30_0.23x0.31_remap_c061107.nc</value>
+      <value hgrid="0.47x0.63">${DIN_LOC_ROOT}/atm/cam/topo/USGS_gtopo30_0.47x0.63_remap_c061106.nc</value>
+      <value hgrid="0.47x0.63" phys="cam6">${DIN_LOC_ROOT}/atm/cam/topo/fv_0.47x0.63_nc3000_Co030_Fi001_PF_nullRR_Nsw021_20171023.nc</value>
+      <value hgrid="0.5x0.625">${DIN_LOC_ROOT}/atm/cam/topo/topo-from-cami_0000-10-01_0.5x0.625_L26_c031204.nc</value>
+      <value hgrid="0.9x1.25">${DIN_LOC_ROOT}/atm/cam/topo/fv_0.9x1.25_nc3000_Nsw042_Nrs008_Co060_Fi001_ZR_sgh30_24km_GRNL_c170103.nc</value>
+      <value hgrid="1.9x2.5">${DIN_LOC_ROOT}/atm/cam/topo/fv_1.9x2.5_nc3000_Nsw084_Nrs016_Co120_Fi001_ZR_GRNL_c190405.nc</value>
+      <value hgrid="2.5x3.33">${DIN_LOC_ROOT}/atm/cam/topo/USGS-gtopo30_2.5x3.33_remap_c100204.nc</value>
+      <value hgrid="4x5">${DIN_LOC_ROOT}/atm/cam/topo/USGS-gtopo30_4x5_remap_c050520.nc</value>
+      <value hgrid="10x15">${DIN_LOC_ROOT}/atm/cam/topo/fv_10x15_nc0540_Nsw042_Nrs008_Co060_Fi001_20171220.nc</value>
+      <value hgrid="ne5np4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne5np4_nc3000_Co360_Fi001_MulG_PF_nullRR_Nsw064_20170515.nc</value>
+      <value hgrid="ne16np4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne16np4_nc3000_Co120_Fi001_PF_nullRR_Nsw084_20171012.nc</value>
+      <value hgrid="ne30np4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne30np4_nc3000_Co060_Fi001_PF_nullRR_Nsw042_20171020.nc</value>
+      <value hgrid="ne60np4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne60np4_nc3000_Co030_Fi001_PF_nullRR_Nsw021_20171012.nc</value>
+      <value hgrid="ne120np4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne120np4_nc3000_Co015_Fi001_PF_nullRR_Nsw010_20171011.nc</value>
+      <value hgrid="ne240np4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne240np4_nc3000_Co008_Fi001_PF_nullRR_Nsw005_20171014.nc</value>
+      <value hgrid="ne5np4" npg="2">${DIN_LOC_ROOT}/atm/cam/topo/se/ne5pg2_nc3000_Co360_Fi001_MulG_PF_nullRR_Nsw060_20170706.nc</value>
+      <value hgrid="ne30np4" npg="2">${DIN_LOC_ROOT}/atm/cam/topo/se/ne30pg2_nc3000_Co060_Fi001_PF_nullRR_Nsw042_20171014.nc</value>
+      <value hgrid="ne60np4" npg="2">${DIN_LOC_ROOT}/atm/cam/topo/se/ne60pg2_nc3000_Co030_Fi001_PF_nullRR_Nsw021_20171014.nc</value>
+      <value hgrid="ne120np4" npg="2">${DIN_LOC_ROOT}/atm/cam/topo/se/ne120pg2_nc3000_Co015_Fi001_PF_nullRR_Nsw010_20171012.nc</value>
+      <value hgrid="ne240np4" npg="2">${DIN_LOC_ROOT}/atm/cam/topo/se/ne240pg2_nc3000_Co008_Fi001_PF_nullRR_Nsw005_20171014.nc</value>
+      <value hgrid="ne5np4" npg="3">${DIN_LOC_ROOT}/atm/cam/topo/se/ne5pg3_nc3000_Co360_Fi001_MulG_PF_nullRR_Nsw064_20170516.nc</value>
+      <value hgrid="ne16np4" npg="3">${DIN_LOC_ROOT}/atm/cam/topo/se/ne16pg3_nc3000_Co120_Fi001_PF_nullRR_Nsw084_20171012.nc</value>
+      <value hgrid="ne30np4" npg="3">${DIN_LOC_ROOT}/atm/cam/topo/se/ne30pg3_nc3000_Co060_Fi001_PF_nullRR_Nsw042_20171014.nc</value>
+      <value hgrid="ne60np4" npg="3">${DIN_LOC_ROOT}/atm/cam/topo/se/ne60pg3_nc3000_Co030_Fi001_PF_nullRR_Nsw021_20171012.nc</value>
+      <value hgrid="ne120np4" npg="3">${DIN_LOC_ROOT}/atm/cam/topo/se/ne120pg3_nc3000_Co015_Fi001_PF_nullRR_Nsw010_20171014.nc</value>
+      <value hgrid="ne240np4" npg="3">${DIN_LOC_ROOT}/atm/cam/topo/se/ne240pg3_nc3000_Co008_Fi001_PF_nullRR_Nsw005_20171015.nc</value>
+      <value hgrid="ne5np4" npg="4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne5pg4_nc3000_Co360_Fi001_MulG_PF_nullRR_Nsw060_20170707.nc</value>
+      <value hgrid="ne30np4" npg="4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne30pg4_nc3000_Co060_Fi001_PF_nullRR_Nsw042_20171014.nc</value>
+      <value hgrid="ne60np4" npg="4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne60pg4_nc3000_Co030_Fi001_PF_nullRR_Nsw021_20171018.nc</value>
+      <value hgrid="ne120np4" npg="4">${DIN_LOC_ROOT}/atm/cam/topo/se/ne120pg4_nc3000_Co015_Fi001_PF_nullRR_Nsw010_20171014.nc</value>
+      <value hgrid="ne0np4CONUS.ne30x8">${DIN_LOC_ROOT}/atm/cam/topo/se/ne30x8_conus_nc3000_Co060_Fi001_MulG_PF_nullRR_Nsw042_20190710.nc</value>
+      <value analytic_ic="1">UNSET_PATH</value>
+      <value analytic_ic="1" npg="2">UNSET_PATH</value>
+      <value analytic_ic="1" npg="3">UNSET_PATH</value>
+      <value analytic_ic="1" npg="4">UNSET_PATH</value>
+    </values>
+  </entry>
+
+<!-- Host model physics settings -->
+
+  <entry id="ncdata_check">
+    <type>char*256</type>
+    <category>initial_conditions</category>
+    <group>physics_nl</group>
+    <desc>
+      Full pathname of atmospheric state dataset for comparison/check (NetCDF format).
+      If not UNSET_PATH, the physics check tool will run and print out stats every timestep.
+      Default: UNSET_PATH
+    </desc>
+    <values>
+      <value>UNSET_PATH</value>
+    </values>
+  </entry>
+  <entry id="min_difference">
+    <type>real</type>
+    <category>diagnostics</category>
+    <group>physics_nl</group>
+    <desc>
+      Controls processing of comparison between physics outputs and data from `{{ hilight }}ncdata_check{{ closehilight }}`.
+      Threshold over which differences are counted in the physics check process.
+      Default: 0
+    </desc>
+    <values>
+      <value>0.0</value>
+    </values>
+  </entry>
+  <entry id="min_relative_value">
+    <type>real</type>
+    <category>diagnostics</category>
+    <group>physics_nl</group>
+    <desc>
+      Controls processing of comparison between physics outputs and data from `{{ hilight }}ncdata_check{{ closehilight }}`.
+      Threshold under which the absolute difference is calculated rather than the relative difference.
+      Default: 1e-5
+    </desc>
+    <values>
+      <value>1.e-5</value>
+    </values>
+  </entry>
+  <entry id="cam_take_snapshot_before">
+    <type>char*32</type>
+    <category>diagnostics</category>
+    <group>physics_nl</group>
+    <desc>
+      Name of parameterization to take snapshot before running
+      Default: none
+    </desc>
+    <values>
+      <value>none</value>
+    </values>
+  </entry>
+  <entry id="cam_take_snapshot_after">
+    <type>char*32</type>
+    <category>diagnostics</category>
+    <group>physics_nl</group>
+    <desc>
+      Name of parameterization to take snapshot after running
+      Default: none
+    </desc>
+    <values>
+      <value>none</value>
+    </values>
+  </entry>
+  <entry id="cam_physics_mesh">
+    <type>char*256</type>
+    <category>build</category>
+    <group>physics_nl</group>
+    <desc>
+      Full pathname to CAM physics grid ESMF mesh file.
+    </desc>
+    <values>
+      <value>UNSET_PATH</value>
+    </values>
+  </entry>
+  <entry id="physics_suite">
+    <type>char*256</type>
+    <category>build</category>
+    <group>physics_nl</group>
+    <desc>
+      Name of CCPP physics suite being used.
+
+      This variable is usually set by the model
+      itself unless running with multiple physics
+      suites, in which case it must be specified
+      by the user in 'user_nl_cam'.
+
+      This variable will also set the value of the
+      'phys_suite' namelist XML attribute.
+    </desc>
+    <values>
+      <value>UNSET</value>
+    </values>
+  </entry>
+
+<!-- Vertical Coordinate -->
+
+  <entry id="pver">
+    <type>integer</type>
+    <category>vert_coord</category>
+    <group>vert_coord_nl</group>
+    <desc>
+      Number of model vertical levels.
+      Default: 30
+
+      Please note that changing this variable
+      will likely change other namelist variables
+      via the "nlev" attribute.
+    </desc>
+    <values>
+      <value>30</value>
+      <value phys_suite="cam4">26</value>
+      <value phys_suite="cam5">30</value>
+      <value phys_suite="cam6">32</value>
+    </values>
+  </entry>
+
+<!-- Reference Pressures -->
+
+  <entry id="trop_cloud_top_press">
+    <type>real</type>
+    <category>press_lim</category>
+    <group>ref_pres_nl</group>
+    <desc>
+      Troposphere cloud physics will be done only below the top defined
+      by this pressure (Pa).
+    </desc>
+    <values>
+      <value>1.D2</value>
+    </values>
+  </entry>
+  <entry id="clim_modal_aero_top_press">
+    <type>real</type>
+    <category>press_lim</category>
+    <group>ref_pres_nl</group>
+    <desc>
+      MAM affects climate only below the top defined by this pressure (Pa).
+    </desc>
+    <values>
+      <value>1.D-4</value>
+    </values>
+  </entry>
+  <entry id="do_molec_press">
+    <type>real</type>
+    <category>press_lim</category>
+    <group>ref_pres_nl</group>
+    <desc>
+      Molecular diffusion will be done only if the lowest pressure is
+      below this limit (Pa).
+    </desc>
+    <values>
+      <value>0.1D0</value>
+    </values>
+  </entry>
+  <entry id="molec_diff_bot_press">
+    <type>real</type>
+    <category>press_lim</category>
+    <group>ref_pres_nl</group>
+    <desc>
+      The level closest to this pressure (Pa) is the bottom of the region
+      where molecular diffusion is done.
+    </desc>
+    <values>
+      <value>50.D0</value>
+    </values>
+  </entry>
+
+<!-- Debug flag -->
+
+  <entry id="debug_output">
+    <type>integer</type>
+    <category>diagnostics</category>
+    <group>cam_logfile_nl</group>
+    <valid_values>0,1,2,3</valid_values>
+    <desc>
+      Include exra checks and logging output.
+      0: No extra checks or output
+      1: Extra informational output
+      2: Level 1 plus extra checks and informational output
+      3: All available checks and output
+    </desc>
+    <values>
+      <value>0</value>
+      <value debug="1">2</value>
+    </values>
+  </entry>
+
+</entry_id_pg>
