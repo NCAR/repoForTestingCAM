@@ -2,6 +2,8 @@
 
 [![ADF Framework Unit Tests](https://github.com/NCAR/repoForTestingCAM/actions/workflows/ADF_unit_tests.yaml/badge.svg)](https://github.com/NCAR/repoForTestingCAM/actions/workflows/ADF_unit_tests.yaml)
 
+[![Python Unit Tests](https://github.com/NCAR/repoForTestingCAM/actions/workflows/python_unit_tests.yml/badge.svg)](https://github.com/NCAR/repoForTestingCAM/actions/workflows/python_unit_tests.yml)
+
 This repo is solely for testing purposes
 
 The information below is solely for testing CI/CD scripts, and has nothing to do with the actual code in this repo.
