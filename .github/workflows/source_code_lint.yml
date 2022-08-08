@@ -7,9 +7,9 @@ on:
 jobs:
   #This job is designed to run linting and formatting tests
   #on all source-code files modified by the Pull Request (PR).
-  #This is done by running a master python script which collects
-  #all modified files, and then passes those files off to
-  #additional scripts to run the actual tests.
+  #This is done by running a top-level python script which
+  #collects all modified files, and then passes those files
+  #off to additional scripts to run the actual tests.
   source_code_tests:
     runs-on: ubuntu-latest
     steps:
