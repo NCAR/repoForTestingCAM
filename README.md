@@ -1,6 +1,6 @@
 # repoForTestingCAM
 
-[![Python unit tests](https://github.com/NCAR/repoForTestingCAM/actions/workflows/unit_tests.yaml/badge.svg)](https://github.com/NCAR/repoForTestingCAM/actions/workflows/unit_tests.yaml)
+[![ADF Framework Unit Tests](https://github.com/NCAR/repoForTestingCAM/actions/workflows/ADF_unit_tests.yaml/badge.svg)](https://github.com/NCAR/repoForTestingCAM/actions/workflows/ADF_unit_tests.yaml)
 
 This repo is solely for testing purposes
 
