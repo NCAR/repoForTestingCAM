@@ -25,6 +25,7 @@ import sys
 import shutil
 import glob
 import filecmp
+from collections.abc import Iterable
 
 #Python unit-testing library:
 import unittest
@@ -56,8 +57,7 @@ sys.path.append(_CCPP_DIR)
 from cam_autogen import CamAutoGenError
 from cam_autogen import _update_file, _find_schemes_in_sdf
 from cam_autogen import _find_metadata_files, generate_registry
-from cam_autogen import generate_physics_suites, generate_physics_suites
-from cam_autogen import generate_init_routines
+from cam_autogen import generate_physics_suites, generate_init_routines
 
 #Import necessary CCPP framework functions:
 from parse_tools import read_xml_file
@@ -77,15 +77,20 @@ class FakeBuildCache:
     functions.
     """
 
+    # pylint: disable=unused-argument
+    # pylint: disable=no-self-use
     def __init__(self):
         pass
 
     def update_registry(self, gen_reg_file, registry_files,
                         dycore, reg_config):
-        pass
+
+        """Fake version of 'update_regsitry' method"""
 
     def registry_mismatch(self, gen_reg_file, registry_files,
                           dycore, reg_config):
+
+        """Fake version of 'registry_mismatch' method"""
 
         # Always return False, in order to avoid running the
         # actual generation routines when performing doctests:
@@ -93,40 +98,64 @@ class FakeBuildCache:
 
     def update_ccpp(self, sdfs, scheme_files, xml_files,
                     preproc_defs, kind_phys):
-        pass
+
+        """Fake version of 'update_ccpp' method"""
 
     def ccpp_mismatch(self, sdfs, scheme_files, host_files,
                       preproc_defs, kind_phys):
+
+        """Fake version of 'ccpp_mismatch' method"""
 
         # Always return False, in order to avoid running the
         # actual generation routines when performing doctests:
         return False
 
     def xml_nl_mismatch(self, create_nl_file, xml_files):
+
+        """Fake version of 'xml_nl_mismatch' method."""
+
         # Always return False, in order to avoid running the
         # actual generation routines when performing doctests:
         return False
 
     def update_init_gen(self, input_file):
-        pass
+
+        """Fake version of 'update_init_gen' method."""
 
     def init_write_mismatch(self, input_file):
+
+        """Fake version of 'init_write_mismatch' method."""
 
         # Always return False, in order to avoid running the
         # actual generation routines when performing doctests:
         return False
 
     def reg_file_list(self):
+
+        """Fake version of 'reg_file_list' property."""
+
         return []
 
     def scheme_nl_metadata(self):
+
+        """Fake version of 'scheme_nl_metadata' property."""
+
         return []
 
     def scheme_nl_groups(self):
+
+        """Fake version of 'scheme_nl_groups' property."""
+
         return []
 
     def ic_names(self):
+
+        """Fake version of 'ic_names' property."""
+
         return {}
+
+    # pylint: enable=no-self-use
+    # pylint: enable=unused-argument
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #Main cam_autogen testing routine, used when script is run directly
@@ -146,19 +175,23 @@ class CamAutoGenTestRoutine(unittest.TestCase):
         """Initalize Config_CAM object being tested."""
 
         #create fake build cache:
-        TestBuildCache = FakeBuildCache()
+        test_cache = FakeBuildCache()
 
         #Add CAM build cache object to unittest object list:
-        self.test_cache = TestBuildCache
+        self.test_cache = test_cache
 
         #Set needed paths:
-        test_data_search = [os.path.join(_CAM_ROOT_DIR, "src", "data")]
-        test_ccpp_path = os.path.join(_CAM_ROOT_DIR, "ccpp_framework", "scripts")
         test_suite_path = os.path.join(_CURRDIR, "sample_files")
 
-        test_bldroot = os.path.join(_CURRDIR, "tmp", "test_bldroot")
+        test_tmp_dir = os.path.join(_CURRDIR, "tmp")
+        test_bldroot = os.path.join(test_tmp_dir, "test_bldroot")
         test_reg_dir = os.path.join(test_bldroot, "cam_registry")
-        test_src_mods_dir = os.path.join(_CURRDIR, "tmp", "SourceMods")
+        test_src_mods_dir = os.path.join(test_tmp_dir, "SourceMods")
+
+        # Does "tmp" directory exist?  If not then create it:
+        if not os.path.exists(test_tmp_dir):
+            os.mkdir(test_tmp_dir)
+        #End if
 
         # Remove old test directories if they exist:
         if os.path.exists(test_bldroot):
@@ -287,10 +320,10 @@ class CamAutoGenTestRoutine(unittest.TestCase):
         """Check that "_find_schemes_in_sdf" correctly finds schemes in an SDF file."""
 
         #Set path to sample SDF file:
-        test_SDF = os.path.join(self.test_suite_path, "write_init_files", "suite_simple.xml")
+        test_sdf = os.path.join(self.test_suite_path, "write_init_files", "suite_simple.xml")
 
         #Open XML file:
-        _, test_suite = read_xml_file(test_SDF)
+        _, test_suite = read_xml_file(test_sdf)
 
         #Set expected results:
         expected_results = ["temp_adjust"]
@@ -311,10 +344,10 @@ class CamAutoGenTestRoutine(unittest.TestCase):
         """
 
         #Set path to a non-SDF file:
-        bad_SDF = os.path.join(self.test_suite_path, "banana_namelist.xml")
+        bad_sdf = os.path.join(self.test_suite_path, "banana_namelist.xml")
 
         #Open XML file:
-        _, bad_file_root = read_xml_file(bad_SDF)
+        _, bad_file_root = read_xml_file(bad_sdf)
 
         #Run function:
         gen_results = _find_schemes_in_sdf(bad_file_root)
@@ -380,7 +413,7 @@ class CamAutoGenTestRoutine(unittest.TestCase):
         #Expect "CamAutoGenError":
         with self.assertRaises(CamAutoGenError) as autoerr:
             #Run function:
-            test_scheme_files = _find_metadata_files([self.test_src_mods_dir], find_scheme_names)
+            _ = _find_metadata_files([self.test_src_mods_dir], find_scheme_names)
         #End with
 
         #Check that error message matches what's expected:
@@ -424,7 +457,7 @@ class CamAutoGenTestRoutine(unittest.TestCase):
         #Expect "CamAutoGenError":
         with self.assertRaises(CamAutoGenError) as autoerr:
             #Run function:
-            test_scheme_files = _find_metadata_files([self.test_src_mods_dir], find_scheme_names)
+            _ = _find_metadata_files([self.test_src_mods_dir], find_scheme_names)
         #End with
 
         #Check that error message matches what's expected:
@@ -449,7 +482,7 @@ class CamAutoGenTestRoutine(unittest.TestCase):
         #Expect "CamAutoGenError":
         with self.assertRaises(CamAutoGenError) as autoerr:
             #Run function:
-            test_scheme_files = _find_metadata_files([self.test_src_mods_dir], find_scheme_names)
+            _ = _find_metadata_files([self.test_src_mods_dir], find_scheme_names)
         #End with
 
         #Check that error message matches what's expected:
@@ -506,9 +539,9 @@ class CamAutoGenTestRoutine(unittest.TestCase):
         #Expect "CamAutoGenError":
         with self.assertRaises(CamAutoGenError) as autoerr:
             #Run function:
-            gen_results = generate_registry(bad_path, self.test_cache, _CAM_ROOT_DIR,
-                                            self.test_bldroot, self.test_src_mods_dir, 'se',
-                                            self.fort_indent)
+            _ = generate_registry(bad_path, self.test_cache, _CAM_ROOT_DIR,
+                                  self.test_bldroot, self.test_src_mods_dir, 'se',
+                                  self.fort_indent)
         #End with
 
         #Check that error message matches what's expected:
@@ -531,15 +564,11 @@ class CamAutoGenTestRoutine(unittest.TestCase):
         shutil.copy2(test_meta, self.test_src_mods_dir)
         shutil.copy2(test_src, self.test_src_mods_dir)
 
-        #Create an enpty "dict_values" object:
-        test_dict = {}
-        test_dict_value = test_dict.values()
-
         #Set expected output tuple:
         expected_results = ([f'{self.test_bldroot}'+os.sep+'ccpp_physics',
                              f'{self.test_bldroot}'+os.sep+'ccpp'], False,
                              f'{self.test_bldroot}'+os.sep+'ccpp'+os.sep+'ccpp_datatable.xml',
-                             test_dict_value, None)
+                             [], None)
 
         #Run physics suite generation function:
         gen_results = generate_physics_suites(self.test_cache, "UNSET", "cam", "simple",
@@ -547,12 +576,13 @@ class CamAutoGenTestRoutine(unittest.TestCase):
                                               self.test_reg_dir, [],
                                               self.test_src_mods_dir, False)
 
-        #Due to the presence of a "dict_values" object which needs to be treated
-        #in a special way, the tuples will need to be iterated over and each
-        #element compared directly:
+        #Due to the presence of a "dict_values" dictview object which needs
+        #to be treated in a special way, the tuples will need to be iterated
+        #over and each element compared directly:
         for idx, elem in enumerate(gen_results):
-            #Check if a "dict_values" instance:
-            if isinstance(elem, type(test_dict_value)):
+            #Check if a variable is iterable.  If so then convert to a list,
+            #which is needed to manage the "dict_values" view object:
+            if isinstance(elem, Iterable):
                 #Convert to list and then compare:
                 self.assertEqual(list(elem), list(expected_results[idx]))
             else:
@@ -570,7 +600,7 @@ class CamAutoGenTestRoutine(unittest.TestCase):
 
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    def test_missing_SDF_generate_physics_suites(self):
+    def test_missing_sdf_generate_physics_suites(self):
 
         """
         Check that "generate_physics_suites" fails with
@@ -583,10 +613,10 @@ class CamAutoGenTestRoutine(unittest.TestCase):
 
         #Expect "CamAutoGenError":
         with self.assertRaises(CamAutoGenError) as autoerr:
-            gen_results = generate_physics_suites(self.test_cache, "UNSET", "cam", "missing",
-                                                  _CAM_ROOT_DIR, self.test_bldroot,
-                                                  self.test_reg_dir, [],
-                                                  self.test_src_mods_dir, False)
+            _ = generate_physics_suites(self.test_cache, "UNSET", "cam", "missing",
+                                        _CAM_ROOT_DIR, self.test_bldroot,
+                                        self.test_reg_dir, [],
+                                        self.test_src_mods_dir, False)
         #End with
 
         #Check that error message matches what's expected:
@@ -611,10 +641,10 @@ class CamAutoGenTestRoutine(unittest.TestCase):
 
         #Expect "CamAutoGenError":
         with self.assertRaises(CamAutoGenError) as autoerr:
-            gen_results = generate_physics_suites(self.test_cache, "UNSET", "cam", "simple",
-                                                  _CAM_ROOT_DIR, self.test_bldroot,
-                                                  self.test_reg_dir, [],
-                                                  self.test_src_mods_dir, False)
+            _ = generate_physics_suites(self.test_cache, "UNSET", "cam", "simple",
+                                        _CAM_ROOT_DIR, self.test_bldroot,
+                                        self.test_reg_dir, [],
+                                        self.test_src_mods_dir, False)
         #End with
 
         #Check that error message matches what's expected:
