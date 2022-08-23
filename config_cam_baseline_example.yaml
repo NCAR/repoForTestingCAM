@@ -58,6 +58,8 @@ diag_basic_info:
     #If "false" or missing, then a model-model comparison is assumed:
     compare_obs: false
 
+    compare_obs: true
+
     #Generate HTML website (assumed false if missing):
     #Note:  The website files themselves will be located in the path
     #specified by "cam_diag_plot_loc", under the "<diag_run>/website" subdirectory,
