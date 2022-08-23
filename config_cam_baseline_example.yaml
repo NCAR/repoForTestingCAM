@@ -56,8 +56,6 @@ diag_basic_info:
 
     #Is this a model vs observations comparison?
     #If "false" or missing, then a model-model comparison is assumed:
-    compare_obs: false
-
     compare_obs: true
 
     #Generate HTML website (assumed false if missing):
