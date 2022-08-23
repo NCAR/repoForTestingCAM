@@ -16,6 +16,7 @@ jobs:
   #set of static analysis, linters, and formatters
   #for Python and YAML.
   pre-commit:
+    if: github.event_name == 'pull_request' || github.repository == 'NCAR/repoForTestingCAM'
     runs-on: ubuntu-latest
     steps:
     # acquire github action routines
