@@ -104,7 +104,7 @@ class AdfConfigTestRoutine(unittest.TestCase):
         #Set error message:
         ermsg = "ADF currently only allows for a single nested dict"
         ermsg += " in the config (YAML) file.\n"
-        ermsg += f"  Variable '{'double_nested_var': 'bad_val'}' is nested too far."
+        ermsg += "  Variable '{'double_nested_var': 'bad_val'}' is nested too far."
 
         #Expect an ADF error:
         with self.assertRaises(AdfError) as err:
