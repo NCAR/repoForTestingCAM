@@ -6,4 +6,13 @@ repos:
     hooks:
       - id: check-yaml
 
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        files: lib
+        args: ["--rcfile=lib/test/pylintrc"]
 #End of file.

@@ -95,7 +95,6 @@ for root, dirs, files in os.walk(_DIAG_SCRIPTS_PATH):
 from adf_web import AdfWeb
 
 
-
 #################
 #Helper functions
 #################
@@ -127,6 +126,17 @@ def construct_index_info(page_dict, fnam, opf):
     if plot_type not in page_dict[vname]:
         page_dict[vname][plot_type] = {}
     page_dict[vname][plot_type][temporal] = opf
+
+#########
+
+def _subprocess_run(cmd):
+    '''
+    This is a helper function for `create_time_series`.
+    It just wraps the subprocess.call() function, so it can be
+    used with the multiprocessing Pool that is constructed by
+    the time series generator.
+    '''
+    return subprocess.run(cmd, shell=False, check=True)
 
 ######################################
 #Main ADF diagnostics class (AdfDiag)
@@ -328,14 +338,14 @@ class AdfDiag(AdfWeb):
         Generate time series versions of the CAM history file data.
         """
 
-        global call_ncrcat
-        def call_ncrcat(cmd):
-            '''this is an internal function to `create_time_series`
-            It just wraps the subprocess.call() function, so it can be
-            used with the multiprocessing Pool that is constructed below.
-            It is declared as global to avoid AttributeError.
-            '''
-            return subprocess.run(cmd, shell=False)
+        #global call_ncrcat
+        #def call_ncrcat(cmd):
+        #    '''this is an internal function to `create_time_series`
+        #    It just wraps the subprocess.call() function, so it can be
+        #    used with the multiprocessing Pool that is constructed below.
+        #    It is declared as global to avoid AttributeError.
+        #    '''
+        #    return subprocess.run(cmd, shell=False)
 
 
         #Check if baseline time-series files are being created:
@@ -579,11 +589,7 @@ class AdfDiag(AdfWeb):
                     continue
 
                 #Check if variable has a "lev" dimension according to first file:
-                if 'lev' in hist_file_ds[var].dims:
-                    has_lev = True
-                else:
-                    has_lev = False
-                #End if
+                has_lev = bool('lev' in hist_file_ds[var].dims)
 
                 #Create full path name,  file name template:
                 #$cam_case_name.h0.$variable.YYYYMM-YYYYMM.nc
@@ -632,8 +638,8 @@ class AdfDiag(AdfWeb):
             #End variable loop
 
             #Now run the "ncrcat" subprocesses in parallel:
-            with mp.Pool(processes=self.num_procs) as p:
-                result = p.map(call_ncrcat, list_of_commands)
+            with mp.Pool(processes=self.num_procs) as pool:
+                _ = pool.map(_subprocess_run, list_of_commands)
             #End with
 
         #End cases loop
@@ -916,9 +922,11 @@ class AdfDiag(AdfWeb):
 
         #Submit the CVDP driver script in background mode, send output to cvdp.out file
         with open(os.path.join(cvdp_dir,'cvdp.out'), 'w', encoding='utf-8') as subout:
+            #pylint: disable=consider-using-with
             _ = subprocess.Popen([f'cd {cvdp_dir}; ncl -Q '+ \
                                   os.path.join(cvdp_dir,f'driver.{case_names[0]}.ncl')],
                                   shell=True, stdout=subout, close_fds=True)
+            #pylint: enable=consider-using-with
         #End with
 
         print('   ')
