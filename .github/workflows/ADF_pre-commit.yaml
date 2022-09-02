@@ -33,6 +33,10 @@ jobs:
         pip install pre-commit               # Install pre-commit
         pip install pylint                   # Install Pylint python package
         pip install pyyaml                   # Install PyYAML python package
+        pip install xarray
+        pip install matplotlib
+        pip install cartopy
+        pip install geocat
     # run pre-commit on ADF code
     - name: Run pre-commit
       run: pre-commit run -a
