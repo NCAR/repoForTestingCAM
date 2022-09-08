@@ -4,20 +4,18 @@ channels:
   - defaults
   - ncar
 dependencies:
-  #Needed for running the ADF
-  - python=3.9
-  - pyyaml=5.4.1
-  - scipy=1.7.1
-  - cartopy=0.20.0
-  - shapely=1.7.1 #Needed to avoid cartopy deprecation warning
-  - xarray=0.19.0
-  - dask=2021.09.1
-  - matplotlib=3.4.3
-  - pandas=1.3.3
-  - netcdf4=1.5.7
+  - pyyaml
+  - scipy
+  - cartopy
+  - shapely
+  - xarray
+  - dask
+  - matplotlib
+  - pandas
+  - netcdf4
   - geocat-comp
-  #Tools for testing the ADF
-  - pre-commit
-  - pytest
-  - pytest-cov
-prefix: /some/where/you/want/the/conda/env/adf_test
+  - pre-commit  #Used for running pre-commit tests during development
+  - pylint      #Used for running pre-commit/pylint during development
+  - pytest      #Used for running python unit tests during development
+  - python=3.10
+prefix: /some/where/you/want/files/envs/adf_test

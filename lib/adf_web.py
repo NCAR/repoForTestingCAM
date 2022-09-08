@@ -55,26 +55,21 @@ class _WebData:
     needed by the website generator.
     """
 
-    def __init__(self, web_data, web_name, case_name,
-                 category = None,
-                 season = None,
-                 plot_type = "Special",
-                 data_frame = False,
-                 html_file  = None,
-                 asset_path = None,
-                 multi_case = False):
+    def __init__(self, web_data, web_name, case_name, **kwargs):
 
-        #Initialize relevant website variables:
+        #Initialize required website variables:
         self.name       = web_name
         self.data       = web_data
         self.case       = case_name
-        self.category   = category
-        self.season     = season
-        self.plot_type  = plot_type
-        self.data_frame = data_frame
-        self.html_file  = html_file
-        self.asset_path = asset_path
-        self.multi_case = multi_case
+
+        #Initialize optional website variables:
+        self.category   = kwargs.get("category", None)
+        self.season     = kwargs.get("season", None)
+        self.plot_type  = kwargs.get("plot_type", "Special")
+        self.data_frame = kwargs.get("data_frame", False)
+        self.html_file  = kwargs.get("html_file", None)
+        self.asset_path = kwargs.get("asset_path", None)
+        self.multi_case = kwargs.get("multi-case", False)
 
 #+++++++++++++++++++++
 #Define main web class

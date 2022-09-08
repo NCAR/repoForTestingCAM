@@ -21,8 +21,10 @@ _ADF_LIB_DIR = os.path.join(_CURRDIR, os.pardir, os.pardir)
 sys.path.append(_ADF_LIB_DIR)
 
 #Import AdfBase class
+#pylint: disable=import-error
 from adf_base import AdfBase
 from adf_base import AdfError
+#pylint: enable=import-error
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #Main AdfBase testing routine, used when script is run directly
@@ -47,12 +49,12 @@ class AdfBaseTestRoutine(unittest.TestCase):
         #Remove log file if it exists:
         if os.path.exists("ADF_debug.log"):
             os.remove("ADF_debug.log")
-
+        #end if
 
         #Close all log streams:
         logging.shutdown()
 
-    def test_AdfBase_create(self):
+    def test_adf_base_create(self):
 
         """
         Check that the Adfbase class can
@@ -65,7 +67,7 @@ class AdfBaseTestRoutine(unittest.TestCase):
         #Assert that new object is of the "AdfBase" class:
         self.assertIsInstance(adf_test, AdfBase)
 
-    def test_AdfBase_debug_create(self):
+    def test_adf_base_debug_create(self):
 
         """
         Check that the Adfbase class can
@@ -83,7 +85,7 @@ class AdfBaseTestRoutine(unittest.TestCase):
         #Assert that "ADF_debug.log" file exists in local directory:
         self.assertTrue(os.path.exists("ADF_debug.log"))
 
-    def test_AdfBase_bad_debug(self):
+    def test_adf_base_bad_debug(self):
 
         """
         Check that the Adfbase class
@@ -98,13 +100,14 @@ class AdfBaseTestRoutine(unittest.TestCase):
         with self.assertRaises(TypeError) as typerr:
 
             #Create AdfBase object with bad debug setting:
-            adf_test = AdfBase(debug=5)
+            _ = AdfBase(debug=5)
+        #end with
 
         #Check that error message matches what's expected:
         self.assertEqual(ermsg, str(typerr.exception))
 
 
-    def test_AdfBase_debug_nothing(self):
+    def test_adf_base_debug_nothing(self):
 
         """
         Check that using the "debug_log" method
@@ -120,7 +123,7 @@ class AdfBaseTestRoutine(unittest.TestCase):
         #Check that no log file exists:
         self.assertFalse(os.path.exists("ADF_debug.log"))
 
-    def test_AdfBase_debug_write(self):
+    def test_adf_base_debug_write(self):
 
         """
         Check that using the "debug_log" method
@@ -141,15 +144,17 @@ class AdfBaseTestRoutine(unittest.TestCase):
         if os.path.exists("ADF_debug.log"):
 
             #Open log file:
-            with open("ADF_debug.log") as logfil:
+            with open("ADF_debug.log", encoding='utf-8') as logfil:
 
                 #Extract file contents:
                 log_text = logfil.read()
 
                 #Check that log text matches what was written:
                 self.assertEqual("DEBUG:ADF:test\n",log_text)
+            #end with
+        #end if
 
-    def test_AdfBase_script_end_fail(self):
+    def test_adf_base_script_end_fail(self):
 
         """
         Check that using "end_diag_fail" raises
@@ -164,6 +169,7 @@ class AdfBaseTestRoutine(unittest.TestCase):
 
             #Call "end_diag_fail" method:
             adf_test.end_diag_fail("test")
+        #end with
 
         #Check that error message matches what's expected:
         self.assertEqual("test", str(adferr.exception))
@@ -174,4 +180,3 @@ class AdfBaseTestRoutine(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
