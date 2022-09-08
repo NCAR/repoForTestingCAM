@@ -33,5 +33,5 @@ jobs:
         $CONDA/bin/conda env update --file env/test_env_conda.yaml --name base
     # run pre-commit on ADF code
     - name: Run pre-commit
-      run: pre-commit run -a
+      run: $CONDA/bin/pre-commit run -a
 
