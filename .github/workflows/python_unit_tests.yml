@@ -49,6 +49,8 @@ jobs:
     # Run python unit and doctests:
     - name: python unit tests
       run: |
+        # CAM config classes doctests:
+        pytest cime_config/cam_config_classes.py --doctest-modules
         # CAM config doctests:
         python cime_config/cam_config.py
         # CAM config unit tests:
