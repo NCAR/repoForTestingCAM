@@ -949,9 +949,9 @@ class ConfigCAM:
 ###############################################################################
 
 def vlist(nspace):
-        """Convert a namespace into an ordered list view"""
-        vargs = vars(nspace)
-        return [(x, vargs[x]) for x in sorted(vargs)]
+    """Convert a namespace into an ordered list view"""
+    vargs = vars(nspace)
+    return [(x, vargs[x]) for x in sorted(vargs)]
 
 #############
 # End of file
