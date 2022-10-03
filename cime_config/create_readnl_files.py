@@ -9,8 +9,6 @@ To run doctests on this file: python create_readnl_files.py
 """
 
 # Python library imports
-# NB: ET is used in doctests which are not recognized by pylint
-import xml.etree.ElementTree as ET # pylint: disable=unused-import
 import os
 import os.path
 import re

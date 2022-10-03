@@ -53,8 +53,6 @@ jobs:
         pytest cime_config/cam_config_classes.py --doctest-modules
         # CAM config doctests:
         pytest cime_config/cam_config.py --doctest-modules
-        # CAM config unit tests:
-        python test/unit/cam_config_unit_tests.py
         # CAM autogen doctests:
         pytest cime_config/cam_autogen.py --doctest-modules
         # CAM build cache doctests:

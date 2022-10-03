@@ -97,7 +97,7 @@ class CreateReadnlFilesTest(unittest.TestCase):
         #Run inherited setup method:
         super().setUpClass()
 
-    def test_NLVar_valid_xml(self):
+    def test_nlvar_valid_xml(self):
         """
         Test that the "NLVar" class can correctly
         determine that a namelist xml variable is valid.
@@ -116,7 +116,7 @@ class CreateReadnlFilesTest(unittest.TestCase):
         #Check that the object recgonizes the input as valid:
         self.assertTrue(nlvar_obj.is_valid())
 
-    def test_NLVar_no_stdname_xml(self):
+    def test_nlvar_no_stdname_xml(self):
         """
         Test that the "NLVar" class can correctly
         determine that a namelist xml variable is
@@ -140,7 +140,7 @@ class CreateReadnlFilesTest(unittest.TestCase):
         #is missing:
         self.assertEqual(nlvar_obj.missing(), 'standard_name')
 
-    def test_NLVar_no_group_xml(self):
+    def test_nlvar_no_group_xml(self):
         """
         Test that the "NLVar" class can correctly
         determine that a namelist xml variable is
@@ -164,7 +164,7 @@ class CreateReadnlFilesTest(unittest.TestCase):
         #is missing:
         self.assertEqual(nlvar_obj.missing(), 'group')
 
-    def test_NLVar_no_units_xml(self):
+    def test_nlvar_no_units_xml(self):
         """
         Test that the "NLVar" class can correctly
         determine that a namelist xml variable is
@@ -188,7 +188,7 @@ class CreateReadnlFilesTest(unittest.TestCase):
         #are missing:
         self.assertEqual(nlvar_obj.missing(), 'units')
 
-    def test_NLVar_bad_char_xml(self):
+    def test_nlvar_bad_char_xml(self):
         """
         Test that the "NLVar" class can correctly
         determine that a namelist xml variable has
@@ -217,7 +217,7 @@ class CreateReadnlFilesTest(unittest.TestCase):
         #length is missing:
         self.assertEqual(nlvar_obj.missing(), ermsg)
 
-    def test_NLVar_bad_type_xml(self):
+    def test_nlvar_bad_type_xml(self):
         """
         Test that the "NLVar" class can correctly
         determine that a namelist xml variable has
@@ -277,7 +277,7 @@ class CreateReadnlFilesTest(unittest.TestCase):
         remove_files([out_source, out_meta, reader_source])
 
         # Create the namelist object
-        args = ['--namelist-file-arg', "{}:{}".format(scheme_name, xml_file),
+        args = ['--namelist-file-arg', f"{scheme_name}:{xml_file}",
                 '--namelist-read-mod', reader_mod]
         namelist_obj = gen_namelist_files(args, _TMP_DIR, logger)
 
@@ -438,23 +438,16 @@ class CreateReadnlFilesTest(unittest.TestCase):
         reader_mod = "cam_ccpp_scheme_namelists_single_def"
         reader_source = os.path.join(_TMP_DIR, reader_mod + ".F90")
 
-        # Check output files
-        out_source_check = os.path.join(_NL_SAMPLES_DIR,
-                                        out_source_name + '.F90')
-        out_meta_check = os.path.join(_NL_SAMPLES_DIR,
-                                      out_source_name + '.meta')
-        reader_source_check = os.path.join(_NL_SAMPLES_DIR, reader_mod + ".F90")
-
         # Clear all temporary output files:
         remove_files([out_source, out_meta, reader_source])
 
         # Create the namelist object
-        args = ['--namelist-file-arg', "{}:{}".format(scheme_name, xml_file),
+        args = ['--namelist-file-arg', f"{scheme_name}:{xml_file}",
                 '--namelist-read-mod', reader_mod]
         with self.assertRaises(NamelistError) as verr:
             with self.assertLogs('test_missing_xml_file',
                                  level='ERROR') as cmp_log:
-                namelist_obj = gen_namelist_files(args, _TMP_DIR, logger)
+                _ = gen_namelist_files(args, _TMP_DIR, logger)
             # end with
         # end with
         # Check exception message
@@ -499,12 +492,12 @@ class CreateReadnlFilesTest(unittest.TestCase):
         remove_files([out_source, out_meta, reader_source])
 
         # Create the namelist object
-        args = ['--namelist-file-arg', "{}:{}".format(scheme_name, xml_file),
+        args = ['--namelist-file-arg', f"{scheme_name}:{xml_file}",
                 '--namelist-read-mod', reader_mod]
         with self.assertRaises(NamelistError) as nerr:
             with self.assertLogs("test_bad_namelist_def",
                                  level='INFO') as cmp_log:
-                namelist_obj = gen_namelist_files(args, _TMP_DIR, logger)
+                _ = gen_namelist_files(args, _TMP_DIR, logger)
             # end with
         # end with
 
