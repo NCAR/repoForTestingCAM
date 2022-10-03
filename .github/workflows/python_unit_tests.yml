@@ -60,7 +60,7 @@ jobs:
         # CAM build cache doctests:
         python cime_config/cam_build_cache.py
         # Namelist reader generator doctests:
-        python cime_config/create_readnl_files.py
+        pytest cime_config/create_readnl_files.py --doctest-modules
         # Registry generator doctests:
         pytest src/data/generate_registry_data.py --doctest-modules
         # ParamGen atm_in namelist writer doctests:
