@@ -640,8 +640,6 @@ Standard / required CCPP variables
     * `logical(kind=)`: units = flag
 * `do_read_surface_albedo_for_diffused_shortwave_from_input`: Do read surface albedo for diffused shortwave from input
     * `logical(kind=)`: units = flag
-* `do_read_surface_albedo_for_diffused_shortwave_from_input`: Do read surface albedo for diffused shortwave from input
-    * `logical(kind=)`: units = flag
 * `do_limited_surface_roughness_length_over_ocean`: Do limited surface roughness length over ocean
     * `logical(kind=)`: units = flag
 * `do_reference_pressure_theta`: Do reference pressure theta
