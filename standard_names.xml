@@ -998,6 +998,11 @@
       <standard_name name="do_read_surface_albedo_for_diffused_shortwave_from_input">
          <type kind="" units="flag">logical</type>
       </standard_name>
+      <!--bad val-->
+      <standard_name name="do_read_surface_albedo_for_diffused_shortwave_from_input">
+         <type kind="" units="flag">logical</type>
+      </standard_name>
+      <!-- bad val-->
       <standard_name name="do_limited_surface_roughness_length_over_ocean">
          <type kind="" units="flag">logical</type>
       </standard_name>
