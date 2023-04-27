@@ -8,7 +8,7 @@ import argparse
 import sys
 import os.path
 import xml.etree.ElementTree as ET
-from xml_tools import read_xml_file
+from xml_tools import find_schema_file, find_schema_version, validate_xml_file, read_xml_file
 import copy
 
 ###############################################################################
@@ -22,7 +22,7 @@ def parse_command_line(args, description):
                         type=str, help="XML file with standard name library")
     parser.add_argument("--overwrite", action='store_true',
                         help="flag to remove duplicates and overwrite the file")
-
+    
     pargs = parser.parse_args(args)
     return pargs
 
@@ -33,14 +33,30 @@ def main_func():
     """
     # Parse command line arguments
     args = parse_command_line(sys.argv[1:], __doc__)
-    stdname_file = os.path.abspath(args.standard_name_file)
-    tree, root = read_xml_file(stdname_file)
+    stdname_file = os.path.abspath(args.standard_name_file)    
+    _, root = read_xml_file(stdname_file)
+
+    # Validate the XML file
+    version = find_schema_version(root)
+    schema_name = os.path.basename(stdname_file)[0:-4]
+    schema_root = os.path.dirname(stdname_file)
+    schema_file = find_schema_file(schema_name, version)
+    if schema_file:
+        try:
+            validate_xml_file(stdname_file, schema_name, version, None,
+                            schema_path=schema_root, error_on_noxmllint=True)
+        except ValueError:
+            raise ValueError("Invalid standard names file, {}".format(stdname_file))
+    else:
+        raise ValueError(
+            'Cannot find schema file, {}, for version {}'.format(schema_name, version)
+        )
 
     #get list of all standard names
     all_std_names = []
     for name in root.findall('./section/standard_name'):
         all_std_names.append(name.attrib['name'])
-
+    
     #get list of all unique and duplicate standard names, in source order
     seen = set()
     uniq_std_names = []
@@ -51,7 +67,7 @@ def main_func():
             seen.add(x)
         else:
             dup_std_names.append(x)
-
+    
     if args.overwrite:
         #delete all duplicate elements after the first
         if len(dup_std_names)>0:
@@ -61,18 +77,13 @@ def main_func():
                 print("{0}, ({1} duplicate(s))".format(dup, len(rm_elements)))
             print('Removing duplicates and overwriting {}'.format(stdname_file))
             for dup in dup_std_names:
-                first_use = True #Logical that indicates the first use of the duplicated name
-                rm_parents = root.findall('./section/standard_name[@name="%s"]..'%dup)
+                rm_parents = root.findall('./section/standard_name[@name="%s"]...'%dup)[1:]
                 for par in rm_parents:
                     rm_ele = par.findall('./standard_name[@name="%s"]'%dup)
                     for ele in rm_ele:
-                        if first_use:
-                            #Now all future uses of the name will be removed:
-                            first_use = False
-                        else:
-                            par.remove(ele)
-            #Overwrite the xml file with the new, duplicate-free element tree:
-            tree.write(stdname_file, "utf-8")
+                        par.remove(ele)
+            
+            _.write(stdname_file, "utf-8")
         else:
             print('No duplicate standard names were found.')
     else:
@@ -82,9 +93,10 @@ def main_func():
             for dup in dup_std_names:
                 rm_elements = root.findall('./section/standard_name[@name="%s"]'%dup)[1:]
                 print("{0}, ({1} duplicate(s))".format(dup, len(rm_elements)))
+            sys.exit(1)
         else:
             print('No duplicate standard names were found.')
-
+    
 ###############################################################################
 if __name__ == "__main__":
     main_func()
