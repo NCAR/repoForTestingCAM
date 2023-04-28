@@ -39,8 +39,6 @@ Also note that horizontal_dimension should be used in xxx_[timestep_]init and xx
 Currently, the only dimension which supports all six dimension types is horizontal_dimension. This and other supported dimension standard names are listed below.
 * `horizontal_dimension`: Size horizontal dimension
     * `integer`: units = count
-* `horizontal_dimension`: Size horizontal dimension
-    * `integer`: units = meters
 * `vertical_layer_dimension`: number of vertical layers
     * `integer`: units = count
 * `vertical_interface_dimension`: number of vertical interfaces
