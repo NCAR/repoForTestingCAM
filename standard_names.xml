@@ -36,6 +36,12 @@
                    long_name="Size horizontal dimension">
       <type units="count">integer</type>
     </standard_name>
+    <!-- duplicate val -->
+    <standard_name name="horizontal_dimension"
+                   long_name="Size horizontal dimension">
+      <type units="meters">integer</type>
+    </standard_name>
+    <!-- duplicate val -->
     <standard_name name="vertical_layer_dimension"
                    long_name="number of vertical layers">
       <type units="count">integer</type>
